@@ -16,9 +16,9 @@ jobs:
       - name: Sync Files via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER: 82.25.83.190 }}
-          username: ${{ secrets.FTP_USERNAME: u528738533.gcmnoticias.com }}
-          password: ${{ secrets.FTP_PASSWORD: hs:iUP4k2!N3pzA }}
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           # Ruta absoluta o relativa a la carpeta de tu tema en el servidor WordPress:
           server-dir: /public_html/wp-content/themes/PressGridPro/
           # Ignorar archivos del repositorio que no deben ir al servidor:
