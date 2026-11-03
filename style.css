@@ -1,450 +1,153 @@
-/*
-Theme Name: PressGrid Pro
-Theme URI: https://solucionesgcm.com/pressgrid
-Author: Soluciones GCM
-Author URI: https://solucionesgcm.com
-Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales (v10.38.0 — Full Single Layout Restored + Lucide Icons).
-Version: 10.38.0
-License: GNU General Public License v2 or later
-Text Domain: pressgrid 
-*/
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-:root {
-    --bg-main: #ffffff;
-    --nbc-dark-bg: #111827;
-    --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --text-muted: #64748b;
-    --brand-red: #dc2626;
-    --border-color: #e2e8f0;
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --font-serif-content: 'Merriweather', Georgia, serif;
-    --font-serif-excerpt: Georgia, 'Times New Roman', serif;
-    --font-mono: 'DM Mono', monospace, SFMono-Regular, Menlo, Monaco, Consolas;
+/* --- ESTILOS DEL CUERPO INFERIOR DE PORTADA --- */
+.pressgrid-sections-block {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--text-primary);
 }
 
-body {
-    font-family: var(--font-sans);
-    margin: 0;
-    padding: 0;
+.section-block-title {
+    font-size: 1.1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.2px;
+    margin-bottom: 1.75rem;
     color: var(--text-primary);
-    background-color: var(--bg-main);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
 }
 
-.container {
-    max-width: 1240px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-}
-
-header.site-header {
-    background: var(--nbc-dark-bg);
-    color: #ffffff;
-    padding: 1.2rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo h1 {
-    margin: 0;
-    font-size: 1.85rem;
-    font-weight: 900;
-    letter-spacing: -0.5px;
-}
-.logo a {
-    color: #ffffff;
-    text-decoration: none;
-}
-.logo .highlight {
-    color: var(--brand-red);
-}
-
-.main-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 1.8rem;
-}
-.main-nav a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.gcm-home-wrapper {
-    padding-top: 1.75rem;
-    padding-bottom: 5rem;
-}
-
-.nbc-hero-section {
+.pressgrid-3col-grid {
     display: grid;
-    grid-template-columns: 1.35fr 0.95fr 310px;
-    gap: 1.75rem;
-    padding-bottom: 2rem;
-    margin-bottom: 2.5rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.nbc-hero-main-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-}
-.nbc-hero-main-card .thumb-wrap {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    background: #111827;
-    margin-bottom: 1rem;
-    border-radius: 4px;
-}
-.nbc-hero-main-card .thumb-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.nbc-hero-kicker {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--brand-red);
-    text-transform: uppercase;
-    margin-bottom: 0.35rem;
-}
-.nbc-hero-title {
-    font-size: 2.1rem;
-    line-height: 1.15;
-    font-weight: 900;
-    margin: 0 0 0.6rem 0;
-}
-.nbc-hero-excerpt {
-    font-family: var(--font-serif-excerpt);
-    font-size: 1.05rem;
-    color: #475569;
-    margin: 0;
-}
-
-/* SINGLE LAYOUT ESTILO NBC NEWS */
-.gcm-single-hero-dark {
-    background: var(--nbc-dark-bg);
-    color: #ffffff;
-    padding: 3.5rem 0 11rem 0;
-    position: relative;
-    z-index: 1;
-}
-
-.gcm-nbc-master-grid {
-    display: grid;
-    grid-template-columns: 130px 800px;
-    gap: 2.5rem;
-    max-width: 1010px;
-    margin: 0 auto;
-}
-
-@media (max-width: 992px) {
-    .gcm-nbc-master-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-}
-
-.gcm-hero-category {
-    font-family: var(--font-mono);
-    font-size: 0.725rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--brand-red);
-    padding-top: 0.5rem;
-}
-
-.gcm-hero-headline {
-    font-size: 2.75rem;
-    line-height: 1.15;
-    font-weight: 900;
-    letter-spacing: -0.8px;
-    color: #ffffff;
-    margin: 0 0 1.25rem 0;
-}
-
-.gcm-hero-subtitle {
-    font-family: var(--font-serif-excerpt);
-    font-size: 1.2rem;
-    line-height: 1.55;
-    color: #cbd5e1;
-    font-weight: 400;
-    margin-bottom: 2rem;
-}
-
-.gcm-audio-player-bar {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 40px;
-    padding: 0.65rem 1.25rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 0.5rem;
-}
-
-.audio-play-btn {
-    width: 32px;
-    height: 32px;
-    background: #ffffff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-.audio-play-btn svg {
-    stroke: var(--nbc-dark-bg);
-    width: 16px;
-    height: 16px;
-}
-
-.audio-info {
-    font-size: 0.825rem;
-    font-weight: 600;
-    color: #ffffff;
-}
-
-.gcm-single-body-area {
-    padding: 0 0 5rem 0;
-    background: #ffffff;
-    position: relative;
-    z-index: 10;
-}
-
-.gcm-feat-hero-media-wrapper {
-    position: relative;
-    z-index: 30;
-    top: -8rem;
-    margin-bottom: -6.5rem;
-    width: 100%;
-}
-
-.gcm-feat-hero-media {
-    width: 100%;
-    overflow: hidden;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.22);
-    border-radius: 4px;
-    background: var(--nbc-dark-bg);
-}
-
-.gcm-feat-hero-media img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.gcm-nbc-sub-grid {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 2.5rem;
-    align-items: start;
-    width: 100%;
-}
-
-@media (max-width: 768px) {
-    .gcm-nbc-sub-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.byline-date-block {
-    margin: 0 0 2rem 0;
-    font-size: 0.875rem;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1rem;
-}
-.byline-date-block .pub-date {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.775rem;
-    color: #64748b;
-    margin-bottom: 0.3rem;
-    text-transform: uppercase;
-}
-
-.post-content {
-    font-family: var(--font-serif-content);
-    font-size: 1.05rem;
-    line-height: 1.78;
-    color: #1a202c;
-}
-
-.post-content p {
-    margin-bottom: 1.65rem;
-}
-
-.gcm-sidebar {
-    border-left: 1px solid var(--border-color);
-    padding-left: 1.8rem;
-}
-
-.gcm-sidebar-widget h3.widget-title {
-    font-size: 0.85rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #0f172a;
-    border-bottom: 2px solid #0f172a;
-    padding-bottom: 0.4rem;
-    margin-top: 0;
-    margin-bottom: 1.4rem;
-}
-
-.sidebar-news-card-nbc {
-    display: block;
-    margin-bottom: 1.6rem;
-    text-decoration: none;
-    color: inherit;
-}
-
-.sidebar-thumb-top-32 {
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    overflow: hidden;
-    border-radius: 2px;
-    background: #e2e8f0;
-    margin-bottom: 0.55rem;
-}
-.sidebar-thumb-top-32 img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.sidebar-card-info-nbc h4 {
-    font-size: 0.9rem;
-    line-height: 1.35;
-    font-weight: 700;
-    margin: 0 0 0.3rem 0;
-    color: #0f172a;
-}
-.sidebar-card-info-nbc .meta-time {
-    font-family: var(--font-mono);
-    font-size: 0.685rem;
-    color: #94a3b8;
-    text-transform: uppercase;
-}
-
-footer.site-footer {
-    background: var(--nbc-dark-bg);
-    color: #94a3b8;
-    text-align: center;
-    padding: 2.5rem 0;
-    border-top: 1px solid rgba(255,255,255,0.1);
-}
-
-/* --- REGIONAL FIXES PARA HOME EN PORTADA --- */
-.nbc-hero-section {
-    display: grid;
-    grid-template-columns: 1.35fr 1fr 290px;
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    align-items: start;
 }
 
-.nbc-hero-stack {
+@media (max-width: 900px) {
+    .pressgrid-3col-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pressgrid-card-item {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    border-left: 1px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
-    padding: 0 1.5rem;
 }
 
-.nbc-hero-stack-item {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-    border-bottom: 1px solid #f1f5f9;
-    padding-bottom: 1.25rem;
-}
-
-.nbc-hero-stack-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.nbc-hero-stack-item .thumb {
-    width: 100%;
-    aspect-ratio: 16 / 9;
+.card-thumb-link {
+    display: block;
+    aspect-ratio: 16 / 10;
     overflow: hidden;
     border-radius: 3px;
-    margin-bottom: 0.75rem;
     background: #e2e8f0;
+    margin-bottom: 0.85rem;
 }
 
-.nbc-hero-stack-item .thumb img {
+.card-thumb-link img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.nbc-hero-stack-item .meta-kicker {
+.card-meta-tag {
     font-family: var(--font-mono);
     font-size: 0.7rem;
     font-weight: 700;
-    text-transform: uppercase;
     color: var(--brand-red);
-    margin-bottom: 0.25rem;
-    display: block;
-}
-
-.nbc-hero-stack-item h4 {
-    font-size: 1rem;
-    line-height: 1.3;
-    font-weight: 800;
-    margin: 0;
-    color: #0f172a;
-}
-
-.al-momento-item {
-    display: block;
-    text-decoration: none;
-    padding: 0.85rem 0;
-    border-bottom: 1px solid #f1f5f9;
-}
-
-.al-momento-meta-row {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
+    text-transform: uppercase;
     margin-bottom: 0.35rem;
 }
 
-.al-momento-time {
-    color: #64748b;
+.card-title {
+    font-size: 1.1rem;
+    line-height: 1.25;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
 }
 
-.al-momento-tag {
-    color: var(--brand-red);
-    font-weight: 700;
+.card-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.card-excerpt {
+    font-family: var(--font-serif-excerpt);
+    font-size: 0.925rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.pressgrid-bottom-feed-section {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.pressgrid-main-with-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+}
+
+@media (max-width: 900px) {
+    .pressgrid-main-with-sidebar {
+        grid-template-columns: 1fr;
+    }
+}
+
+.feed-header-title {
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--text-primary);
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+.pressgrid-list-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 1.25rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.list-thumb {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 3px;
+    background: #e2e8f0;
+}
+
+.list-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.list-date {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
     text-transform: uppercase;
 }
 
-.al-momento-item h4 {
+.list-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin: 0.25rem 0 0.4rem 0;
+}
+
+.list-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.list-excerpt {
     font-size: 0.875rem;
-    line-height: 1.35;
-    font-weight: 700;
-    color: #1e293b;
+    color: var(--text-secondary);
     margin: 0;
+    line-height: 1.45;
 }

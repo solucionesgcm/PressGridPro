@@ -1,8 +1,9 @@
 <?php get_header(); ?>
-<main class="container gcm-home-wrapper"> 
+<main class="container gcm-home-wrapper">
 
     <?php $used_ids = array(); ?>
 
+    <!-- 1. BLOQUE HERO (3 COLUMNAS) -->
     <section class="nbc-hero-section">
         
         <!-- COLUMNA 1: NOTA PRINCIPAL DESTACADA -->
@@ -166,6 +167,119 @@
             <?php endif; ?>
         </div>
 
+    </section>
+
+    <!-- 2. GRID SECCIONAL TEMÁTICO (FINANZAS / TECNOLOGÍA / POLÍTICA) -->
+    <section class="pressgrid-sections-block">
+        <div class="section-block-header">
+            <h2 class="section-block-title">Análisis y Cobertura Temática</h2>
+        </div>
+        
+        <div class="pressgrid-3col-grid">
+            <?php
+            $cat_grid_q = new WP_Query(array(
+                'posts_per_page' => 6,
+                'post__not_in'   => $used_ids,
+                'ignore_sticky_posts' => true
+            ));
+
+            if ($cat_grid_q->have_posts()) :
+                while ($cat_grid_q->have_posts()) : $cat_grid_q->the_post();
+                    $used_ids[] = get_the_ID();
+                    $kicker = get_post_meta(get_the_ID(), '_gcm_kicker', true);
+                    $cats   = get_the_category();
+                    $cat_label = !empty($kicker) ? $kicker : (!empty($cats) ? $cats[0]->name : 'EDITORIAL');
+            ?>
+                    <article class="pressgrid-card-item">
+                        <a href="<?php the_permalink(); ?>" class="card-thumb-link">
+                            <?php if (has_post_thumbnail()) : ?>
+                                <?php the_post_thumbnail('medium_large'); ?>
+                            <?php else : ?>
+                                <img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=500&q=80" alt="GCM Noticias">
+                            <?php endif; ?>
+                        </a>
+                        <div class="card-meta-tag"><?php echo esc_html($cat_label); ?></div>
+                        <h3 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                        <p class="card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 18); ?></p>
+                    </article>
+            <?php
+                endwhile;
+                wp_reset_postdata();
+            endif;
+            ?>
+        </div>
+    </section>
+
+    <!-- 3. FEED INFERIOR CONTINUO CON SIDEBAR DE LO MÁS LEÍDO -->
+    <section class="pressgrid-bottom-feed-section">
+        <div class="pressgrid-main-with-sidebar">
+            
+            <div class="pressgrid-feed-col">
+                <h3 class="feed-header-title">Más Noticias</h3>
+                
+                <div class="pressgrid-list-feed">
+                    <?php
+                    $list_feed_q = new WP_Query(array(
+                        'posts_per_page' => 5,
+                        'post__not_in'   => $used_ids,
+                        'ignore_sticky_posts' => true
+                    ));
+
+                    if ($list_feed_q->have_posts()) :
+                        while ($list_feed_q->have_posts()) : $list_feed_q->the_post();
+                    ?>
+                            <article class="pressgrid-list-item">
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <a href="<?php the_permalink(); ?>" class="list-thumb">
+                                        <?php the_post_thumbnail('medium'); ?>
+                                    </a>
+                                <?php endif; ?>
+                                <div class="list-content">
+                                    <span class="list-date"><?php echo get_the_date('d M, Y'); ?></span>
+                                    <h4 class="list-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
+                                    <p class="list-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 22); ?></p>
+                                </div>
+                            </article>
+                    <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+            </div>
+
+            <aside class="pressgrid-sidebar-col">
+                <div class="gcm-sidebar-widget">
+                    <h3 class="widget-title">Tendencias B2B</h3>
+                    <?php
+                    $popular_q = new WP_Query(array(
+                        'posts_per_page' => 4,
+                        'ignore_sticky_posts' => true
+                    ));
+
+                    if ($popular_q->have_posts()) :
+                        while ($popular_q->have_posts()) : $popular_q->the_post();
+                    ?>
+                            <a href="<?php the_permalink(); ?>" class="sidebar-news-card-nbc">
+                                <div class="sidebar-thumb-top-32">
+                                    <?php if (has_post_thumbnail()) : ?>
+                                        <?php the_post_thumbnail('medium'); ?>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="sidebar-card-info-nbc">
+                                    <h4><?php the_title(); ?></h4>
+                                    <span class="meta-time"><?php echo get_the_date('M j, Y'); ?></span>
+                                </div>
+                            </a>
+                    <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+            </aside>
+
+        </div>
     </section>
 
 </main>
