@@ -26,11 +26,10 @@ function pressgrid_setup() {
 }
 add_action('after_setup_theme', 'pressgrid_setup');
 
-// ENCOLE DE ESTILOS Y FUENTES (ÚNICA DECLARACIÓN CON CACHE-BUSTING)
+// ENCOLE DE ESTILOS Y FUENTES CON CACHE-BUSTING
 function pressgrid_enqueue_scripts() {
     wp_enqueue_style('pressgrid-google-fonts', 'https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600;700;800;900&display=swap', array(), null);
     
-    // time() asegura que cualquier cambio en style.css impacte de inmediato en el navegador
     wp_enqueue_style('pressgrid-style', get_stylesheet_uri(), array('pressgrid-google-fonts'), time());
 }
 add_action('wp_enqueue_scripts', 'pressgrid_enqueue_scripts');
@@ -65,38 +64,33 @@ function pressgrid_render_sidebar_meta_box($post) {
 
     $is_featured  = get_post_meta($post->ID, '_gcm_is_featured', true);
     $is_secondary = get_post_meta($post->ID, '_gcm_is_secondary', true);
-    ?>
-    <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;">
-        <label style="display:flex; align-items:center; gap:0.5rem; font-weight:700; font-size:0.825rem; margin-bottom:0.4rem;">
-            <input type="checkbox" name="gcm_is_featured" value="1" <?php checked($is_featured, '1'); ?> />
-            Nota Principal (Hero Col 1)
-        </label>
-
-        <label style="display:flex; align-items:center; gap:0.5rem; font-weight:700; font-size:0.825rem; margin-bottom:0.4rem;">
-            <input type="checkbox" name="gcm_is_secondary" value="1" <?php checked($is_secondary, '1'); ?> />
-            Nota Secundaria (Hero Col 2)
-        </label>
-    </div>
-    <?php
+    
+    echo '<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;">';
+    echo '<label style="display:flex; align-items:center; gap:0.5rem; font-weight:700; font-size:0.825rem; margin-bottom:0.4rem;">';
+    echo '<input type="checkbox" name="gcm_is_featured" value="1" ' . checked($is_featured, '1', false) . ' /> Nota Principal (Hero Col 1)';
+    echo '</label>';
+    echo '<label style="display:flex; align-items:center; gap:0.5rem; font-weight:700; font-size:0.825rem; margin-bottom:0.4rem;">';
+    echo '<input type="checkbox" name="gcm_is_secondary" value="1" ' . checked($is_secondary, '1', false) . ' /> Nota Secundaria (Hero Col 2)';
+    echo '</label>';
+    echo '</div>';
 }
 
 function pressgrid_render_unified_meta_box($post) {
     wp_nonce_field('pressgrid_save_unified_meta_box', 'pressgrid_unified_meta_box_nonce');
 
-    $kicker         = get_post_meta($post->ID, '_gcm_kicker', true);
-    $subtitle       = get_post_meta($post->ID, '_gcm_subtitle', true);
-    ?>
-    <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif; background:#f8fafc; border:1px solid #cbd5e1; border-radius:6px; padding:1.15rem;">
-        <div style="margin-bottom:1rem;">
-            <label style="display:block; font-weight:700; font-size:0.825rem; margin-bottom:0.3rem;">Kicker / Ante-título:</label>
-            <input type="text" name="gcm_kicker" value="<?php echo esc_attr($kicker); ?>" style="width:100%; padding:0.5rem; border:1px solid #cbd5e1; border-radius:4px;" />
-        </div>
-        <div>
-            <label style="display:block; font-weight:700; font-size:0.825rem; margin-bottom:0.3rem;">Bajada / Subtítulo:</label>
-            <textarea name="gcm_subtitle" rows="3" style="width:100%; padding:0.5rem; border:1px solid #cbd5e1; border-radius:4px;"><?php echo esc_textarea($subtitle); ?></textarea>
-        </div>
-    </div>
-    <?php
+    $kicker   = get_post_meta($post->ID, '_gcm_kicker', true);
+    $subtitle = get_post_meta($post->ID, '_gcm_subtitle', true);
+
+    echo '<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif; background:#f8fafc; border:1px solid #cbd5e1; border-radius:6px; padding:1.15rem;">';
+    echo '<div style="margin-bottom:1rem;">';
+    echo '<label style="display:block; font-weight:700; font-size:0.825rem; margin-bottom:0.3rem;">Kicker / Ante-título:</label>';
+    echo '<input type="text" name="gcm_kicker" value="' . esc_attr($kicker) . '" style="width:100%; padding:0.5rem; border:1px solid #cbd5e1; border-radius:4px;" />';
+    echo '</div>';
+    echo '<div>';
+    echo '<label style="display:block; font-weight:700; font-size:0.825rem; margin-bottom:0.3rem;">Bajada / Subtítulo:</label>';
+    echo '<textarea name="gcm_subtitle" rows="3" style="width:100%; padding:0.5rem; border:1px solid #cbd5e1; border-radius:4px;">' . esc_textarea($subtitle) . '</textarea>';
+    echo '</div>';
+    echo '</div>';
 }
 
 function pressgrid_save_unified_meta_box($post_id) {
@@ -113,3 +107,4 @@ function pressgrid_save_unified_meta_box($post_id) {
     if (isset($_POST['gcm_subtitle'])) update_post_meta($post_id, '_gcm_subtitle', sanitize_textarea_field($_POST['gcm_subtitle']));
 }
 add_action('save_post', 'pressgrid_save_unified_meta_box');
+?>
