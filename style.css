@@ -3,7 +3,7 @@ Theme Name: PressGrid Pro
 Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
-Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales (v10.38.0 — Full Single Layout Restored + Lucide Icons).
+Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales (v10.38.0 — Complete NBC/Foxiz/Bloomberg Master Layout).
 Version: 10.38.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
@@ -13,7 +13,7 @@ Text Domain: pressgrid
 
 :root {
     --bg-main: #ffffff;
-    --nbc-dark-bg: #111827;
+    --nbc-dark-bg: #0f172a;
     --text-primary: #0f172a;
     --text-secondary: #334155;
     --text-muted: #64748b;
@@ -88,11 +88,11 @@ header.site-header {
 }
 
 /* ==========================================================================
-   PORTADA (FRONT-PAGE) - ESTRUCTURA Y HERO
+   PORTADA: HERO 3 COLUMNAS ASIMÉTRICAS
    ========================================================================== */
 .gcm-home-wrapper {
     padding-top: 1.75rem;
-    padding-bottom: 5rem;
+    padding-bottom: 3rem;
 }
 
 .nbc-hero-section {
@@ -101,7 +101,7 @@ header.site-header {
     gap: 2rem;
     align-items: start;
     padding-bottom: 2.5rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -111,7 +111,6 @@ header.site-header {
     }
 }
 
-/* Columna 1: Nota Principal */
 .nbc-hero-main-card {
     display: block;
     text-decoration: none;
@@ -152,7 +151,6 @@ header.site-header {
     margin: 0;
 }
 
-/* Columna 2: Stack Secundario */
 .nbc-hero-stack {
     display: flex;
     flex-direction: column;
@@ -217,7 +215,6 @@ header.site-header {
     color: #0f172a;
 }
 
-/* Columna 3: Al Momento / Cobertura en Vivo */
 .nbc-al-momento-header {
     border-bottom: 2px solid var(--text-primary);
     padding-bottom: 0.4rem;
@@ -251,15 +248,8 @@ header.site-header {
     margin-bottom: 0.35rem;
 }
 
-.al-momento-time {
-    color: #64748b;
-}
-
-.al-momento-tag {
-    color: var(--brand-red);
-    font-weight: 700;
-    text-transform: uppercase;
-}
+.al-momento-time { color: #64748b; }
+.al-momento-tag { color: var(--brand-red); font-weight: 700; text-transform: uppercase; }
 
 .al-momento-item h4 {
     font-size: 0.875rem;
@@ -269,204 +259,284 @@ header.site-header {
     margin: 0;
 }
 
-.live-stream-box-col3 {
-    background: #fef2f2;
-    border: 1px solid #fca5a5;
-    border-radius: 6px;
-    padding: 1.25rem;
-}
-
-.live-pulse-badge {
-    background: var(--brand-red);
-    color: #ffffff;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: 800;
-    padding: 0.2rem 0.5rem;
-    border-radius: 3px;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-bottom: 0.75rem;
-}
-
-.live-stream-box-col3 h4 {
-    font-size: 1.1rem;
-    font-weight: 900;
-    margin: 0 0 0.5rem 0;
-    color: #991b1b;
-}
-
-.live-stream-box-col3 p {
-    font-size: 0.85rem;
-    color: #7f1d1d;
-    margin: 0 0 1rem 0;
-}
-
-.live-stream-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.8rem;
-    font-weight: 800;
-    color: var(--brand-red);
-    text-decoration: none;
-    text-transform: uppercase;
-}
-
 /* ==========================================================================
-   CUERPO INFERIOR DEL HOME (SECCIONES TEMÁTICAS Y FEED)
+   FRANJA MULTIMEDIA OSCURA (FULL WIDTH)
    ========================================================================== */
-.pressgrid-sections-block {
-    margin-top: 1rem;
-    padding-top: 2rem;
-    border-top: 2px solid var(--text-primary);
+.gcm-multimedia-dark-strip {
+    background: var(--nbc-dark-bg);
+    color: #ffffff;
+    padding: 2.25rem 0;
+    margin: 2rem 0;
 }
 
-.section-block-title {
-    font-size: 1.1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: -0.2px;
-    margin-bottom: 1.75rem;
-    color: var(--text-primary);
+.multimedia-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 0.5rem;
 }
 
-.pressgrid-3col-grid {
+.multimedia-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
 }
 
 @media (max-width: 900px) {
-    .pressgrid-3col-grid {
+    .multimedia-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.multimedia-card {
+    text-decoration: none;
+    color: #ffffff;
+    display: block;
+}
+
+.multimedia-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #1e293b;
+    margin-bottom: 0.75rem;
+}
+
+.multimedia-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-play-icon {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(0,0,0,0.75);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.multimedia-card h4 {
+    font-size: 0.875rem;
+    line-height: 1.3;
+    font-weight: 700;
+    margin: 0;
+    color: #f1f5f9;
+}
+
+/* ==========================================================================
+   ESTRUCTURA PRINCIPAL DE SECCIONES + SIDEBAR (FOXIZ STYLE)
+   ========================================================================== */
+.foxiz-main-layout {
+    display: grid;
+    grid-template-columns: 1fr 310px;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .foxiz-main-layout {
         grid-template-columns: 1fr;
     }
 }
 
-.pressgrid-card-item {
+.foxiz-block-section {
+    margin-bottom: 3.5rem;
+}
+
+.foxiz-block-header {
+    border-bottom: 2px solid var(--text-primary);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.5rem;
+}
+
+.foxiz-block-title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.foxiz-grid-2x2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+}
+
+@media (max-width: 600px) {
+    .foxiz-grid-2x2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.foxiz-card-item {
     display: flex;
     flex-direction: column;
 }
 
-.card-thumb-link {
-    display: block;
+.foxiz-card-item .card-thumb {
+    width: 100%;
     aspect-ratio: 16 / 10;
     overflow: hidden;
     border-radius: 3px;
     background: #e2e8f0;
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.75rem;
+    display: block;
 }
 
-.card-thumb-link img {
+.foxiz-card-item .card-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.card-meta-tag {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--brand-red);
-    text-transform: uppercase;
-    margin-bottom: 0.35rem;
-}
-
-.card-title {
-    font-size: 1.1rem;
+.foxiz-card-item .card-title {
+    font-size: 1.05rem;
     line-height: 1.25;
     font-weight: 800;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.4rem 0;
 }
 
-.card-title a {
+.foxiz-card-item .card-title a {
     color: var(--text-primary);
     text-decoration: none;
 }
 
-.card-excerpt {
+.foxiz-card-item .card-excerpt {
     font-family: var(--font-serif-excerpt);
-    font-size: 0.925rem;
+    font-size: 0.875rem;
     color: var(--text-secondary);
-    line-height: 1.5;
+    line-height: 1.45;
     margin: 0;
 }
 
-.pressgrid-bottom-feed-section {
-    margin-top: 4rem;
-    padding-top: 2.5rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.pressgrid-main-with-sidebar {
+/* Sección de Opinión */
+.opinion-grid-3col {
     display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 3rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
 }
 
-@media (max-width: 900px) {
-    .pressgrid-main-with-sidebar {
+@media (max-width: 600px) {
+    .opinion-grid-3col {
         grid-template-columns: 1fr;
     }
 }
 
-.feed-header-title {
-    font-size: 1rem;
+.opinion-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 1.25rem;
+    border-radius: 4px;
+}
+
+.opinion-card .author-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.opinion-card .author-avatar-ph {
+    width: 28px;
+    height: 28px;
+    background: #e2e8f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.opinion-card .author-name {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.opinion-title {
+    font-size: 0.95rem;
+    line-height: 1.3;
+    font-weight: 800;
+    margin: 0;
+}
+
+.opinion-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+/* Sidebar "Lo Más Leído" */
+.sidebar-header-title {
+    font-size: 0.9rem;
     font-weight: 900;
     text-transform: uppercase;
     border-bottom: 2px solid var(--text-primary);
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
     margin-top: 0;
     margin-bottom: 1.5rem;
 }
 
-.pressgrid-list-item {
-    display: grid;
-    grid-template-columns: 180px 1fr;
+.sidebar-news-stack {
+    display: flex;
+    flex-direction: column;
     gap: 1.25rem;
-    padding-bottom: 1.5rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
 }
 
-.list-thumb {
+.sidebar-card-vertical {
     display: block;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.25rem;
+}
+
+.sidebar-card-vertical:last-child {
+    border-bottom: none;
+}
+
+.sidebar-card-thumb {
+    width: 100%;
     aspect-ratio: 16 / 10;
     overflow: hidden;
     border-radius: 3px;
     background: #e2e8f0;
+    margin-bottom: 0.5rem;
 }
 
-.list-thumb img {
+.sidebar-card-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.list-date {
+.sidebar-card-info h4 {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    font-weight: 800;
+    margin: 0 0 0.3rem 0;
+    color: var(--text-primary);
+}
+
+.sidebar-meta {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.685rem;
     color: var(--text-muted);
     text-transform: uppercase;
-}
-
-.list-title {
-    font-size: 1.05rem;
-    font-weight: 800;
-    line-height: 1.3;
-    margin: 0.25rem 0 0.4rem 0;
-}
-
-.list-title a {
-    color: var(--text-primary);
-    text-decoration: none;
-}
-
-.list-excerpt {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    margin: 0;
-    line-height: 1.45;
 }
 
 /* ==========================================================================
@@ -523,40 +593,6 @@ header.site-header {
     margin-bottom: 2rem;
 }
 
-.gcm-audio-player-bar {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 40px;
-    padding: 0.65rem 1.25rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 0.5rem;
-}
-
-.audio-play-btn {
-    width: 32px;
-    height: 32px;
-    background: #ffffff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-.audio-play-btn svg {
-    stroke: var(--nbc-dark-bg);
-    width: 16px;
-    height: 16px;
-}
-
-.audio-info {
-    font-size: 0.825rem;
-    font-weight: 600;
-    color: #ffffff;
-}
-
 .gcm-single-body-area {
     padding: 0 0 5rem 0;
     background: #ffffff;
@@ -600,21 +636,6 @@ header.site-header {
     }
 }
 
-.byline-date-block {
-    margin: 0 0 2rem 0;
-    font-size: 0.875rem;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1rem;
-}
-.byline-date-block .pub-date {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.775rem;
-    color: #64748b;
-    margin-bottom: 0.3rem;
-    text-transform: uppercase;
-}
-
 .post-content {
     font-family: var(--font-serif-content);
     font-size: 1.05rem;
@@ -624,57 +645,6 @@ header.site-header {
 
 .post-content p {
     margin-bottom: 1.65rem;
-}
-
-.gcm-sidebar {
-    border-left: 1px solid var(--border-color);
-    padding-left: 1.8rem;
-}
-
-.gcm-sidebar-widget h3.widget-title {
-    font-size: 0.85rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #0f172a;
-    border-bottom: 2px solid #0f172a;
-    padding-bottom: 0.4rem;
-    margin-top: 0;
-    margin-bottom: 1.4rem;
-}
-
-.sidebar-news-card-nbc {
-    display: block;
-    margin-bottom: 1.6rem;
-    text-decoration: none;
-    color: inherit;
-}
-
-.sidebar-thumb-top-32 {
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    overflow: hidden;
-    border-radius: 2px;
-    background: #e2e8f0;
-    margin-bottom: 0.55rem;
-}
-.sidebar-thumb-top-32 img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.sidebar-card-info-nbc h4 {
-    font-size: 0.9rem;
-    line-height: 1.35;
-    font-weight: 700;
-    margin: 0 0 0.3rem 0;
-    color: #0f172a;
-}
-.sidebar-card-info-nbc .meta-time {
-    font-family: var(--font-mono);
-    font-size: 0.685rem;
-    color: #94a3b8;
-    text-transform: uppercase;
 }
 
 /* ==========================================================================
