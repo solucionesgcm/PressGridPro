@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<main class="container gcm-home-wrapper">
+<main class="container gcm-home-wrapper"> 
 
     <?php $used_ids = array(); ?>
 
