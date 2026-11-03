@@ -1,6 +1,5 @@
 <?php get_header(); ?>
 
-<!-- TICKER DE NOTICIAS / MERCADOS EN VIVO -->
 <div class="gcm-ticker-bar">
     <div class="container gcm-ticker-container">
         <div class="ticker-badge">MERCADOS & EN VIVO</div>
@@ -17,10 +16,8 @@
 
     <?php $used_ids = array(); ?>
 
-    <!-- BLOQUE 1: HERO NBC NEWS (3 COLUMNAS ASIMÉTRICAS) -->
     <section class="nbc-hero-section">
         
-        <!-- Col 1: Nota Principal Destacada -->
         <div class="nbc-hero-col-1">
             <?php
             $main_hero_q = new WP_Query(array(
@@ -57,7 +54,6 @@
             ?>
         </div>
 
-        <!-- Col 2: Stack Secundario (3 Notas) -->
         <div class="nbc-hero-stack">
             <?php
             $secondary_posts = array();
@@ -120,7 +116,6 @@
             ?>
         </div>
 
-        <!-- Col 3: Widget Al Momento -->
         <div class="nbc-hero-third-col">
             <div class="nbc-al-momento-header">
                 <h3 class="nbc-al-momento-title">
@@ -163,7 +158,6 @@
 
 </main>
 
-<!-- BLOQUE 2: COBERTURA MULTIMEDIA / REPORTAJES (FULL WIDTH DARK STRIP) -->
 <section class="gcm-multimedia-dark-strip">
     <div class="container">
         <div class="multimedia-header">
@@ -203,13 +197,10 @@
 
 <main class="container gcm-home-wrapper" style="padding-top: 1.5rem;">
 
-    <!-- BLOQUE 3: ESTRUCTURA DE 2 COLUMNAS (CONTENIDO PRINCIPAL + SIDEBAR) -->
     <div class="foxiz-main-layout">
         
-        <!-- COLUMNA IZQUIERDA: SECCIONES Y RETÍCULAS DIVERSAS -->
         <div class="foxiz-content-col">
             
-            <!-- SECCIÓN 1: FINANZAS & ECONOMÍA GLOBAL (LAYOUT ASIMÉTRICO: 1 GRANDE + 3 PEQUEÑAS) -->
             <section class="foxiz-block-section">
                 <div class="foxiz-block-header">
                     <h2 class="foxiz-block-title">Finanzas & Economía Global</h2>
@@ -229,7 +220,7 @@
                             $used_ids[] = get_the_ID();
                             $count++;
                             
-                            if ($count === 1) : // Noticia Grande Izquierda
+                            if ($count === 1) :
                     ?>
                                 <article class="asym-main-card">
                                     <a href="<?php the_permalink(); ?>" class="asym-thumb">
@@ -241,7 +232,7 @@
                                 </article>
                                 <div class="asym-side-list">
                     <?php
-                            else : // 3 Noticias Lista Derecha
+                            else :
                     ?>
                                 <article class="asym-list-item">
                                     <a href="<?php the_permalink(); ?>" class="asym-list-thumb">
@@ -255,14 +246,13 @@
                     <?php
                             endif;
                         endwhile;
-                        echo '</div>'; // Cierre de asym-side-list
+                        echo '</div>';
                         wp_reset_postdata();
                     endif;
                     ?>
                 </div>
             </section>
 
-            <!-- CAJA DE SUSCRIPCIÓN B2B / NEWSLETTER INTERCALADA -->
             <div class="gcm-newsletter-banner">
                 <div class="news-banner-content">
                     <h3>Inteligencia Financiera & Tecnología</h3>
@@ -274,7 +264,6 @@
                 </form>
             </div>
 
-            <!-- SECCIÓN 2: TECNOLOGÍA & INTELIGENCIA ARTIFICIAL (2x2 GRID) -->
             <section class="foxiz-block-section">
                 <div class="foxiz-block-header">
                     <h2 class="foxiz-block-title">Tecnología & Inteligencia Artificial</h2>
@@ -306,7 +295,6 @@
                 </div>
             </section>
 
-            <!-- SECCIÓN 3: ANÁLISIS & COLUMNAS DE OPINIÓN -->
             <section class="foxiz-block-section">
                 <div class="foxiz-block-header">
                     <h2 class="foxiz-block-title">Análisis & Columnas de Opinión</h2>
@@ -341,11 +329,9 @@
 
         </div>
 
-        <!-- COLUMNA DERECHA: SIDEBAR DE TENDENCIAS Y LO MÁS LEÍDO -->
         <aside class="foxiz-sidebar-col">
             <div class="sticky-sidebar-box">
                 
-                <!-- LO MÁS LEÍDO CON NUMERACIÓN (TOP 5) -->
                 <h3 class="sidebar-header-title">Lo Más Leído</h3>
                 
                 <div class="top-ranked-list">
@@ -374,7 +360,6 @@
                     ?>
                 </div>
 
-                <!-- WIDGET DE PODCAST / AUDIO DESTACADO -->
                 <div class="sidebar-podcast-widget">
                     <span class="podcast-badge">PODCAST B2B</span>
                     <h4>Resumen Económico Diario</h4>
