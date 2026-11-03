@@ -350,3 +350,100 @@ footer.site-footer {
     padding: 2.5rem 0;
     border-top: 1px solid rgba(255,255,255,0.1);
 }
+/* --- REGIONAL FIXES PARA HOME EN PORTADA --- */
+.nbc-hero-section {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr 290px;
+    gap: 2rem;
+    align-items: start;
+}
+
+.nbc-hero-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    padding: 0 1.5rem;
+}
+
+.nbc-hero-stack-item {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 1.25rem;
+}
+
+.nbc-hero-stack-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.nbc-hero-stack-item .thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 3px;
+    margin-bottom: 0.75rem;
+    background: #e2e8f0;
+}
+
+.nbc-hero-stack-item .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nbc-hero-stack-item .meta-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--brand-red);
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.nbc-hero-stack-item h4 {
+    font-size: 1rem;
+    line-height: 1.3;
+    font-weight: 800;
+    margin: 0;
+    color: #0f172a;
+}
+
+.al-momento-item {
+    display: block;
+    text-decoration: none;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.al-momento-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    margin-bottom: 0.35rem;
+}
+
+.al-momento-time {
+    color: #64748b;
+}
+
+.al-momento-tag {
+    color: var(--brand-red);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.al-momento-item h4 {
+    font-size: 0.875rem;
+    line-height: 1.35;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
