@@ -1,12 +1,13 @@
 <?php get_header(); ?>
+
 <main class="container gcm-home-wrapper">
 
     <?php $used_ids = array(); ?>
 
-    <!-- 1. BLOQUE HERO (3 COLUMNAS) -->
+    <!-- 1. BLOQUE HERO DE ALTO IMPACTO (3 COLUMNAS ASIMÉTRICAS) -->
     <section class="nbc-hero-section">
         
-        <!-- COLUMNA 1: NOTA PRINCIPAL DESTACADA -->
+        <!-- Columna 1: Nota Principal Destacada -->
         <div class="nbc-hero-col-1">
             <?php
             $main_hero_q = new WP_Query(array(
@@ -33,7 +34,7 @@
                         <div class="nbc-hero-kicker"><?php echo !empty($kicker) ? esc_html($kicker) : 'NOTA PRINCIPAL'; ?></div>
                         <h1 class="nbc-hero-title"><?php the_title(); ?></h1>
                         <p class="nbc-hero-excerpt">
-                            <?php echo !empty($subtitle) ? esc_html($subtitle) : (has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 28)); ?>
+                            <?php echo !empty($subtitle) ? esc_html($subtitle) : (has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 26)); ?>
                         </p>
                     </a>
             <?php
@@ -43,7 +44,7 @@
             ?>
         </div>
 
-        <!-- COLUMNA 2: STACK DE NOTICIAS SECUNDARIAS (3 NOTAS) -->
+        <!-- Columna 2: Stack Secundario Vertical (3 Notas) -->
         <div class="nbc-hero-stack">
             <?php
             $secondary_posts = array();
@@ -106,7 +107,7 @@
             ?>
         </div>
 
-        <!-- COLUMNA 3: AL MOMENTO / COBERTURA EN VIVO -->
+        <!-- Columna 3: Widget Al Momento / Cobertura en Vivo -->
         <div class="nbc-hero-third-col">
             <?php
             $pressgrid_opts = get_option('pressgrid_options');
@@ -169,76 +170,79 @@
 
     </section>
 
-    <!-- 2. GRID SECCIONAL TEMÁTICO (FINANZAS / TECNOLOGÍA / POLÍTICA) -->
-    <section class="pressgrid-sections-block">
-        <div class="section-block-header">
-            <h2 class="section-block-title">Análisis y Cobertura Temática</h2>
+</main>
+
+<!-- 2. FRANJA OSCURA MULTIMEDIA Y REPORTAJES ESPECIALES (FULL WIDTH) -->
+<section class="gcm-multimedia-dark-strip">
+    <div class="container">
+        <div class="multimedia-header">
+            <span class="multimedia-label">GCM NOTICIAS — COBERTURAS & REPORTAJES MULTIMEDIA</span>
         </div>
-        
-        <div class="pressgrid-3col-grid">
+        <div class="multimedia-grid">
             <?php
-            $cat_grid_q = new WP_Query(array(
-                'posts_per_page' => 6,
+            $multi_q = new WP_Query(array(
+                'posts_per_page' => 4,
                 'post__not_in'   => $used_ids,
                 'ignore_sticky_posts' => true
             ));
 
-            if ($cat_grid_q->have_posts()) :
-                while ($cat_grid_q->have_posts()) : $cat_grid_q->the_post();
+            if ($multi_q->have_posts()) :
+                while ($multi_q->have_posts()) : $multi_q->the_post();
                     $used_ids[] = get_the_ID();
-                    $kicker = get_post_meta(get_the_ID(), '_gcm_kicker', true);
-                    $cats   = get_the_category();
-                    $cat_label = !empty($kicker) ? $kicker : (!empty($cats) ? $cats[0]->name : 'EDITORIAL');
             ?>
-                    <article class="pressgrid-card-item">
-                        <a href="<?php the_permalink(); ?>" class="card-thumb-link">
+                    <a href="<?php the_permalink(); ?>" class="multimedia-card">
+                        <div class="multimedia-thumb">
                             <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('medium_large'); ?>
-                            <?php else : ?>
-                                <img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=500&q=80" alt="GCM Noticias">
+                                <?php the_post_thumbnail('medium'); ?>
                             <?php endif; ?>
-                        </a>
-                        <div class="card-meta-tag"><?php echo esc_html($cat_label); ?></div>
-                        <h3 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                        <p class="card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 18); ?></p>
-                    </article>
+                            <span class="video-play-icon">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="#ffffff"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            </span>
+                        </div>
+                        <h4><?php the_title(); ?></h4>
+                    </a>
             <?php
                 endwhile;
                 wp_reset_postdata();
             endif;
             ?>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- 3. FEED INFERIOR CONTINUO CON SIDEBAR DE LO MÁS LEÍDO -->
-    <section class="pressgrid-bottom-feed-section">
-        <div class="pressgrid-main-with-sidebar">
+<main class="container gcm-home-wrapper" style="padding-top: 1.5rem;">
+
+    <!-- 3. CUERPO PRINCIPAL DE BLOQUES TEMÁTICOS + SIDEBAR DERECHA CONTINUA -->
+    <div class="foxiz-main-layout">
+        
+        <!-- Columna Principal (Secciones de Noticias) -->
+        <div class="foxiz-content-col">
             
-            <div class="pressgrid-feed-col">
-                <h3 class="feed-header-title">Más Noticias</h3>
-                
-                <div class="pressgrid-list-feed">
+            <!-- SECCIÓN A: FINANZAS & ECONOMÍA GLOBAL (2x2 Grid) -->
+            <section class="foxiz-block-section">
+                <div class="foxiz-block-header">
+                    <h2 class="foxiz-block-title">Finanzas & Economía Global</h2>
+                </div>
+                <div class="foxiz-grid-2x2">
                     <?php
-                    $list_feed_q = new WP_Query(array(
-                        'posts_per_page' => 5,
+                    $finanzas_q = new WP_Query(array(
+                        'posts_per_page' => 4,
                         'post__not_in'   => $used_ids,
                         'ignore_sticky_posts' => true
                     ));
 
-                    if ($list_feed_q->have_posts()) :
-                        while ($list_feed_q->have_posts()) : $list_feed_q->the_post();
+                    if ($finanzas_q->have_posts()) :
+                        while ($finanzas_q->have_posts()) : $finanzas_q->the_post();
+                            $used_ids[] = get_the_ID();
                     ?>
-                            <article class="pressgrid-list-item">
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <a href="<?php the_permalink(); ?>" class="list-thumb">
-                                        <?php the_post_thumbnail('medium'); ?>
-                                    </a>
-                                <?php endif; ?>
-                                <div class="list-content">
-                                    <span class="list-date"><?php echo get_the_date('d M, Y'); ?></span>
-                                    <h4 class="list-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
-                                    <p class="list-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 22); ?></p>
-                                </div>
+                            <article class="foxiz-card-item">
+                                <a href="<?php the_permalink(); ?>" class="card-thumb">
+                                    <?php if (has_post_thumbnail()) : ?>
+                                        <?php the_post_thumbnail('medium_large'); ?>
+                                    <?php endif; ?>
+                                </a>
+                                <h3 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <p class="card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 18); ?></p>
                             </article>
                     <?php
                         endwhile;
@@ -246,29 +250,101 @@
                     endif;
                     ?>
                 </div>
-            </div>
+            </section>
 
-            <aside class="pressgrid-sidebar-col">
-                <div class="gcm-sidebar-widget">
-                    <h3 class="widget-title">Tendencias B2B</h3>
+            <!-- SECCIÓN B: TECNOLOGÍA & INTELIGENCIA ARTIFICIAL (2x2 Grid) -->
+            <section class="foxiz-block-section">
+                <div class="foxiz-block-header">
+                    <h2 class="foxiz-block-title">Tecnología & Inteligencia Artificial</h2>
+                </div>
+                <div class="foxiz-grid-2x2">
                     <?php
-                    $popular_q = new WP_Query(array(
+                    $tecno_q = new WP_Query(array(
                         'posts_per_page' => 4,
+                        'post__not_in'   => $used_ids,
                         'ignore_sticky_posts' => true
                     ));
 
-                    if ($popular_q->have_posts()) :
-                        while ($popular_q->have_posts()) : $popular_q->the_post();
+                    if ($tecno_q->have_posts()) :
+                        while ($tecno_q->have_posts()) : $tecno_q->the_post();
+                            $used_ids[] = get_the_ID();
                     ?>
-                            <a href="<?php the_permalink(); ?>" class="sidebar-news-card-nbc">
-                                <div class="sidebar-thumb-top-32">
+                            <article class="foxiz-card-item">
+                                <a href="<?php the_permalink(); ?>" class="card-thumb">
                                     <?php if (has_post_thumbnail()) : ?>
-                                        <?php the_post_thumbnail('medium'); ?>
+                                        <?php the_post_thumbnail('medium_large'); ?>
                                     <?php endif; ?>
+                                </a>
+                                <h3 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <p class="card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 18); ?></p>
+                            </article>
+                    <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+            </section>
+
+            <!-- SECCIÓN C: ANÁLISIS & COLUMNAS DE OPINIÓN (3 Columnas con Avatar) -->
+            <section class="foxiz-block-section">
+                <div class="foxiz-block-header">
+                    <h2 class="foxiz-block-title">Análisis & Columnas de Opinión</h2>
+                </div>
+                <div class="opinion-grid-3col">
+                    <?php
+                    $opinion_q = new WP_Query(array(
+                        'posts_per_page' => 3,
+                        'post__not_in'   => $used_ids,
+                        'ignore_sticky_posts' => true
+                    ));
+
+                    if ($opinion_q->have_posts()) :
+                        while ($opinion_q->have_posts()) : $opinion_q->the_post();
+                    ?>
+                            <div class="opinion-card">
+                                <div class="author-row">
+                                    <div class="author-avatar-ph">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    </div>
+                                    <span class="author-name">GCM Noticias</span>
                                 </div>
-                                <div class="sidebar-card-info-nbc">
+                                <h4 class="opinion-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
+                            </div>
+                    <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Sidebar Derecha Flotante (Lo Más Leído Continuous Feed) -->
+        <aside class="foxiz-sidebar-col">
+            <div class="sticky-sidebar-box">
+                <h3 class="sidebar-header-title">Lo Más Leído</h3>
+                
+                <div class="sidebar-news-stack">
+                    <?php
+                    $side_pop_q = new WP_Query(array(
+                        'posts_per_page' => 6,
+                        'ignore_sticky_posts' => true
+                    ));
+
+                    if ($side_pop_q->have_posts()) :
+                        while ($side_pop_q->have_posts()) : $side_pop_q->the_post();
+                    ?>
+                            <a href="<?php the_permalink(); ?>" class="sidebar-card-vertical">
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <div class="sidebar-card-thumb">
+                                        <?php the_post_thumbnail('medium'); ?>
+                                    </div>
+                                <?php endif; ?>
+                                <div class="sidebar-card-info">
                                     <h4><?php the_title(); ?></h4>
-                                    <span class="meta-time"><?php echo get_the_date('M j, Y'); ?></span>
+                                    <span class="sidebar-meta"><?php echo get_the_date('M j, Y'); ?></span>
                                 </div>
                             </a>
                     <?php
@@ -277,10 +353,11 @@
                     endif;
                     ?>
                 </div>
-            </aside>
+            </div>
+        </aside>
 
-        </div>
-    </section>
+    </div>
 
 </main>
+
 <?php get_footer(); ?>
