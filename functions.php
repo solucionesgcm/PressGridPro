@@ -26,9 +26,12 @@ function pressgrid_setup() {
 }
 add_action('after_setup_theme', 'pressgrid_setup');
 
+// ENCOLE DE ESTILOS Y FUENTES (ÚNICA DECLARACIÓN CON CACHE-BUSTING)
 function pressgrid_enqueue_scripts() {
     wp_enqueue_style('pressgrid-google-fonts', 'https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600;700;800;900&display=swap', array(), null);
-    wp_enqueue_style('pressgrid-style', get_stylesheet_uri(), array('pressgrid-google-fonts'), '10.38.0');
+    
+    // time() asegura que cualquier cambio en style.css impacte de inmediato en el navegador
+    wp_enqueue_style('pressgrid-style', get_stylesheet_uri(), array('pressgrid-google-fonts'), time());
 }
 add_action('wp_enqueue_scripts', 'pressgrid_enqueue_scripts');
 
@@ -110,11 +113,3 @@ function pressgrid_save_unified_meta_box($post_id) {
     if (isset($_POST['gcm_subtitle'])) update_post_meta($post_id, '_gcm_subtitle', sanitize_textarea_field($_POST['gcm_subtitle']));
 }
 add_action('save_post', 'pressgrid_save_unified_meta_box');
-
-function pressgrid_enqueue_scripts() {
-    wp_enqueue_style('pressgrid-google-fonts', 'https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600;700;800;900&display=swap', array(), null);
-    
-    // Usar time() como versión invalida la caché del navegador en cada commit
-    wp_enqueue_style('pressgrid-style', get_stylesheet_uri(), array('pressgrid-google-fonts'), time());
-}
-add_action('wp_enqueue_scripts', 'pressgrid_enqueue_scripts');
