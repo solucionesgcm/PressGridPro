@@ -1,120 +1,121 @@
 <?php get_header(); ?>
-<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-    <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-        
-        <!-- 1. HERO OSCURO SUPERIOR ESTILO NBC NEWS -->
-        <section class="gcm-single-hero-dark">
-            <div class="container">
-                <div class="gcm-nbc-master-grid">
-                    
-                    <div class="gcm-hero-category">
-                        <?php
-                        $meta_kicker = get_post_meta(get_the_ID(), '_gcm_kicker', true);
-                        if (!empty($meta_kicker)) {
-                            echo esc_html($meta_kicker);
-                        } else {
-                            $categories = get_the_category();
-                            echo !empty($categories) ? esc_html($categories[0]->name) : 'TECNOLOGÍA + FINANZAS';
-                        }
-                        ?>
-                    </div>
 
-                    <div class="gcm-hero-main-col">
-                        <h1 class="gcm-hero-headline"><?php the_title(); ?></h1>
-                        
+<?php while (have_posts()) : the_post(); ?>
+
+    <!-- HERO OSCURO ESTILO NBC NEWS -->
+    <section class="gcm-single-hero-dark">
+        <div class="container">
+            <div class="gcm-nbc-master-grid">
+                
+                <!-- Columna Izquierda Meta -->
+                <div class="gcm-hero-meta-left">
+                    <span class="gcm-hero-category">
                         <?php 
-                        $meta_subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
-                        if (!empty($meta_subtitle)) :
+                        $cats = get_the_category();
+                        echo !empty($cats) ? esc_html($cats[0]->name) : 'EXCLUSIVO';
                         ?>
-                            <div class="gcm-hero-subtitle"><?php echo esc_html($meta_subtitle); ?></div>
-                        <?php elseif (has_excerpt()) : ?>
-                            <div class="gcm-hero-subtitle"><?php echo get_the_excerpt(); ?></div>
-                        <?php else : ?>
-                            <div class="gcm-hero-subtitle"><?php echo wp_trim_words(get_the_content(), 28, '...'); ?></div>
-                        <?php endif; ?>
-
-                        <!-- PLAYER DE AUDIO ENCABEZADO CON LUCIDE PLAY ICON -->
-                        <div class="gcm-audio-player-bar">
-                            <div class="audio-play-btn">
-                                <!-- Lucide Play Icon -->
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            </div>
-                            <div class="audio-info">
-                                Escuchar versión narrada por IA (04:15)
-                            </div>
-                        </div>
-
-                    </div>
+                    </span>
                 </div>
-            </div>
-        </section>
 
-        <!-- 2. CUERPO PRINCIPAL DEL ARTÍCULO (IMAGEN DESTACADA Y CONTENIDO) -->
-        <section class="gcm-single-body-area">
-            <div class="container">
-                <div class="gcm-nbc-master-grid">
+                <!-- Columna Principal Encabezado -->
+                <div class="gcm-hero-main-content">
+                    <?php 
+                    $kicker = get_post_meta(get_the_ID(), '_gcm_kicker', true);$subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
+                    ?>
                     
-                    <div class="gcm-layout-left-spacer"></div>
+                    <?php if (!empty($kicker)) : ?>
+                        <div class="gcm-hero-kicker-tag"><?php echo esc_html($kicker); ?></div>
+                    <?php endif; ?>
 
-                    <div class="gcm-hero-main-col">
-                        
-                        <?php if (has_post_thumbnail()) : ?>
-                            <div class="gcm-feat-hero-media-wrapper">
-                                <div class="gcm-feat-hero-media">
-                                    <?php the_post_thumbnail('full'); ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
+                    <h1 class="gcm-hero-headline"><?php the_title(); ?></h1>
 
-                        <div class="gcm-nbc-sub-grid">
-                            
-                            <main class="gcm-article-main">
-                                <div class="byline-date-block">
-                                    <span class="pub-date">Por <?php the_author(); ?> — <?php echo get_the_date('j \d\e F, Y — g:i A'); ?></span>
-                                </div>
+                    <?php if (!empty($subtitle)) : ?>
+                        <p class="gcm-hero-subtitle"><?php echo esc_html($subtitle); ?></p>
+                    <?php elseif (has_excerpt()) : ?>
+                        <p class="gcm-hero-subtitle"><?php echo get_the_excerpt(); ?></p>
+                    <?php endif; ?>
 
-                                <div class="post-content">
-                                    <?php the_content(); ?>
-                                </div>
-                            </main>
+                    <div class="byline-date-block-dark">
+                        <span class="pub-date">Publicado: <?php echo get_the_date('j \d\e F, Y — H:i'); ?> hrs</span>
+                        <span class="byline-author">Por <strong><?php the_author(); ?></strong></span>
+                    </div>
 
-                            <aside class="gcm-sidebar">
-                                <?php if (is_active_sidebar('sidebar-1')) : ?>
-                                    <?php dynamic_sidebar('sidebar-1'); ?>
-                                <?php else : ?>
-                                    <div class="gcm-sidebar-widget">
-                                        <h3 class="widget-title">Lo Más Leído</h3>
-                                        <?php
-                                        $recent_posts = new WP_Query(array('posts_per_page' => 4, 'post__not_in' => array(get_the_ID()), 'ignore_sticky_posts' => true));
-                                        if ($recent_posts->have_posts()) :
-                                            while ($recent_posts->have_posts()) : $recent_posts->the_post();
-                                        ?>
-                                            <a href="<?php the_permalink(); ?>" class="sidebar-news-card-nbc">
-                                                <div class="sidebar-thumb-top-32">
-                                                    <?php if (has_post_thumbnail()) : ?>
-                                                        <?php the_post_thumbnail('medium'); ?>
-                                                    <?php endif; ?>
-                                                </div>
-                                                <div class="sidebar-card-info-nbc">
-                                                    <h4><?php the_title(); ?></h4>
-                                                    <span class="meta-time"><?php echo get_the_date('M j, Y'); ?></span>
-                                                </div>
-                                            </a>
-                                        <?php
-                                            endwhile;
-                                            wp_reset_postdata();
-                                        endif;
-                                        ?>
-                                    </div>
-                                <?php endif; ?>
-                            </aside>
-
-                        </div>
-
+                    <!-- Widget de Reproductor de Audio Flotante -->
+                    <div class="gcm-audio-player-bar">
+                        <button class="audio-play-btn" aria-label="Escuchar artículo">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        </button>
+                        <span class="audio-info">Escuchar resumen en audio (2 min)</span>
                     </div>
                 </div>
+
             </div>
-        </section>
-    </article>
-<?php endwhile; endif; ?>
+        </div>
+    </section>
+
+    <!-- CUERPO DE ARTÍCULO Y SIDEBAR -->
+    <section class="gcm-single-body-area">
+        <div class="container">
+
+            <?php if (has_post_thumbnail()) : ?>
+                <div class="gcm-feat-hero-media-wrapper">
+                    <div class="gcm-feat-hero-media">
+                        <?php the_post_thumbnail('full'); ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <div class="gcm-nbc-sub-grid">
+                
+                <!-- Contenido del Artículo -->
+                <article class="gcm-article-main-column">
+                    <div class="post-content">
+                        <?php the_content(); ?>
+                    </div>
+
+                    <!-- Navegación entre entradas -->
+                    <div class="gcm-post-nav-strip">
+                        <div class="nav-prev"><?php previous_post_link('%link', '← Nota Anterior: %title'); ?></div>
+                        <div class="nav-next"><?php next_post_link('%link', 'Siguiente Nota: %title →'); ?></div>
+                    </div>
+                </article>
+
+                <!-- Sidebar de Notas Relacionadas / Lo Más Leído -->
+                <aside class="gcm-sidebar">
+                    <div class="gcm-sidebar-widget">
+                        <h3 class="widget-title">Tendencias B2B</h3>
+                        <?php
+                        $rel_q = new WP_Query(array(
+                            'posts_per_page' => 4,
+                            'post__not_in'   => array(get_the_ID()),
+                            'ignore_sticky_posts' => true
+                        ));
+
+                        if ($rel_q->have_posts()) :
+                            while ($rel_q->have_posts()) :$rel_q->the_post();
+                        ?>
+                                <a href="<?php the_permalink(); ?>" class="sidebar-news-card-nbc">
+                                    <div class="sidebar-thumb-top-32">
+                                        <?php if (has_post_thumbnail()) the_post_thumbnail('medium'); ?>
+                                    </div>
+                                    <div class="sidebar-card-info-nbc">
+                                        <h4><?php the_title(); ?></h4>
+                                        <span class="meta-time"><?php echo get_the_date('M j, Y'); ?></span>
+                                    </div>
+                                </a>
+                        <?php
+                            endwhile;
+                            wp_reset_postdata();
+                        endif;
+                        ?>
+                    </div>
+                </aside>
+
+            </div>
+
+        </div>
+    </section>
+
+<?php endwhile; ?>
+
 <?php get_footer(); ?>
