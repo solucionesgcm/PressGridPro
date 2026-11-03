@@ -5,6 +5,7 @@
 
     <section class="nbc-hero-section">
         
+        <!-- COLUMNA 1: NOTA PRINCIPAL DESTACADA -->
         <div class="nbc-hero-col-1">
             <?php
             $main_hero_q = new WP_Query(array(
@@ -31,7 +32,7 @@
                         <div class="nbc-hero-kicker"><?php echo !empty($kicker) ? esc_html($kicker) : 'NOTA PRINCIPAL'; ?></div>
                         <h1 class="nbc-hero-title"><?php the_title(); ?></h1>
                         <p class="nbc-hero-excerpt">
-                            <?php echo !empty($subtitle) ? esc_html($subtitle) : (has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 26)); ?>
+                            <?php echo !empty($subtitle) ? esc_html($subtitle) : (has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 28)); ?>
                         </p>
                     </a>
             <?php
@@ -41,6 +42,7 @@
             ?>
         </div>
 
+        <!-- COLUMNA 2: STACK DE NOTICIAS SECUNDARIAS (3 NOTAS) -->
         <div class="nbc-hero-stack">
             <?php
             $secondary_posts = array();
@@ -89,12 +91,12 @@
                         <?php if (has_post_thumbnail($post_obj->ID)) : ?>
                             <?php echo get_the_post_thumbnail($post_obj->ID, 'medium'); ?>
                         <?php else: ?>
-                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80" alt="PressGrid Pro">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&q=80" alt="GCM Noticias">
                         <?php endif; ?>
                     </div>
-                    <div>
+                    <div class="info">
+                        <span class="meta-kicker"><?php echo !empty($side_kicker) ? esc_html($side_kicker) : get_the_date('M j', $post_obj->ID); ?></span>
                         <h4><?php echo get_the_title($post_obj->ID); ?></h4>
-                        <span class="meta"><?php echo !empty($side_kicker) ? esc_html($side_kicker) : get_the_date('M j', $post_obj->ID); ?></span>
                     </div>
                 </a>
             <?php
@@ -103,6 +105,7 @@
             ?>
         </div>
 
+        <!-- COLUMNA 3: AL MOMENTO / COBERTURA EN VIVO -->
         <div class="nbc-hero-third-col">
             <?php
             $pressgrid_opts = get_option('pressgrid_options');
@@ -121,14 +124,12 @@
                     <p><?php echo esc_html($live_subtitle); ?></p>
                     <a href="<?php echo esc_url($live_url); ?>" class="live-stream-link">
                         Seguir Transmisión Minuto a Minuto
-                        <!-- Lucide ArrowRight Icon -->
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </a>
                 </div>
             <?php else : ?>
                 <div class="nbc-al-momento-header">
                     <h3 class="nbc-al-momento-title">
-                        <!-- Lucide Zap Icon -->
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
                         Al Momento
                     </h3>
