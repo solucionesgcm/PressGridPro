@@ -3,7 +3,7 @@ Theme Name: PressGrid Pro
 Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
-Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales (v10.38.0 — Full Single & NBC Front Page).
+Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales (v10.38.0 — Full Stable Release).
 Version: 10.38.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
@@ -42,7 +42,7 @@ body {
 }
 
 /* ==========================================================================
-   HEADER & TICKER DE MERCADOS
+   HEADER & TICKER
    ========================================================================== */
 .gcm-ticker-bar {
     background: #020617;
@@ -51,11 +51,7 @@ body {
     border-bottom: 1px solid #1e293b;
     padding: 0.4rem 0;
 }
-.gcm-ticker-container {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-}
+.gcm-ticker-container { display: flex; align-items: center; gap: 1.25rem; }
 .ticker-badge {
     background: var(--brand-red);
     color: #ffffff;
@@ -66,12 +62,7 @@ body {
     border-radius: 2px;
     text-transform: uppercase;
 }
-.ticker-content {
-    display: flex;
-    gap: 1.5rem;
-    overflow: hidden;
-    white-space: nowrap;
-}
+.ticker-content { display: flex; gap: 1.5rem; overflow: hidden; white-space: nowrap; }
 .ticker-item strong { color: #f8fafc; }
 .ticker-item.highlight { color: #f8fafc; font-weight: 600; }
 
@@ -81,43 +72,18 @@ header.site-header {
     padding: 1.2rem 0;
     border-bottom: 1px solid rgba(255,255,255,0.08);
 }
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.logo h1 {
-    margin: 0;
-    font-size: 1.85rem;
-    font-weight: 900;
-    letter-spacing: -0.5px;
-}
+.header-container { display: flex; justify-content: space-between; align-items: center; }
+.logo h1 { margin: 0; font-size: 1.85rem; font-weight: 900; letter-spacing: -0.5px; }
 .logo a { color: #ffffff; text-decoration: none; }
 .logo .highlight { color: var(--brand-red); }
 
-.main-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 1.8rem;
-}
-.main-nav a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
+.main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.8rem; }
+.main-nav a { color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   PORTADA: HERO 3 COLUMNAS ASIMÉTRICAS
+   PORTADA: HERO & RETÍCULAS
    ========================================================================== */
-.gcm-home-wrapper {
-    padding-top: 1.75rem;
-    padding-bottom: 3rem;
-}
+.gcm-home-wrapper { padding-top: 1.75rem; padding-bottom: 3rem; }
 .nbc-hero-section {
     display: grid;
     grid-template-columns: 1.35fr 1fr 290px;
@@ -127,182 +93,50 @@ header.site-header {
     margin-bottom: 1rem;
     border-bottom: 1px solid var(--border-color);
 }
-@media (max-width: 992px) {
-    .nbc-hero-section { grid-template-columns: 1fr; }
-}
+@media (max-width: 992px) { .nbc-hero-section { grid-template-columns: 1fr; } }
 .nbc-hero-main-card { display: block; text-decoration: none; color: inherit; }
-.nbc-hero-main-card .thumb-wrap {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    background: #111827;
-    margin-bottom: 1rem;
-    border-radius: 4px;
-}
+.nbc-hero-main-card .thumb-wrap { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #111827; margin-bottom: 1rem; border-radius: 4px; }
 .nbc-hero-main-card .thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.nbc-hero-kicker {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--brand-red);
-    text-transform: uppercase;
-    margin-bottom: 0.35rem;
-}
-.nbc-hero-title {
-    font-size: 2.1rem;
-    line-height: 1.15;
-    font-weight: 900;
-    margin: 0 0 0.6rem 0;
-    color: var(--text-primary);
-}
-.nbc-hero-excerpt {
-    font-family: var(--font-serif-excerpt);
-    font-size: 1.05rem;
-    color: #475569;
-    margin: 0;
-}
+.nbc-hero-kicker { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--brand-red); text-transform: uppercase; margin-bottom: 0.35rem; }
+.nbc-hero-title { font-size: 2.1rem; line-height: 1.15; font-weight: 900; margin: 0 0 0.6rem 0; color: var(--text-primary); }
+.nbc-hero-excerpt { font-family: var(--font-serif-excerpt); font-size: 1.05rem; color: #475569; margin: 0; }
 
-.nbc-hero-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    border-left: 1px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
-    padding: 0 1.5rem;
-}
-@media (max-width: 992px) {
-    .nbc-hero-stack { border-left: none; border-right: none; padding: 0; }
-}
-.nbc-hero-stack-item {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-    border-bottom: 1px solid #f1f5f9;
-    padding-bottom: 1.25rem;
-}
+.nbc-hero-stack { display: flex; flex-direction: column; gap: 1.5rem; border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0 1.5rem; }
+@media (max-width: 992px) { .nbc-hero-stack { border-left: none; border-right: none; padding: 0; } }
+.nbc-hero-stack-item { display: flex; flex-direction: column; text-decoration: none; color: inherit; border-bottom: 1px solid #f1f5f9; padding-bottom: 1.25rem; }
 .nbc-hero-stack-item:last-child { border-bottom: none; padding-bottom: 0; }
-.nbc-hero-stack-item .thumb {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-radius: 3px;
-    margin-bottom: 0.75rem;
-    background: #e2e8f0;
-}
+.nbc-hero-stack-item .thumb { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 3px; margin-bottom: 0.75rem; background: #e2e8f0; }
 .nbc-hero-stack-item .thumb img { width: 100%; height: 100%; object-fit: cover; }
-.nbc-hero-stack-item .meta-kicker {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--brand-red);
-    margin-bottom: 0.25rem;
-    display: block;
-}
-.nbc-hero-stack-item h4 {
-    font-size: 1rem;
-    line-height: 1.3;
-    font-weight: 800;
-    margin: 0;
-    color: #0f172a;
-}
+.nbc-hero-stack-item .meta-kicker { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--brand-red); margin-bottom: 0.25rem; display: block; }
+.nbc-hero-stack-item h4 { font-size: 1rem; line-height: 1.3; font-weight: 800; margin: 0; color: #0f172a; }
 
-.nbc-al-momento-header {
-    border-bottom: 2px solid var(--text-primary);
-    padding-bottom: 0.4rem;
-    margin-bottom: 1rem;
-}
-.nbc-al-momento-title {
-    font-size: 0.85rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
+.nbc-al-momento-header { border-bottom: 2px solid var(--text-primary); padding-bottom: 0.4rem; margin-bottom: 1rem; }
+.nbc-al-momento-title { font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin: 0; display: flex; align-items: center; gap: 0.4rem; }
 .al-momento-item { display: block; text-decoration: none; padding: 0.85rem 0; border-bottom: 1px solid #f1f5f9; }
-.al-momento-meta-row {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    margin-bottom: 0.35rem;
-}
+.al-momento-meta-row { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.7rem; margin-bottom: 0.35rem; }
 .al-momento-time { color: #64748b; }
 .al-momento-tag { color: var(--brand-red); font-weight: 700; text-transform: uppercase; }
 .al-momento-item h4 { font-size: 0.875rem; line-height: 1.35; font-weight: 700; color: #1e293b; margin: 0; }
 
-/* ==========================================================================
-   FRANJA MULTIMEDIA OSCURA
-   ========================================================================== */
-.gcm-multimedia-dark-strip {
-    background: var(--nbc-dark-bg);
-    color: #ffffff;
-    padding: 2.25rem 0;
-    margin: 2rem 0;
-}
-.multimedia-label {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: #94a3b8;
-    display: block;
-    margin-bottom: 1.25rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 0.5rem;
-}
+/* FRANJA MULTIMEDIA */
+.gcm-multimedia-dark-strip { background: var(--nbc-dark-bg); color: #ffffff; padding: 2.25rem 0; margin: 2rem 0; }
+.multimedia-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; color: #94a3b8; display: block; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
 .multimedia-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 @media (max-width: 900px) { .multimedia-grid { grid-template-columns: repeat(2, 1fr); } }
 .multimedia-card { text-decoration: none; color: #ffffff; display: block; }
-.multimedia-thumb {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-radius: 4px;
-    background: #1e293b;
-    margin-bottom: 0.75rem;
-}
+.multimedia-thumb { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 4px; background: #1e293b; margin-bottom: 0.75rem; }
 .multimedia-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.video-play-icon {
-    position: absolute;
-    bottom: 8px;
-    left: 8px;
-    background: rgba(0,0,0,0.75);
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+.video-play-icon { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.75); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .multimedia-card h4 { font-size: 0.875rem; line-height: 1.3; font-weight: 700; margin: 0; color: #f1f5f9; }
 
-/* ==========================================================================
-   LAYOUT PRINCIPAL & RETÍCULA ASIMÉTRICA
-   ========================================================================== */
-.foxiz-main-layout {
-    display: grid;
-    grid-template-columns: 1fr 310px;
-    gap: 2.5rem;
-    align-items: start;
-}
+/* LAYOUT PRINCIPAL Y SIDEBAR */
+.foxiz-main-layout { display: grid; grid-template-columns: 1fr 310px; gap: 2.5rem; align-items: start; }
 @media (max-width: 992px) { .foxiz-main-layout { grid-template-columns: 1fr; } }
-
 .foxiz-block-section { margin-bottom: 3.5rem; }
 .foxiz-block-header { border-bottom: 2px solid var(--text-primary); padding-bottom: 0.4rem; margin-bottom: 1.5rem; }
 .foxiz-block-title { font-size: 1.15rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.3px; margin: 0; color: var(--text-primary); }
 
-.asymmetric-layout-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 1.75rem;
-}
+.asymmetric-layout-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.75rem; }
 @media (max-width: 768px) { .asymmetric-layout-grid { grid-template-columns: 1fr; } }
 .asym-main-card { text-decoration: none; color: inherit; display: block; }
 .asym-thumb { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 4px; margin-bottom: 0.75rem; background: #e2e8f0; }
@@ -320,17 +154,7 @@ header.site-header {
 .asym-list-info h4 a { color: var(--text-primary); text-decoration: none; }
 .asym-date { font-family: var(--font-mono); font-size: 0.685rem; color: var(--text-muted); }
 
-.gcm-newsletter-banner {
-    background: #f8fafc;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 1.75rem;
-    margin-bottom: 3.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1.5rem;
-}
+.gcm-newsletter-banner { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.75rem; margin-bottom: 3.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
 @media (max-width: 768px) { .gcm-newsletter-banner { flex-direction: column; text-align: center; } }
 .news-banner-content h3 { font-size: 1.1rem; font-weight: 900; margin: 0 0 0.25rem 0; color: #0f172a; }
 .news-banner-content p { font-size: 0.875rem; color: #475569; margin: 0; }
@@ -371,39 +195,30 @@ header.site-header {
 .podcast-play-btn { background: var(--brand-red); color: #ffffff; border: none; padding: 0.6rem 1rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; width: 100%; justify-content: center; }
 
 /* ==========================================================================
-   SINGLE LAYOUT ESTILO NBC NEWS (DARK HERO & ARTICLE BODY)
+   SINGLE LAYOUT (ESTRUCTURA DE LECTURA LIMPIA)
    ========================================================================== */
 .gcm-single-hero-dark {
     background: var(--nbc-dark-bg);
     color: #ffffff;
-    padding: 3.5rem 0 10rem 0;
+    padding: 3.5rem 0 9rem 0;
     position: relative;
     z-index: 1;
 }
 
-.gcm-nbc-master-grid {
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 2.5rem;
-    max-width: 1020px;
+.gcm-single-hero-inner {
+    max-width: 860px;
     margin: 0 auto;
-}
-@media (max-width: 992px) {
-    .gcm-nbc-master-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
 }
 
 .gcm-hero-category {
     font-family: var(--font-mono);
-    font-size: 0.725rem;
+    font-size: 0.75rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--brand-red);
-    padding-top: 0.5rem;
     display: block;
+    margin-bottom: 0.5rem;
 }
 
 .gcm-hero-kicker-tag {
@@ -416,23 +231,20 @@ header.site-header {
 }
 
 .gcm-hero-headline {
-    font-size: 2.85rem;
-    line-height: 1.12;
+    font-size: 2.65rem;
+    line-height: 1.15;
     font-weight: 900;
-    letter-spacing: -0.8px;
+    letter-spacing: -0.5px;
     color: #ffffff;
     margin: 0 0 1.25rem 0;
 }
-@media (max-width: 768px) {
-    .gcm-hero-headline { font-size: 2rem; }
-}
+@media (max-width: 768px) { .gcm-hero-headline { font-size: 1.9rem; } }
 
 .gcm-hero-subtitle {
     font-family: var(--font-serif-excerpt);
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     line-height: 1.55;
     color: #cbd5e1;
-    font-weight: 400;
     margin-bottom: 1.75rem;
 }
 
@@ -441,32 +253,25 @@ header.site-header {
     color: #94a3b8;
     border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     display: flex;
-    flex-wrap: wrap;
     gap: 1.5rem;
 }
-.byline-date-block-dark .pub-date {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-}
-.byline-date-block-dark .byline-author strong {
-    color: #ffffff;
-}
+.byline-date-block-dark .pub-date { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; }
+.byline-date-block-dark .byline-author strong { color: #ffffff; }
 
 .gcm-audio-player-bar {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 40px;
-    padding: 0.55rem 1.15rem;
+    padding: 0.45rem 1rem;
     display: inline-flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.75rem;
 }
 .audio-play-btn {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     background: #ffffff;
     border: none;
     border-radius: 50%;
@@ -474,13 +279,8 @@ header.site-header {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    flex-shrink: 0;
 }
-.audio-info {
-    font-size: 0.825rem;
-    font-weight: 600;
-    color: #ffffff;
-}
+.audio-info { font-size: 0.8rem; font-weight: 600; color: #ffffff; }
 
 .gcm-single-body-area {
     padding: 0 0 5rem 0;
@@ -492,52 +292,39 @@ header.site-header {
 .gcm-feat-hero-media-wrapper {
     position: relative;
     z-index: 30;
-    top: -7rem;
-    margin-bottom: -5.5rem;
-    width: 100%;
+    top: -6rem;
+    margin-bottom: -4.5rem;
+    max-width: 1020px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .gcm-feat-hero-media {
     width: 100%;
     overflow: hidden;
-    box-shadow: 0 14px 40px rgba(0,0,0,0.25);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.2);
     border-radius: 6px;
     background: var(--nbc-dark-bg);
 }
-.gcm-feat-hero-media img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
+.gcm-feat-hero-media img { width: 100%; height: auto; display: block; }
 
 .gcm-nbc-sub-grid {
     display: grid;
-    grid-template-columns: 1fr 310px;
+    grid-template-columns: 1fr 300px;
     gap: 3rem;
     align-items: start;
-    width: 100%;
+    max-width: 1020px;
+    margin: 0 auto;
 }
-@media (max-width: 992px) {
-    .gcm-nbc-sub-grid {
-        grid-template-columns: 1fr;
-    }
-}
+@media (max-width: 992px) { .gcm-nbc-sub-grid { grid-template-columns: 1fr; } }
 
 .post-content {
     font-family: var(--font-serif-content);
-    font-size: 1.075rem;
-    line-height: 1.82;
+    font-size: 1.05rem;
+    line-height: 1.8;
     color: #1e293b;
 }
-.post-content p {
-    margin-bottom: 1.75rem;
-}
-.post-content h2, .post-content h3 {
-    font-family: var(--font-sans);
-    font-weight: 900;
-    color: #0f172a;
-    margin-top: 2.25rem;
-    margin-bottom: 1rem;
-}
+.post-content p { margin-bottom: 1.75rem; }
+.post-content h2, .post-content h3 { font-family: var(--font-sans); font-weight: 900; color: #0f172a; margin-top: 2rem; margin-bottom: 1rem; }
 
 .gcm-post-nav-strip {
     display: flex;
@@ -548,75 +335,22 @@ header.site-header {
     padding: 1.25rem 0;
     margin-top: 3rem;
     font-family: var(--font-sans);
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     font-weight: 700;
 }
-.gcm-post-nav-strip a {
-    color: var(--text-primary);
-    text-decoration: none;
-}
+.gcm-post-nav-strip a { color: var(--text-primary); text-decoration: none; }
 
-.gcm-sidebar {
-    border-left: 1px solid var(--border-color);
-    padding-left: 2rem;
-}
-@media (max-width: 992px) {
-    .gcm-sidebar {
-        border-left: none;
-        padding-left: 0;
-        border-top: 2px solid var(--text-primary);
-        padding-top: 2rem;
-    }
-}
+.gcm-sidebar { border-left: 1px solid var(--border-color); padding-left: 2rem; }
+@media (max-width: 992px) { .gcm-sidebar { border-left: none; padding-left: 0; border-top: 2px solid var(--text-primary); padding-top: 2rem; } }
+.gcm-sidebar-widget h3.widget-title { font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; color: #0f172a; border-bottom: 2px solid #0f172a; padding-bottom: 0.4rem; margin-top: 0; margin-bottom: 1.4rem; }
 
-.gcm-sidebar-widget h3.widget-title {
-    font-size: 0.85rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #0f172a;
-    border-bottom: 2px solid #0f172a;
-    padding-bottom: 0.4rem;
-    margin-top: 0;
-    margin-bottom: 1.4rem;
-}
+.sidebar-news-card-nbc { display: block; margin-bottom: 1.6rem; text-decoration: none; color: inherit; }
+.sidebar-thumb-top-32 { width: 100%; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 3px; background: #e2e8f0; margin-bottom: 0.55rem; }
+.sidebar-thumb-top-32 img { width: 100%; height: 100%; object-fit: cover; }
+.sidebar-card-info-nbc h4 { font-size: 0.9rem; line-height: 1.35; font-weight: 800; margin: 0 0 0.3rem 0; color: #0f172a; }
+.sidebar-card-info-nbc .meta-time { font-family: var(--font-mono); font-size: 0.685rem; color: #94a3b8; text-transform: uppercase; }
 
-.sidebar-news-card-nbc {
-    display: block;
-    margin-bottom: 1.6rem;
-    text-decoration: none;
-    color: inherit;
-}
-.sidebar-thumb-top-32 {
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    border-radius: 3px;
-    background: #e2e8f0;
-    margin-bottom: 0.55rem;
-}
-.sidebar-thumb-top-32 img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.sidebar-card-info-nbc h4 {
-    font-size: 0.9rem;
-    line-height: 1.35;
-    font-weight: 800;
-    margin: 0 0 0.3rem 0;
-    color: #0f172a;
-}
-.sidebar-card-info-nbc .meta-time {
-    font-family: var(--font-mono);
-    font-size: 0.685rem;
-    color: #94a3b8;
-    text-transform: uppercase;
-}
-
-/* ==========================================================================
-   FOOTER
-   ========================================================================== */
+/* FOOTER */
 footer.site-footer {
     background: var(--nbc-dark-bg);
     color: #94a3b8;
