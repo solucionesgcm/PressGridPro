@@ -20,7 +20,7 @@
 
     <!-- 1. HERO OSCURO -->
     <section class="nbc-bg-dark">
-        <div class="nbc-container">
+        <div class="nbc-master-grid">
             
             <!-- Columna 1: Categoría -->
             <div class="nbc-col-cat">
@@ -30,7 +30,7 @@
                 <?php endif; ?>
             </div>
 
-            <!-- Columna 2: Título, Subtítulo y Audio -->
+            <!-- Columna 2: Título, Subtítulo y Audio (Estirado al 100%) -->
             <div class="nbc-col-main">
                 <h1 class="nbc-title"><?php the_title(); ?></h1>
 
@@ -69,10 +69,10 @@
         </div>
     </section>
 
-    <!-- 2. IMAGEN FLOTANTE -->
+    <!-- 2. IMAGEN FLOTANTE (Misma cuadrícula) -->
     <?php if (has_post_thumbnail()) : ?>
         <div class="nbc-image-wrapper">
-            <div class="nbc-container">
+            <div class="nbc-master-grid">
                 <div class="nbc-col-cat"></div>
                 <div class="nbc-col-main">
                     <div class="nbc-image-container">
@@ -90,13 +90,13 @@
         </div>
     <?php endif; ?>
 
-    <!-- 3. CUERPO Y SIDEBAR -->
+    <!-- 3. CUERPO Y SIDEBAR (Misma cuadrícula) -->
     <section class="nbc-bg-light">
-        <div class="nbc-container">
+        <div class="nbc-master-grid">
             
             <div class="nbc-col-cat"></div>
 
-            <!-- Columna 2: Texto del Artículo -->
+            <!-- Columna 2: Texto del Artículo (Estirado al 100%) -->
             <main class="nbc-col-main">
                 <div class="nbc-action-bar">
                     <a href="#" class="nbc-action-btn">SHARE</a>
