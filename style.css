@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 10.51.0
+Version: 10.53.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -64,7 +64,7 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. PORTADA Y HOME (Sin cambios)
+   3. PORTADA Y HOME (Omitido para brevedad, usa el que ya tienes)
    ========================================================================== */
 .gcm-home-wrapper { padding-top: 1.75rem; padding-bottom: 3rem; }
 .nbc-hero-section { display: grid; grid-template-columns: 1.35fr 1fr 290px; gap: 2rem; align-items: start; padding-bottom: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
@@ -169,27 +169,29 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .podcast-play-btn { background: var(--brand-red); color: #ffffff; border: none; padding: 0.6rem 1rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; width: 100%; justify-content: center; }
 
 /* ==========================================================================
-   5. SINGLE POST (GRID MAESTRO EXACTO)
+   5. SINGLE POST (EL ANCHO MÁXIMO POSIBLE)
    ========================================================================== */
 
-/* El contenedor de 3 columnas que se repite en toda la página */
+/* EL CONTENEDOR OCUPA TODO EL ANCHO DISPONIBLE (1400px para no romper en monitores gigantes) */
 .nbc-container {
-    max-width: 1200px;
+    width: 100%;
+    max-width: 1500px; /* Muy ancho */
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 3rem;
     display: grid;
-    grid-template-columns: 100px minmax(0, 1fr) 300px; /* Categoría | Contenido | Sidebar */
-    column-gap: 2rem;
+    /* Categoría (fija) | Contenido (elástico) | Sidebar (fijo) */
+    grid-template-columns: 120px minmax(0, 1fr) 340px; 
+    column-gap: 3rem;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .nbc-container {
         grid-template-columns: 1fr;
         padding: 0 1.5rem;
     }
 }
 
-/* 1. FONDO OSCURO (Fila 1) */
+/* 1. FONDO OSCURO */
 .nbc-bg-dark { 
     background-color: var(--nbc-dark-bg); 
     color: #ffffff; 
@@ -202,7 +204,7 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     flex-direction: column;
     padding-top: 0.5rem;
 }
-@media (max-width: 992px) { .nbc-col-cat { grid-column: 1; margin-bottom: 1rem; } }
+@media (max-width: 1100px) { .nbc-col-cat { grid-column: 1; margin-bottom: 1rem; } }
 
 .nbc-cat-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #94a3b8; }
 .nbc-kicker-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--brand-red); margin-top: 0.3rem; }
@@ -210,15 +212,17 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .nbc-col-main {
     grid-column: 2;
     min-width: 0;
+    width: 100%; /* OBLIGA A ESTIRARSE */
 }
-@media (max-width: 992px) { .nbc-col-main { grid-column: 1; } }
+@media (max-width: 1100px) { .nbc-col-main { grid-column: 1; } }
 
 .nbc-title {
-    font-size: 3.5rem;
+    font-size: 3.8rem;
     line-height: 1.05;
     font-weight: 900;
     letter-spacing: -1.5px;
     margin: 0 0 1.5rem 0;
+    width: 100%; /* Asegura que el título fluya */
 }
 @media (max-width: 768px) { .nbc-title { font-size: 2.2rem; } }
 
@@ -228,6 +232,7 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     line-height: 1.4;
     color: #cbd5e1;
     margin-bottom: 2.5rem;
+    width: 100%;
 }
 
 /* Reproductor */
@@ -259,15 +264,16 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .nbc-audio-progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #ffffff; width: 0%; }
 .nbc-audio-speed { border: 1px solid #64748b; padding: 0.1rem 0.3rem; border-radius: 2px; font-weight: 700; }
 
-/* 2. IMAGEN FLOTANTE (Fila 2) */
+/* 2. IMAGEN FLOTANTE (A TODO EL ANCHO) */
 .nbc-image-wrapper {
     position: relative;
     z-index: 30;
     margin-top: -6rem;
     margin-bottom: 2rem;
+    width: 100%;
 }
 
-.nbc-image-container { width: 100%; overflow: hidden; background: #e2e8f0; }
+.nbc-image-container { width: 100%; overflow: hidden; background: #e2e8f0; display: block; }
 .nbc-image-container img { width: 100%; height: auto; display: block; }
 
 .nbc-image-caption { margin-top: 1rem; font-family: var(--font-serif-excerpt); font-size: 0.85rem; color: #475569; line-height: 1.4; display: flex; flex-direction: column; gap: 0.3rem; }
@@ -275,13 +281,12 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .nbc-caption-text::before { content: "——"; color: #94a3b8; font-weight: 400; flex-shrink: 0; }
 .nbc-photo-credit { font-family: var(--font-sans); font-size: 0.7rem; color: #94a3b8; padding-left: 1.8rem; }
 
-/* 3. FONDO BLANCO (Fila 3: Texto y Sidebar) */
+/* 3. FONDO BLANCO */
 .nbc-bg-light { 
     background-color: #ffffff; 
     padding-bottom: 5rem;
 }
 
-/* Barra de Acciones */
 .nbc-action-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
 .nbc-action-btn { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 700; color: #334155; text-transform: uppercase; }
 .nbc-action-btn:hover { color: #0f172a; }
@@ -291,19 +296,26 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .nbc-pub-date { font-size: 0.75rem; color: #64748b; font-family: var(--font-sans); }
 .nbc-author-name { font-size: 0.85rem; font-weight: 800; color: #0f172a; }
 
-.nbc-post-content { font-family: var(--font-serif-content); font-size: 1.1rem; line-height: 1.7; color: #1e293b; }
+.nbc-post-content { 
+    font-family: var(--font-serif-content); 
+    font-size: 1.1rem; 
+    line-height: 1.7; 
+    color: #1e293b; 
+    width: 100%; /* EL TEXTO OCUPA TODO EL ESPACIO */
+}
 .nbc-post-content p { margin-bottom: 1.5rem; }
 .nbc-post-content h2, .nbc-post-content h3 { font-family: var(--font-sans); font-weight: 900; color: #0f172a; margin-top: 2rem; margin-bottom: 1rem; }
 
 .gcm-post-nav-strip { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 1.25rem 0; margin-top: 3rem; font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700; }
 .gcm-post-nav-strip a { color: var(--text-primary); }
 
-/* El Sidebar vive en su columna, alineado con la imagen */
+/* El Sidebar */
 .nbc-col-side {
     grid-column: 3;
-    padding-top: 1rem; /* Ajusta visualmente para alinear con el texto */
+    padding-top: 1rem;
+    width: 100%;
 }
-@media (max-width: 992px) { .nbc-col-side { grid-column: 1; padding-top: 2rem; border-top: 1px solid var(--border-color); } }
+@media (max-width: 1100px) { .nbc-col-side { grid-column: 1; padding-top: 2rem; border-top: 1px solid var(--border-color); } }
 
 /* ==========================================================================
    6. FOOTER
