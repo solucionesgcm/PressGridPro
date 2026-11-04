@@ -126,4 +126,4 @@ function pressgrid_render_options_page() {
         </div>
     </div>
     <?php
-}
+} ?>
