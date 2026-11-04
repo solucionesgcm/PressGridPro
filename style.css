@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 15.3.0
+Version: 15.4.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -86,7 +86,7 @@ header.site-header {
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. HOME (PORTADA - HERO CLEAN NBC STYLE EN BLANCO)
+   3. HOME (PORTADA - HERO CLEAN NBC STYLE SIN KICKER PRINCIPAL)
    ========================================================================== */
 .gcm-home-wrapper { 
     background: #ffffff;
@@ -112,7 +112,7 @@ header.site-header {
     .nbc-home-hero-white { grid-template-columns: 1fr; } 
 }
 
-/* Columna 1: Nota Principal (Fondo Blanco) */
+/* Columna 1: Nota Principal (Direct Titular) */
 .nbc-hero-main-col {
     padding-right: 0.5rem;
 }
@@ -122,37 +122,27 @@ header.site-header {
     aspect-ratio: 16 / 9; 
     overflow: hidden; 
     background: #f1f5f9; 
-    margin-bottom: 0.85rem; 
+    margin-bottom: 0.9rem; 
     border-radius: 2px; 
 }
 .nbc-hero-lead-card .lead-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.lead-kicker { 
-    font-family: var(--font-mono); 
-    font-size: 0.725rem; 
-    font-weight: 800; 
-    color: var(--brand-red); 
-    text-transform: uppercase; 
-    letter-spacing: 0.5px;
-    margin-bottom: 0.3rem; 
-    display: block;
-}
 .lead-title { 
-    font-size: 2.15rem; 
+    font-size: 2.25rem; 
     line-height: 1.12; 
     font-weight: 900; 
-    letter-spacing: -0.6px; 
-    margin: 0 0 0.55rem 0; 
+    letter-spacing: -0.7px; 
+    margin: 0 0 0.6rem 0; 
     color: var(--text-primary); 
 }
 .lead-excerpt { 
     font-family: var(--font-serif-excerpt); 
-    font-size: 1rem; 
+    font-size: 1.025rem; 
     line-height: 1.48;
     color: var(--text-secondary); 
     margin: 0; 
 }
 
-/* Columna 2: Stack Secundario (4 Notas Ajustadas) */
+/* Columna 2: Stack Secundario */
 .nbc-hero-stack-col { 
     display: flex; 
     flex-direction: column; 
@@ -289,7 +279,7 @@ header.site-header {
 .asym-date { font-family: var(--font-mono); font-size: 0.685rem; color: var(--text-muted); }
 
 /* ==========================================================================
-   5. SINGLE POST (ARTÍCULO INDIVIDUAL EN FONDO AZUL OSCURO)
+   5. SINGLE POST
    ========================================================================== */
 .gcm-single-hero-dark { 
     background: var(--nbc-dark-bg); 
