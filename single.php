@@ -5,35 +5,43 @@
     <?php 
     $photo_caption = get_post_meta(get_the_ID(), '_gcm_photo_caption', true);
     $photo_credit  = get_post_meta(get_the_ID(), '_gcm_photo_credit', true);
+    
+    // Lógica blindada para evitar duplicar categoría y kicker
+    $cats = get_the_category();
+    $category_name = !empty($cats) ? $cats[0]->name : 'EXCLUSIVO';
+    $kicker = get_post_meta(get_the_ID(), '_gcm_kicker', true);
+    
+    // Comparamos eliminando acentos, espacios y pasando a minúsculas
+    $clean_cat = strtolower(remove_accents(trim($category_name)));
+    $clean_kicker = strtolower(remove_accents(trim($kicker)));
+    
+    if ($clean_kicker === $clean_cat) {
+        $kicker = ''; // Si son iguales, ocultamos el kicker
+    }
     ?>
 
     <!-- 1. ENCABEZADO OSCURO -->
     <section class="gcm-single-hero-dark">
         <div class="container">
             <div class="nbc-article-header">
-                <span class="gcm-hero-category">
-                    <?php 
-                    $cats = get_the_category();
-                    echo !empty($cats) ? esc_html($cats[0]->name) : 'EXCLUSIVO';
-                    ?>
-                </span>
-
-                <?php 
-                $kicker = get_post_meta(get_the_ID(), '_gcm_kicker', true);
-                $subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
-                ?>
-
-                <?php if (!empty($kicker)) : ?>
-                    <div class="gcm-hero-kicker-tag"><?php echo esc_html($kicker); ?></div>
-                <?php endif; ?>
+                
+                <div class="nbc-category-bar">
+                    <span class="nbc-cat-label"><?php echo esc_html($category_name); ?></span>
+                    <?php if (!empty($kicker)) : ?>
+                        <span class="nbc-cat-divider">|</span>
+                        <span class="nbc-kicker-label"><?php echo esc_html($kicker); ?></span>
+                    <?php endif; ?>
+                </div>
 
                 <h1 class="nbc-hero-title-single"><?php the_title(); ?></h1>
 
-                <?php if (!empty($subtitle)) : ?>
+                <?php 
+                $subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
+                if (!empty($subtitle)) : ?>
                     <p class="nbc-hero-subtitle-single"><?php echo esc_html($subtitle); ?></p>
                 <?php endif; ?>
 
-                <!-- Reproductor de Audio (Web Speech API) -->
+                <!-- Reproductor de Audio -->
                 <div class="nbc-audio-player-container">
                     <button id="play-audio-btn" class="nbc-audio-play-btn" aria-label="Escuchar artículo">
                         <svg id="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="#0f172a"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -122,7 +130,7 @@
 
 <?php endwhile; ?>
 
-<!-- SCRIPT: SÍNTESIS DE VOZ DEL NAVEGADOR -->
+<!-- SCRIPT: SÍNTESIS DE VOZ INTELIGENTE -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('play-audio-btn');
@@ -139,19 +147,13 @@ document.addEventListener('DOMContentLoaded', function() {
     let elapsed = 0;
     let isSpeaking = false;
 
-    // Función para limpiar el texto del artículo
     function getArticleText() {
         const title = document.querySelector('.nbc-hero-title-single')?.innerText || '';
         const subtitle = document.querySelector('.nbc-hero-subtitle-single')?.innerText || '';
         const contentDiv = document.getElementById('article-content-for-tts');
-        
-        // Clonamos el div para no modificar el original al quitar scripts/estilos
         const clone = contentDiv.cloneNode(true);
-        // Eliminamos scripts, estilos y bloques de código para que no los lea
         clone.querySelectorAll('script, style, pre, code').forEach(el => el.remove());
-        
         const content = clone.innerText || '';
-        
         return `${title}. ${subtitle}. ${content}`.replace(/\s+/g, ' ').trim();
     }
 
@@ -167,10 +169,9 @@ document.addEventListener('DOMContentLoaded', function() {
             elapsed = (Date.now() - startTime) / 1000;
             timeCurrent.textContent = formatTime(elapsed);
             
-            // Simulamos el progreso basándonos en una velocidad estimada de 150 palabras por minuto
             const text = getArticleText();
             const wordCount = text.split(/\s+/).length;
-            const estimatedDuration = (wordCount / 150) * 60; // en segundos
+            const estimatedDuration = (wordCount / 150) * 60;
             
             timeDuration.textContent = formatTime(estimatedDuration);
             
@@ -197,10 +198,40 @@ document.addEventListener('DOMContentLoaded', function() {
         utterance = null;
     }
 
+    // EL SELECTOR DE VOZ INTELIGENTE
+    function getBestVoice() {
+        const voices = window.speechSynthesis.getVoices();
+        
+        // 1. Prioridad Máxima: Voces "Naturales" de Microsoft/Apple o Google en Español México/US
+        let best = voices.find(v => v.lang.includes('es-MX') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Premium')));
+        if (best) return best;
+
+        // 2. Voces de Google en cualquier Español
+        best = voices.find(v => v.lang.startsWith('es-') && v.name.includes('Google'));
+        if (best) return best;
+
+        // 3. Voces Nativas de Mac (Paulina, Mónica) o Windows (Sabina, Helena)
+        best = voices.find(v => v.lang.includes('es-MX') && (v.name.includes('Paulina') || v.name.includes('Mónica') || v.name.includes('Sabina')));
+        if (best) return best;
+
+        // 4. Cualquier voz en Español de LATAM
+        best = voices.find(v => v.lang.includes('es-US') || v.lang.includes('es-419'));
+        if (best) return best;
+
+        // 5. La primera en español que encuentre
+        return voices.find(v => v.lang.startsWith('es-'));
+    }
+
     if ('speechSynthesis' in window) {
+        
+        // Cargar voces (a veces el navegador tarda en cargarlas)
+        let voicesReady = false;
+        window.speechSynthesis.onvoiceschanged = function() {
+            voicesReady = true;
+        };
+
         btn.addEventListener('click', function() {
             if (window.speechSynthesis.paused && isSpeaking) {
-                // Si está pausado, reanudar
                 window.speechSynthesis.resume();
                 startTimer();
                 iconPlay.style.display = 'none';
@@ -210,7 +241,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
-                // Si está hablando, pausar
                 window.speechSynthesis.pause();
                 stopTimer();
                 iconPlay.style.display = 'block';
@@ -219,7 +249,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Si no hay utterance o ya terminó, empezar de nuevo
             if (!utterance || !window.speechSynthesis.speaking) {
                 const text = getArticleText();
                 if (!text) {
@@ -229,15 +258,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 utterance = new SpeechSynthesisUtterance(text);
                 
-                // Buscar una voz en español
-                const voices = window.speechSynthesis.getVoices();
-                const spanishVoice = voices.find(v => v.lang.startsWith('es-'));
-                if (spanishVoice) {
-                    utterance.voice = spanishVoice;
+                const bestVoice = getBestVoice();
+                if (bestVoice) {
+                    utterance.voice = bestVoice;
+                    // Mostrar qué voz se está usando para depurar
+                    console.log("Leyendo con la voz:", bestVoice.name, bestVoice.lang);
                 }
                 
-                utterance.rate = 1; // Velocidad normal
-                utterance.pitch = 1; // Tono normal
+                utterance.rate = 1;
+                utterance.pitch = 1;
 
                 utterance.onstart = function() {
                     isSpeaking = true;
@@ -260,13 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.speechSynthesis.speak(utterance);
             }
         });
-
-        // Cargar voces si aún no están disponibles
-        window.speechSynthesis.onvoiceschanged = function() {
-            window.speechSynthesis.getVoices();
-        };
     } else {
-        // Navegador no compatible
         audioText.textContent = 'Tu navegador no soporta lectura por voz.';
         btn.style.opacity = '0.5';
         btn.style.cursor = 'not-allowed';
