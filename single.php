@@ -18,7 +18,7 @@
     }
     ?>
 
-    <!-- 1. HERO OSCURO (Fondo a todo lo ancho) -->
+    <!-- 1. HERO OSCURO -->
     <section class="nbc-bg-dark">
         <div class="nbc-container">
             
@@ -58,19 +58,18 @@
                             </div>
                             <span id="audio-duration">04:28</span>
                             <span class="nbc-audio-speed">1x</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="margin-left: 5px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Columna 3: Vacía en el Hero -->
+            <!-- Columna 3: Vacía -->
             <div class="nbc-col-side"></div>
 
         </div>
     </section>
 
-    <!-- 2. IMAGEN FLOTANTE (Rompe el fondo) -->
+    <!-- 2. IMAGEN FLOTANTE -->
     <?php if (has_post_thumbnail()) : ?>
         <div class="nbc-image-wrapper">
             <div class="nbc-container">
@@ -91,7 +90,7 @@
         </div>
     <?php endif; ?>
 
-    <!-- 3. CUERPO Y SIDEBAR (Fondo blanco) -->
+    <!-- 3. CUERPO Y SIDEBAR -->
     <section class="nbc-bg-light">
         <div class="nbc-container">
             
@@ -100,15 +99,9 @@
             <!-- Columna 2: Texto del Artículo -->
             <main class="nbc-col-main">
                 <div class="nbc-action-bar">
-                    <a href="#" class="nbc-action-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-                        SHARE
-                    </a>
+                    <a href="#" class="nbc-action-btn">SHARE</a>
                     <div class="nbc-action-divider"></div>
-                    <a href="#" class="nbc-action-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                        ADD GCM NOTICIAS TO GOOGLE
-                    </a>
+                    <a href="#" class="nbc-action-btn">ADD GCM NOTICIAS TO GOOGLE</a>
                 </div>
 
                 <div class="nbc-meta-info">
@@ -138,7 +131,7 @@
 
 <?php endwhile; ?>
 
-<!-- SCRIPT: SÍNTESIS DE VOZ (Intacto) -->
+<!-- SCRIPT: SÍNTESIS DE VOZ -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('play-audio-btn');
