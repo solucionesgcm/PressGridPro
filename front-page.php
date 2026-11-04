@@ -1,5 +1,6 @@
 <?php get_header(); ?>
 
+<!-- TICKER SUPERIOR DINÁMICO -->
 <div class="gcm-ticker-bar">
     <div class="container gcm-ticker-container">
         <div class="ticker-badge">MERCADOS & EN VIVO</div>
@@ -7,7 +8,12 @@
             <span class="ticker-item"><strong>S&P 500:</strong> +0.45%</span>
             <span class="ticker-item"><strong>NASDAQ:</strong> +0.82%</span>
             <span class="ticker-item"><strong>BRENT:</strong> $74.20 (-1.1%)</span>
-            <span class="ticker-item highlight"><strong>ÚLTIMA HORA:</strong> Mercados reaccionan ante nuevos anuncios de la FED</span>
+            
+            <?php 
+            $opts = get_option('pressgrid_options');
+            $ticker_text = !empty($opts['ticker_text']) ? $opts['ticker_text'] : 'Mercados reaccionan ante nuevos anuncios de la FED';
+            ?>
+            <span class="ticker-item highlight"><strong>ÚLTIMA HORA:</strong> <?php echo esc_html($ticker_text); ?></span>
         </div>
     </div>
 </div>
@@ -16,8 +22,10 @@
 
     <?php $used_ids = array(); ?>
 
+    <!-- SECCIÓN HERO -->
     <section class="nbc-hero-section">
         
+        <!-- Columna 1: Nota Principal -->
         <div class="nbc-hero-col-1">
             <?php
             $main_hero_q = new WP_Query(array(
@@ -54,6 +62,7 @@
             ?>
         </div>
 
+        <!-- Columna 2: Notas Secundarias -->
         <div class="nbc-hero-stack">
             <?php
             $secondary_posts = array();
@@ -98,13 +107,11 @@
                 $side_kicker = get_post_meta($post_obj->ID, '_gcm_kicker', true);
             ?>
                 <a href="<?php echo get_permalink($post_obj->ID); ?>" class="nbc-hero-stack-item">
-                    <div class="thumb">
-                        <?php if (has_post_thumbnail($post_obj->ID)) : ?>
+                    <?php if (has_post_thumbnail($post_obj->ID)) : ?>
+                        <div class="thumb">
                             <?php echo get_the_post_thumbnail($post_obj->ID, 'medium'); ?>
-                        <?php else: ?>
-                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&q=80" alt="GCM Noticias">
-                        <?php endif; ?>
-                    </div>
+                        </div>
+                    <?php endif; ?>
                     <div class="info">
                         <span class="meta-kicker"><?php echo !empty($side_kicker) ? esc_html($side_kicker) : get_the_date('M j', $post_obj->ID); ?></span>
                         <h4><?php echo get_the_title($post_obj->ID); ?></h4>
@@ -116,48 +123,77 @@
             ?>
         </div>
 
+        <!-- Columna 3: Modo en Vivo o Al Momento -->
         <div class="nbc-hero-third-col">
-            <div class="nbc-al-momento-header">
-                <h3 class="nbc-al-momento-title">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
-                    Al Momento
-                </h3>
-            </div>
-            
-            <div class="al-momento-feed">
-                <?php
-                $am_stream_q = new WP_Query(array(
-                    'posts_per_page' => 5,
-                    'post__not_in'   => $used_ids,
-                    'ignore_sticky_posts' => true
-                ));
+            <?php 
+            $theme_opts = get_option('pressgrid_options');
+            $is_live = isset($theme_opts['live_status']) && $theme_opts['live_status'] === '1'; 
+            ?>
 
-                if ($am_stream_q->have_posts()) :
-                    while ($am_stream_q->have_posts()) : $am_stream_q->the_post();
-                        $used_ids[] = get_the_ID();
-                        $time_diff = human_time_diff(get_post_time('U', true), current_time('timestamp'));
-                        $cats = get_the_category();
-                        $cat_name = !empty($cats) ? $cats[0]->name : 'NOTICIAS';
-                ?>
-                        <a href="<?php the_permalink(); ?>" class="al-momento-item">
-                            <div class="al-momento-meta-row">
-                                <span class="al-momento-time">Hace <?php echo esc_html($time_diff); ?></span>
-                                <span class="al-momento-tag"><?php echo esc_html($cat_name); ?></span>
-                            </div>
-                            <h4><?php the_title(); ?></h4>
-                        </a>
-                <?php
-                    endwhile;
-                    wp_reset_postdata();
-                endif;
-                ?>
-            </div>
+            <?php if ($is_live) : ?>
+                <!-- MODO EN VIVO ACTIVADO -->
+                <div class="nbc-al-momento-header" style="border-bottom-color: var(--brand-red);">
+                    <h3 class="nbc-al-momento-title" style="color: var(--brand-red);">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        EN VIVO
+                    </h3>
+                </div>
+                <div class="al-momento-feed" style="display: flex; flex-direction: column; height: 100%;">
+                    <h4 style="font-size: 1.1rem; font-weight: 900; margin-bottom: 0.5rem; color: #0f172a;">
+                        <?php echo esc_html($theme_opts['live_title'] ?? 'Cobertura Especial'); ?>
+                    </h4>
+                    <p style="font-size: 0.85rem; color: #475569; margin-bottom: 1.5rem; line-height: 1.5;">
+                        <?php echo esc_html($theme_opts['live_subtitle'] ?? ''); ?>
+                    </p>
+                    <a href="<?php echo esc_url($theme_opts['live_url'] ?? '#'); ?>" class="live-pulse-btn" style="display: inline-block; background: var(--brand-red); color: white; padding: 0.75rem 1rem; border-radius: 4px; text-align: center; font-weight: 800; text-decoration: none; font-size: 0.85rem; margin-top: auto;">
+                        Seguir Minuto a Minuto →
+                    </a>
+                </div>
+            <?php else : ?>
+                <!-- MODO "AL MOMENTO" NORMAL -->
+                <div class="nbc-al-momento-header">
+                    <h3 class="nbc-al-momento-title">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+                        Al Momento
+                    </h3>
+                </div>
+                
+                <div class="al-momento-feed">
+                    <?php
+                    $am_stream_q = new WP_Query(array(
+                        'posts_per_page' => 5,
+                        'post__not_in'   => $used_ids,
+                        'ignore_sticky_posts' => true
+                    ));
+
+                    if ($am_stream_q->have_posts()) :
+                        while ($am_stream_q->have_posts()) : $am_stream_q->the_post();
+                            $used_ids[] = get_the_ID();
+                            $time_diff = human_time_diff(get_post_time('U', true), current_time('timestamp'));
+                            $cats = get_the_category();
+                            $cat_name = !empty($cats) ? $cats[0]->name : 'NOTICIAS';
+                    ?>
+                            <a href="<?php the_permalink(); ?>" class="al-momento-item">
+                                <div class="al-momento-meta-row">
+                                    <span class="al-momento-time">Hace <?php echo esc_html($time_diff); ?></span>
+                                    <span class="al-momento-tag"><?php echo esc_html($cat_name); ?></span>
+                                </div>
+                                <h4><?php the_title(); ?></h4>
+                            </a>
+                    <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+            <?php endif; ?>
         </div>
 
     </section>
 
 </main>
 
+<!-- STRIP MULTIMEDIA -->
 <section class="gcm-multimedia-dark-strip">
     <div class="container">
         <div class="multimedia-header">
@@ -176,14 +212,14 @@
                     $used_ids[] = get_the_ID();
             ?>
                     <a href="<?php the_permalink(); ?>" class="multimedia-card">
-                        <div class="multimedia-thumb">
-                            <?php if (has_post_thumbnail()) : ?>
+                        <?php if (has_post_thumbnail()) : ?>
+                            <div class="multimedia-thumb">
                                 <?php the_post_thumbnail('medium'); ?>
-                            <?php endif; ?>
-                            <span class="video-play-icon">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="#ffffff"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            </span>
-                        </div>
+                                <span class="video-play-icon">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#ffffff"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                                </span>
+                            </div>
+                        <?php endif; ?>
                         <h4><?php the_title(); ?></h4>
                     </a>
             <?php
@@ -201,6 +237,7 @@
         
         <div class="foxiz-content-col">
             
+            <!-- BLOQUE FINANZAS -->
             <section class="foxiz-block-section">
                 <div class="foxiz-block-header">
                     <h2 class="foxiz-block-title">Finanzas & Economía Global</h2>
@@ -211,6 +248,7 @@
                     $fin_q = new WP_Query(array(
                         'posts_per_page' => 4,
                         'post__not_in'   => $used_ids,
+                        'category_name'  => 'finanzas', // FILTRO AGREGADO
                         'ignore_sticky_posts' => true
                     ));
 
@@ -253,17 +291,19 @@
                 </div>
             </section>
 
+            <!-- BANNER NEWSLETTER -->
             <div class="gcm-newsletter-banner">
                 <div class="news-banner-content">
                     <h3>Inteligencia Financiera & Tecnología</h3>
                     <p>Recibe los análisis ejecutivos diarios directamente en tu correo.</p>
                 </div>
-                <form class="news-banner-form" onSubmit="return false;">
-                    <input type="email" placeholder="Tu correo ejecutivo..." required />
+                <form class="news-banner-form" action="#" method="POST">
+                    <input type="email" name="email" placeholder="Tu correo ejecutivo..." required />
                     <button type="submit">Suscribirme</button>
                 </form>
             </div>
 
+            <!-- BLOQUE TECNOLOGÍA -->
             <section class="foxiz-block-section">
                 <div class="foxiz-block-header">
                     <h2 class="foxiz-block-title">Tecnología & Inteligencia Artificial</h2>
@@ -273,6 +313,7 @@
                     $tecno_q = new WP_Query(array(
                         'posts_per_page' => 4,
                         'post__not_in'   => $used_ids,
+                        'category_name'  => 'tecnologia', // FILTRO AGREGADO
                         'ignore_sticky_posts' => true
                     ));
 
@@ -295,6 +336,7 @@
                 </div>
             </section>
 
+            <!-- BLOQUE OPINIÓN -->
             <section class="foxiz-block-section">
                 <div class="foxiz-block-header">
                     <h2 class="foxiz-block-title">Análisis & Columnas de Opinión</h2>
@@ -304,6 +346,7 @@
                     $opinion_q = new WP_Query(array(
                         'posts_per_page' => 3,
                         'post__not_in'   => $used_ids,
+                        'category_name'  => 'opinion', // FILTRO AGREGADO
                         'ignore_sticky_posts' => true
                     ));
 
@@ -315,7 +358,7 @@
                                     <div class="author-avatar-ph">
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                                     </div>
-                                    <span class="author-name">GCM Noticias</span>
+                                    <span class="author-name"><?php the_author(); ?></span>
                                 </div>
                                 <h4 class="opinion-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
                             </div>
@@ -329,6 +372,7 @@
 
         </div>
 
+        <!-- SIDEBAR -->
         <aside class="foxiz-sidebar-col">
             <div class="sticky-sidebar-box">
                 
