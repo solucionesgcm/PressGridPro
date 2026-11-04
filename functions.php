@@ -34,7 +34,7 @@ function pressgrid_enqueue_scripts() {
     wp_enqueue_style('pressgrid-google-fonts', 'https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600;700;800;900&display=swap', array(), null);
     
     // Hoja de estilos principal (Con versión fija para caché)
-    wp_enqueue_style('pressgrid-style', get_stylesheet_uri(), array('pressgrid-google-fonts'), '10.38.0');
+    wp_enqueue_style('pressgrid-style', get_stylesheet_uri(), array('pressgrid-google-fonts'), '10.38.1');
 }
 add_action('wp_enqueue_scripts', 'pressgrid_enqueue_scripts');
 
