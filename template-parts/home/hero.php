@@ -1,7 +1,7 @@
 <?php
 /**
- * Standard Home Hero - NBC News Style (Clean White Layout)
- * Version: 15.0.0
+ * Standard Home Hero - NBC News Style (Clean White Layout 4-Items)
+ * Version: 15.2.0
  */
 $used_ids = array();
 ?>
@@ -18,12 +18,15 @@ $used_ids = array();
             'ignore_sticky_posts' => true
         ));
 
-        if (!$main_hero_q->have_posts()) {$main_hero_q = new WP_Query(array('posts_per_page' => 1, 'ignore_sticky_posts' => true));
+        if (!$main_hero_q->have_posts()) {
+            $main_hero_q = new WP_Query(array('posts_per_page' => 1, 'ignore_sticky_posts' => true));
         }
 
         if ($main_hero_q->have_posts()) :
-            while ($main_hero_q->have_posts()) : $main_hero_q->the_post();$used_ids[] = get_the_ID();
-                $kicker   = get_post_meta(get_the_ID(), '_gcm_kicker', true);$subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
+            while ($main_hero_q->have_posts()) : $main_hero_q->the_post();
+                $used_ids[] = get_the_ID();
+                $kicker   = get_post_meta(get_the_ID(), '_gcm_kicker', true);
+                $subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
         ?>
                 <a href="<?php the_permalink(); ?>" class="nbc-hero-lead-card">
                     <?php if (has_post_thumbnail()) : ?>
@@ -42,13 +45,13 @@ $used_ids = array();
         ?>
     </div>
 
-    <!-- Columna 2: Stack Secundario (Lead Stack) -->
+    <!-- Columna 2: Stack Secundario (4 Notas para Cubrir el Espacio) -->
     <div class="nbc-hero-stack-col">
         <?php
         $secondary_posts = array();
 
         $sec_hero_q = new WP_Query(array(
-            'posts_per_page'      => 3,
+            'posts_per_page'      => 4,
             'post__not_in'        => $used_ids,
             'meta_key'            => '_gcm_is_secondary',
             'meta_value'          => '1',
@@ -56,28 +59,33 @@ $used_ids = array();
         ));
 
         if ($sec_hero_q->have_posts()) {
-            while ($sec_hero_q->have_posts()) {$sec_hero_q->the_post();
-                $secondary_posts[] = get_post();$used_ids[] = get_the_ID();
+            while ($sec_hero_q->have_posts()) {
+                $sec_hero_q->the_post();
+                $secondary_posts[] = get_post();
+                $used_ids[] = get_the_ID();
             }
             wp_reset_postdata();
         }
 
-        $needed = 3 - count($secondary_posts);
-        if ($needed > 0) {$fill_q = new WP_Query(array(
+        $needed = 4 - count($secondary_posts);
+        if ($needed > 0) {
+            $fill_q = new WP_Query(array(
                 'posts_per_page'      => $needed,
                 'post__not_in'        => $used_ids,
                 'ignore_sticky_posts' => true
             ));
 
             if ($fill_q->have_posts()) {
-                while ($fill_q->have_posts()) {$fill_q->the_post();
-                    $secondary_posts[] = get_post();$used_ids[] = get_the_ID();
+                while ($fill_q->have_posts()) {
+                    $fill_q->the_post();
+                    $secondary_posts[] = get_post();
+                    $used_ids[] = get_the_ID();
                 }
                 wp_reset_postdata();
             }
         }
 
-        foreach ($secondary_posts as$post_obj) :
+        foreach ($secondary_posts as $post_obj) :
             setup_postdata($post_obj);
             $side_kicker = get_post_meta($post_obj->ID, '_gcm_kicker', true);
         ?>
@@ -90,7 +98,7 @@ $used_ids = array();
                     <?php endif; ?>
                 </div>
                 <div class="stack-info">
-                    <span class="stack-kicker"><?php echo !empty($side_kicker) ? esc_html($side_kicker) : get_the_date('M j',$post_obj->ID); ?></span>
+                    <span class="stack-kicker"><?php echo !empty($side_kicker) ? esc_html($side_kicker) : get_the_date('M j', $post_obj->ID); ?></span>
                     <h4><?php echo get_the_title($post_obj->ID); ?></h4>
                 </div>
             </a>
@@ -100,7 +108,7 @@ $used_ids = array();
         ?>
     </div>
 
-    <!-- Columna 3: Feed Al Momento (Latest Feed) -->
+    <!-- Columna 3: Feed Al Momento (Transparente y Sin Caja) -->
     <div class="nbc-hero-latest-col">
         <div class="latest-header">
             <h3 class="latest-title">
@@ -118,8 +126,10 @@ $used_ids = array();
             ));
 
             if ($am_stream_q->have_posts()) :
-                while ($am_stream_q->have_posts()) : $am_stream_q->the_post();$time_diff = human_time_diff(get_post_time('U', true), current_time('timestamp'));
-                    $cats = get_the_category();$cat_name = !empty($cats) ?$cats[0]->name : 'NOTICIAS';
+                while ($am_stream_q->have_posts()) : $am_stream_q->the_post();
+                    $time_diff = human_time_diff(get_post_time('U', true), current_time('timestamp'));
+                    $cats = get_the_category();
+                    $cat_name = !empty($cats) ? $cats[0]->name : 'NOTICIAS';
             ?>
                     <a href="<?php the_permalink(); ?>" class="latest-feed-item">
                         <div class="latest-meta">
