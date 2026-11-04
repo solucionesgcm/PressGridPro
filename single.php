@@ -6,7 +6,6 @@
     $photo_caption = get_post_meta(get_the_ID(), '_gcm_photo_caption', true);
     $photo_credit  = get_post_meta(get_the_ID(), '_gcm_photo_credit', true);
     
-    // Lógica blindada para evitar duplicar categoría y kicker
     $cats = get_the_category();
     $category_name = !empty($cats) ? $cats[0]->name : 'EXCLUSIVO';
     $kicker = get_post_meta(get_the_ID(), '_gcm_kicker', true);
@@ -19,79 +18,88 @@
     }
     ?>
 
-    <!-- 1. ENCABEZADO OSCURO TIPO NBC NEWS -->
+    <!-- 1. ENCABEZADO OSCURO (Todo alineado al grid) -->
     <section class="gcm-single-hero-dark">
-        <div class="container">
-            <div class="nbc-hero-content">
+        <div class="container nbc-main-container">
+            <div class="nbc-hero-grid">
                 
-                <div class="nbc-category-bar">
-                    <span class="nbc-cat-label"><?php echo esc_html($category_name); ?></span>
-                    <?php if (!empty($kicker)) : ?>
-                        <span class="nbc-cat-divider">|</span>
-                        <span class="nbc-kicker-label"><?php echo esc_html($kicker); ?></span>
+                <!-- Columna Izquierda (Texto) -->
+                <div class="nbc-hero-text-col">
+                    <div class="nbc-category-bar">
+                        <span class="nbc-cat-label"><?php echo esc_html($category_name); ?></span>
+                        <?php if (!empty($kicker)) : ?>
+                            <span class="nbc-cat-divider">|</span>
+                            <span class="nbc-kicker-label"><?php echo esc_html($kicker); ?></span>
+                        <?php endif; ?>
+                    </div>
+
+                    <h1 class="nbc-hero-title-single"><?php the_title(); ?></h1>
+
+                    <?php 
+                    $subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
+                    if (!empty($subtitle)) : ?>
+                        <p class="nbc-hero-subtitle-single"><?php echo esc_html($subtitle); ?></p>
                     <?php endif; ?>
-                </div>
 
-                <h1 class="nbc-hero-title-single"><?php the_title(); ?></h1>
-
-                <?php 
-                $subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
-                if (!empty($subtitle)) : ?>
-                    <p class="nbc-hero-subtitle-single"><?php echo esc_html($subtitle); ?></p>
-                <?php endif; ?>
-
-                <!-- Reproductor de Audio NBC (Estilo exacto) -->
-                <div class="nbc-audio-player-container">
-                    <button id="play-audio-btn" class="nbc-audio-play-btn" aria-label="Escuchar artículo">
-                        <svg id="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="#0f172a"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        <svg id="icon-pause" style="display:none;" width="20" height="20" viewBox="0 0 24 24" fill="#0f172a"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-                    </button>
-                    
-                    <div class="nbc-audio-content">
-                        <div class="nbc-audio-text-row">
-                            <span id="audio-text">Listen to this article with a free profile</span>
-                        </div>
-                        <div class="nbc-audio-progress-row">
-                            <span id="audio-current-time">00:00</span>
-                            <div class="nbc-audio-progress-bar" id="audio-progress-container">
-                                <div class="nbc-audio-progress-fill" id="audio-progress-fill"></div>
+                    <!-- Reproductor de Audio -->
+                    <div class="nbc-audio-player-container">
+                        <button id="play-audio-btn" class="nbc-audio-play-btn" aria-label="Escuchar artículo">
+                            <svg id="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="#0f172a"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            <svg id="icon-pause" style="display:none;" width="20" height="20" viewBox="0 0 24 24" fill="#0f172a"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                        </button>
+                        
+                        <div class="nbc-audio-content">
+                            <div class="nbc-audio-text-row">
+                                <span id="audio-text">Listen to this article with a free profile</span>
                             </div>
-                            <span id="audio-duration">04:28</span>
-                            <span class="nbc-audio-speed">1x</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="margin-left: 5px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                            <div class="nbc-audio-progress-row">
+                                <span id="audio-current-time">00:00</span>
+                                <div class="nbc-audio-progress-bar" id="audio-progress-container">
+                                    <div class="nbc-audio-progress-fill" id="audio-progress-fill"></div>
+                                </div>
+                                <span id="audio-duration">04:28</span>
+                                <span class="nbc-audio-speed">1x</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="margin-left: 5px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Columna Derecha (Espacio vacío para alinear con sidebar) -->
+                <div class="nbc-hero-spacer-col"></div>
+
             </div>
         </div>
     </section>
 
-    <!-- 2. CUERPO E IMAGEN FLOTANTE -->
+    <!-- 2. CUERPO BLANCO -->
     <section class="gcm-single-body-area">
-        <div class="container">
-
-            <?php if (has_post_thumbnail()) : ?>
-                <div class="nbc-featured-image-wrapper">
-                    <div class="nbc-featured-image">
-                        <?php the_post_thumbnail('full'); ?>
-                    </div>
-                    <?php if (!empty($photo_caption) || !empty($photo_credit)) : ?>
-                        <div class="nbc-image-caption">
-                            <?php if (!empty($photo_caption)) : ?>
-                                <div class="nbc-caption-text"><?php echo esc_html($photo_caption); ?></div>
-                            <?php endif; ?>
-                            <?php if (!empty($photo_credit)) : ?>
-                                <div class="nbc-photo-credit"><?php echo esc_html($photo_credit); ?></div>
+        <div class="container nbc-main-container">
+            
+            <div class="nbc-article-grid">
+                
+                <!-- Columna Izquierda (Imagen y Contenido) -->
+                <main class="nbc-article-main">
+                    
+                    <!-- Imagen que flota hacia arriba -->
+                    <?php if (has_post_thumbnail()) : ?>
+                        <div class="nbc-featured-image-wrapper">
+                            <div class="nbc-featured-image">
+                                <?php the_post_thumbnail('full'); ?>
+                            </div>
+                            <?php if (!empty($photo_caption) || !empty($photo_credit)) : ?>
+                                <div class="nbc-image-caption">
+                                    <?php if (!empty($photo_caption)) : ?>
+                                        <div class="nbc-caption-text"><?php echo esc_html($photo_caption); ?></div>
+                                    <?php endif; ?>
+                                    <?php if (!empty($photo_credit)) : ?>
+                                        <div class="nbc-photo-credit"><?php echo esc_html($photo_credit); ?></div>
+                                    <?php endif; ?>
+                                </div>
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
-                </div>
-            <?php endif; ?>
 
-            <!-- Layout de 2 columnas: Artículo y Sidebar -->
-            <div class="nbc-article-layout">
-                
-                <main class="nbc-article-main">
                     <div class="nbc-action-bar">
                         <a href="#" class="nbc-action-btn">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
@@ -119,6 +127,7 @@
                     </div>
                 </main>
 
+                <!-- Columna Derecha (Sidebar) -->
                 <aside class="nbc-article-sidebar">
                     <?php get_template_part('template-parts/home/sidebar'); ?>
                 </aside>
@@ -130,7 +139,7 @@
 
 <?php endwhile; ?>
 
-<!-- SCRIPT: SÍNTESIS DE VOZ INTELIGENTE (Buscando voces naturales) -->
+<!-- SCRIPT: SÍNTESIS DE VOZ MEJORADA -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('play-audio-btn');
@@ -146,6 +155,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let startTime = 0;
     let elapsed = 0;
     let isSpeaking = false;
+    let voices = [];
+
+    // Cargar voces (con un pequeño delay para navegadores lentos)
+    function loadVoices() {
+        voices = window.speechSynthesis.getVoices();
+        if (voices.length === 0) {
+            setTimeout(loadVoices, 250);
+        }
+    }
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+    loadVoices();
 
     function getArticleText() {
         const title = document.querySelector('.nbc-hero-title-single')?.innerText || '';
@@ -198,39 +218,32 @@ document.addEventListener('DOMContentLoaded', function() {
         utterance = null;
     }
 
-    // SELECTOR DE VOZ AGRESIVO (Busca las más naturales primero)
+    // BUSCADOR AGRESIVO DE VOCES PREMIUM
     function getBestVoice() {
-        const voices = window.speechSynthesis.getVoices();
+        if (voices.length === 0) return null;
         
-        // 1. Voces "Naturales" de Apple o Microsoft (Alta calidad)
-        let best = voices.find(v => v.lang.includes('es-') && (v.name.includes('Natural') || v.name.includes('Premium')));
+        // 1. Google US / México
+        let best = voices.find(v => v.lang.includes('es-MX') && v.name.includes('Google'));
         if (best) return best;
-
-        // 2. Voces de Google (Chrome las tiene excelentes)
-        best = voices.find(v => v.lang.includes('es-') && v.name.includes('Google'));
-        if (best) return best;
-
-        // 3. Voces específicas conocidas por ser buenas en español
-        best = voices.find(v => v.lang.includes('es-MX') && (v.name.includes('Paulina') || v.name.includes('Mónica') || v.name.includes('Sabina')));
+        best = voices.find(v => v.lang.includes('es-US') && v.name.includes('Google'));
         if (best) return best;
         
-        best = voices.find(v => v.lang.includes('es-US') && (v.name.includes('Paulina') || v.name.includes('Mónica')));
+        // 2. Voces Naturales/Premium (Apple/Microsoft)
+        best = voices.find(v => v.lang.includes('es-') && (v.name.includes('Natural') || v.name.includes('Premium')));
         if (best) return best;
 
-        // 4. Cualquier voz en Español de LATAM o US
-        best = voices.find(v => v.lang.includes('es-US') || v.lang.includes('es-419') || v.lang.includes('es-MX'));
+        // 3. Voces clásicas de Mac/Windows
+        best = voices.find(v => v.name.includes('Paulina') || v.name.includes('Sabina') || v.name.includes('Mónica'));
         if (best) return best;
 
-        // 5. La primera en español que encuentre
+        // 4. Cualquier latina
+        best = voices.find(v => v.lang.includes('es-419') || v.lang.includes('es-MX'));
+        if (best) return best;
+
         return voices.find(v => v.lang.startsWith('es-'));
     }
 
     if ('speechSynthesis' in window) {
-        window.speechSynthesis.onvoiceschanged = function() {
-            // Precargar voces
-            window.speechSynthesis.getVoices();
-        };
-
         btn.addEventListener('click', function() {
             if (window.speechSynthesis.paused && isSpeaking) {
                 window.speechSynthesis.resume();
@@ -259,12 +272,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const bestVoice = getBestVoice();
                 if (bestVoice) {
                     utterance.voice = bestVoice;
-                    console.log("VOZ SELECCIONADA:", bestVoice.name, bestVoice.lang);
-                } else {
-                    console.warn("No se encontró ninguna voz en español.");
+                    console.log("Leyendo con:", bestVoice.name);
                 }
                 
-                utterance.rate = 0.95; // Un poco más lento suena más natural
+                utterance.rate = 1;
                 utterance.pitch = 1;
 
                 utterance.onstart = function() {
