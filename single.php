@@ -18,12 +18,12 @@
     }
     ?>
 
-    <!-- 1. ENCABEZADO OSCURO (3 Columnas: Categoría, Título, Espacio Sidebar) -->
+    <!-- 1. ENCABEZADO OSCURO (Grid de 3 columnas) -->
     <section class="gcm-single-hero-dark">
         <div class="container nbc-main-container">
             <div class="nbc-hero-grid">
                 
-                <!-- Columna Izquierda Extrema: Categoría -->
+                <!-- Columna Izquierda: Categoría -->
                 <div class="nbc-hero-category-col">
                     <div class="nbc-category-bar">
                         <span class="nbc-cat-label"><?php echo esc_html($category_name); ?></span>
@@ -74,13 +74,16 @@
         </div>
     </section>
 
-    <!-- 2. CUERPO BLANCO -->
+    <!-- 2. CUERPO BLANCO (Grid de 3 columnas) -->
     <section class="gcm-single-body-area">
         <div class="container nbc-main-container">
             
             <div class="nbc-article-grid">
                 
-                <!-- Columna Central (Imagen y Contenido) -->
+                <!-- Columna Izquierda: Vacía para alinear con la categoría -->
+                <div class="nbc-article-spacer"></div>
+
+                <!-- Columna Central: Imagen y Contenido -->
                 <main class="nbc-article-main">
                     
                     <!-- Imagen que flota hacia arriba -->
@@ -129,7 +132,7 @@
                     </div>
                 </main>
 
-                <!-- Columna Derecha (Sidebar) -->
+                <!-- Columna Derecha: Sidebar -->
                 <aside class="nbc-article-sidebar">
                     <?php get_template_part('template-parts/home/sidebar'); ?>
                 </aside>
@@ -141,7 +144,7 @@
 
 <?php endwhile; ?>
 
-<!-- SCRIPT: SÍNTESIS DE VOZ (Se mantiene igual) -->
+<!-- SCRIPT: SÍNTESIS DE VOZ (Igual que antes) -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('play-audio-btn');

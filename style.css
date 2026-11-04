@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 10.44.0
+Version: 10.45.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -207,15 +207,15 @@ header.site-header {
    ========================================================================== */
    
 .nbc-main-container {
-    max-width: 1150px; 
+    max-width: 1300px; 
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
 }
 
 .gcm-single-hero-dark { 
     background: var(--nbc-dark-bg); 
     color: #ffffff; 
-    padding: 3.5rem 0 12rem 0; /* Aumenté el padding inferior para dar más espacio a la imagen flotante */
+    padding: 3.5rem 0 12rem 0; 
     position: relative; 
     z-index: 1; 
 }
@@ -223,7 +223,7 @@ header.site-header {
 /* Grid superior (3 columnas: Categoría, Título, Espacio) */
 .nbc-hero-grid {
     display: grid;
-    grid-template-columns: 100px 1fr 320px; 
+    grid-template-columns: 130px minmax(0, 1fr) 320px; 
     gap: 2rem;
 }
 @media (max-width: 992px) { .nbc-hero-grid { grid-template-columns: 1fr; gap: 1rem; } }
@@ -298,13 +298,16 @@ header.site-header {
 
 .gcm-single-body-area { padding: 0 0 5rem 0; background: #ffffff; position: relative; z-index: 10; }
 
-/* Grid del cuerpo (Imagen y texto a la izquierda, Sidebar a la derecha) */
+/* Grid del cuerpo (Misma cuadrícula que el Hero) */
 .nbc-article-grid {
     display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 3rem;
+    grid-template-columns: 130px minmax(0, 1fr) 320px;
+    gap: 2rem;
 }
 @media (max-width: 992px) { .nbc-article-grid { grid-template-columns: 1fr; } }
+
+.nbc-article-spacer { display: block; }
+@media (max-width: 992px) { .nbc-article-spacer { display: none; } }
 
 .nbc-article-main { min-width: 0; position: relative; }
 
@@ -341,9 +344,9 @@ header.site-header {
 .gcm-post-nav-strip { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 1.25rem 0; margin-top: 3rem; font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700; }
 .gcm-post-nav-strip a { color: var(--text-primary); }
 
-/* EL SIDEBAR SE BAJA PARA ALINEARSE CON EL TEXTO */
+/* El sidebar ahora fluye dentro de su columna sin margen extra */
 .nbc-article-sidebar { 
-    margin-top: 8rem; /* Empuja el sidebar hacia abajo para que no choque con el título */
+    padding-top: 2rem; /* Un pequeño respiro para alinear visualmente con el texto */
 }
 
 /* ==========================================================================
