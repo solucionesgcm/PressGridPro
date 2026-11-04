@@ -18,22 +18,20 @@
     }
     ?>
 
-    <!-- 1. ENCABEZADO OSCURO (Grid de 3 columnas) -->
+    <!-- 1. ENCABEZADO OSCURO -->
     <section class="gcm-single-hero-dark">
-        <div class="container nbc-main-container">
-            <div class="nbc-hero-grid">
-                
-                <!-- Columna Izquierda: Categoría -->
+        <div class="nbc-hero-container">
+            
+            <div class="nbc-hero-layout">
+                <!-- Columna de la Categoría (Izquierda) -->
                 <div class="nbc-hero-category-col">
-                    <div class="nbc-category-bar">
-                        <span class="nbc-cat-label"><?php echo esc_html($category_name); ?></span>
-                        <?php if (!empty($kicker)) : ?>
-                            <br><span class="nbc-kicker-label"><?php echo esc_html($kicker); ?></span>
-                        <?php endif; ?>
-                    </div>
+                    <span class="nbc-cat-label"><?php echo esc_html($category_name); ?></span>
+                    <?php if (!empty($kicker)) : ?>
+                        <span class="nbc-kicker-label"><?php echo esc_html($kicker); ?></span>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Columna Central: Texto -->
+                <!-- Columna del Título (Centro) -->
                 <div class="nbc-hero-text-col">
                     <h1 class="nbc-hero-title-single"><?php the_title(); ?></h1>
 
@@ -66,45 +64,39 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Columna Derecha (Espacio vacío para el sidebar) -->
-                <div class="nbc-hero-spacer-col"></div>
-
             </div>
+
         </div>
     </section>
 
-    <!-- 2. CUERPO BLANCO (Grid de 3 columnas) -->
-    <section class="gcm-single-body-area">
-        <div class="container nbc-main-container">
-            
-            <div class="nbc-article-grid">
-                
-                <!-- Columna Izquierda: Vacía para alinear con la categoría -->
-                <div class="nbc-article-spacer"></div>
+    <!-- 2. IMAGEN FLOTANTE -->
+    <?php if (has_post_thumbnail()) : ?>
+        <div class="nbc-featured-image-wrapper">
+            <div class="nbc-featured-image">
+                <?php the_post_thumbnail('full'); ?>
+            </div>
+            <?php if (!empty($photo_caption) || !empty($photo_credit)) : ?>
+                <div class="nbc-image-caption">
+                    <?php if (!empty($photo_caption)) : ?>
+                        <div class="nbc-caption-text"><?php echo esc_html($photo_caption); ?></div>
+                    <?php endif; ?>
+                    <?php if (!empty($photo_credit)) : ?>
+                        <div class="nbc-photo-credit"><?php echo esc_html($photo_credit); ?></div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 
-                <!-- Columna Central: Imagen y Contenido -->
+    <!-- 3. CUERPO DEL ARTÍCULO Y SIDEBAR -->
+    <section class="gcm-single-body-area">
+        <div class="nbc-body-container">
+            
+            <div class="nbc-body-layout">
+                
+                <!-- Columna Izquierda: Contenido -->
                 <main class="nbc-article-main">
                     
-                    <!-- Imagen que flota hacia arriba -->
-                    <?php if (has_post_thumbnail()) : ?>
-                        <div class="nbc-featured-image-wrapper">
-                            <div class="nbc-featured-image">
-                                <?php the_post_thumbnail('full'); ?>
-                            </div>
-                            <?php if (!empty($photo_caption) || !empty($photo_credit)) : ?>
-                                <div class="nbc-image-caption">
-                                    <?php if (!empty($photo_caption)) : ?>
-                                        <div class="nbc-caption-text"><?php echo esc_html($photo_caption); ?></div>
-                                    <?php endif; ?>
-                                    <?php if (!empty($photo_credit)) : ?>
-                                        <div class="nbc-photo-credit"><?php echo esc_html($photo_credit); ?></div>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    <?php endif; ?>
-
                     <div class="nbc-action-bar">
                         <a href="#" class="nbc-action-btn">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
@@ -144,7 +136,7 @@
 
 <?php endwhile; ?>
 
-<!-- SCRIPT: SÍNTESIS DE VOZ (Igual que antes) -->
+<!-- SCRIPT: SÍNTESIS DE VOZ -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('play-audio-btn');
@@ -155,6 +147,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const timeCurrent = document.getElementById('audio-current-time');
     const timeDuration = document.getElementById('audio-duration');
     
+    if (!btn) return;
+
     let utterance = null;
     let timerInterval = null;
     let startTime = 0;
@@ -173,6 +167,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.querySelector('.nbc-hero-title-single')?.innerText || '';
         const subtitle = document.querySelector('.nbc-hero-subtitle-single')?.innerText || '';
         const contentDiv = document.getElementById('article-content-for-tts');
+        if (!contentDiv) return title + ' ' + subtitle;
+        
         const clone = contentDiv.cloneNode(true);
         clone.querySelectorAll('script, style, pre, code').forEach(el => el.remove());
         const content = clone.innerText || '';
