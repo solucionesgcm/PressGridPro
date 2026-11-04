@@ -3,12 +3,11 @@
 <?php while (have_posts()) : the_post(); ?>
 
     <?php 
-    $audio_url = get_post_meta(get_the_ID(), '_gcm_audio_url', true); 
     $photo_caption = get_post_meta(get_the_ID(), '_gcm_photo_caption', true);
     $photo_credit  = get_post_meta(get_the_ID(), '_gcm_photo_credit', true);
     ?>
 
-    <!-- 1. ENCABEZADO OSCURO (Texto centrado) -->
+    <!-- 1. ENCABEZADO OSCURO -->
     <section class="gcm-single-hero-dark">
         <div class="container">
             <div class="nbc-article-header">
@@ -34,7 +33,7 @@
                     <p class="nbc-hero-subtitle-single"><?php echo esc_html($subtitle); ?></p>
                 <?php endif; ?>
 
-                <!-- Reproductor de Audio -->
+                <!-- Reproductor de Audio (Web Speech API) -->
                 <div class="nbc-audio-player-container">
                     <button id="play-audio-btn" class="nbc-audio-play-btn" aria-label="Escuchar artículo">
                         <svg id="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="#0f172a"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -43,23 +42,17 @@
                     
                     <div class="nbc-audio-content">
                         <div class="nbc-audio-text-row">
-                            <span id="audio-text">
-                                <?php echo !empty($audio_url) ? 'Listen to this article' : 'Añade una URL de audio en el editor para activar esto'; ?>
-                            </span>
+                            <span id="audio-text">Escuchar este artículo con voz natural</span>
                         </div>
                         <div class="nbc-audio-progress-row">
                             <span id="audio-current-time">00:00</span>
                             <div class="nbc-audio-progress-bar" id="audio-progress-container">
                                 <div class="nbc-audio-progress-fill" id="audio-progress-fill"></div>
                             </div>
-                            <span id="audio-duration">00:00</span>
+                            <span id="audio-duration">--:--</span>
                             <span class="nbc-audio-speed">1x</span>
                         </div>
                     </div>
-                    
-                    <?php if (!empty($audio_url)) : ?>
-                        <audio id="article-audio" src="<?php echo esc_url($audio_url); ?>" preload="metadata"></audio>
-                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -88,12 +81,9 @@
                 </div>
             <?php endif; ?>
 
-            <!-- Cuadrícula: Contenido a la izquierda, Sidebar a la derecha -->
             <div class="nbc-article-layout">
                 
-                <!-- Columna Principal -->
                 <main class="nbc-article-main">
-                    
                     <div class="nbc-action-bar">
                         <a href="#" class="nbc-action-btn">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
@@ -111,7 +101,7 @@
                         <span class="nbc-author-name">By <?php the_author(); ?></span>
                     </div>
 
-                    <div class="nbc-post-content">
+                    <div class="nbc-post-content" id="article-content-for-tts">
                         <?php the_content(); ?>
                     </div>
 
@@ -121,7 +111,6 @@
                     </div>
                 </main>
 
-                <!-- Sidebar -->
                 <aside class="nbc-article-sidebar">
                     <?php get_template_part('template-parts/home/sidebar'); ?>
                 </aside>
@@ -133,51 +122,154 @@
 
 <?php endwhile; ?>
 
-<!-- SCRIPT DE AUDIO -->
+<!-- SCRIPT: SÍNTESIS DE VOZ DEL NAVEGADOR -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const audio = document.getElementById('article-audio');
     const btn = document.getElementById('play-audio-btn');
     const iconPlay = document.getElementById('icon-play');
     const iconPause = document.getElementById('icon-pause');
+    const audioText = document.getElementById('audio-text');
     const progressFill = document.getElementById('audio-progress-fill');
     const timeCurrent = document.getElementById('audio-current-time');
     const timeDuration = document.getElementById('audio-duration');
+    
+    let utterance = null;
+    let timerInterval = null;
+    let startTime = 0;
+    let elapsed = 0;
+    let isSpeaking = false;
 
-    if(audio && btn) {
-        function formatTime(seconds) {
-            const m = Math.floor(seconds / 60);
-            const s = Math.floor(seconds % 60);
-            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-        }
+    // Función para limpiar el texto del artículo
+    function getArticleText() {
+        const title = document.querySelector('.nbc-hero-title-single')?.innerText || '';
+        const subtitle = document.querySelector('.nbc-hero-subtitle-single')?.innerText || '';
+        const contentDiv = document.getElementById('article-content-for-tts');
+        
+        // Clonamos el div para no modificar el original al quitar scripts/estilos
+        const clone = contentDiv.cloneNode(true);
+        // Eliminamos scripts, estilos y bloques de código para que no los lea
+        clone.querySelectorAll('script, style, pre, code').forEach(el => el.remove());
+        
+        const content = clone.innerText || '';
+        
+        return `${title}. ${subtitle}. ${content}`.replace(/\s+/g, ' ').trim();
+    }
 
-        audio.addEventListener('loadedmetadata', function() {
-            timeDuration.textContent = formatTime(audio.duration);
-        });
+    function formatTime(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
 
+    function startTimer() {
+        startTime = Date.now() - (elapsed * 1000);
+        timerInterval = setInterval(() => {
+            elapsed = (Date.now() - startTime) / 1000;
+            timeCurrent.textContent = formatTime(elapsed);
+            
+            // Simulamos el progreso basándonos en una velocidad estimada de 150 palabras por minuto
+            const text = getArticleText();
+            const wordCount = text.split(/\s+/).length;
+            const estimatedDuration = (wordCount / 150) * 60; // en segundos
+            
+            timeDuration.textContent = formatTime(estimatedDuration);
+            
+            if (estimatedDuration > 0) {
+                const percent = Math.min((elapsed / estimatedDuration) * 100, 100);
+                progressFill.style.width = percent + '%';
+            }
+        }, 1000);
+    }
+
+    function stopTimer() {
+        clearInterval(timerInterval);
+    }
+
+    function resetPlayer() {
+        stopTimer();
+        elapsed = 0;
+        timeCurrent.textContent = '00:00';
+        progressFill.style.width = '0%';
+        isSpeaking = false;
+        iconPlay.style.display = 'block';
+        iconPause.style.display = 'none';
+        audioText.textContent = 'Escuchar este artículo con voz natural';
+        utterance = null;
+    }
+
+    if ('speechSynthesis' in window) {
         btn.addEventListener('click', function() {
-            if (audio.paused) {
-                audio.play();
+            if (window.speechSynthesis.paused && isSpeaking) {
+                // Si está pausado, reanudar
+                window.speechSynthesis.resume();
+                startTimer();
                 iconPlay.style.display = 'none';
                 iconPause.style.display = 'block';
-            } else {
-                audio.pause();
+                audioText.textContent = 'Pausar lectura';
+                return;
+            }
+
+            if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+                // Si está hablando, pausar
+                window.speechSynthesis.pause();
+                stopTimer();
                 iconPlay.style.display = 'block';
                 iconPause.style.display = 'none';
+                audioText.textContent = 'Reanudar lectura';
+                return;
+            }
+
+            // Si no hay utterance o ya terminó, empezar de nuevo
+            if (!utterance || !window.speechSynthesis.speaking) {
+                const text = getArticleText();
+                if (!text) {
+                    audioText.textContent = 'No hay texto para leer.';
+                    return;
+                }
+
+                utterance = new SpeechSynthesisUtterance(text);
+                
+                // Buscar una voz en español
+                const voices = window.speechSynthesis.getVoices();
+                const spanishVoice = voices.find(v => v.lang.startsWith('es-'));
+                if (spanishVoice) {
+                    utterance.voice = spanishVoice;
+                }
+                
+                utterance.rate = 1; // Velocidad normal
+                utterance.pitch = 1; // Tono normal
+
+                utterance.onstart = function() {
+                    isSpeaking = true;
+                    iconPlay.style.display = 'none';
+                    iconPause.style.display = 'block';
+                    audioText.textContent = 'Pausar lectura';
+                    startTimer();
+                };
+
+                utterance.onend = function() {
+                    resetPlayer();
+                };
+
+                utterance.onerror = function(e) {
+                    console.error('Error en síntesis de voz:', e);
+                    audioText.textContent = 'Error al leer el artículo.';
+                    resetPlayer();
+                };
+
+                window.speechSynthesis.speak(utterance);
             }
         });
 
-        audio.addEventListener('timeupdate', function() {
-            const percent = (audio.currentTime / audio.duration) * 100;
-            progressFill.style.width = percent + '%';
-            timeCurrent.textContent = formatTime(audio.currentTime);
-        });
-
-        audio.addEventListener('ended', function() {
-            iconPlay.style.display = 'block';
-            iconPause.style.display = 'none';
-            progressFill.style.width = '0%';
-        });
+        // Cargar voces si aún no están disponibles
+        window.speechSynthesis.onvoiceschanged = function() {
+            window.speechSynthesis.getVoices();
+        };
+    } else {
+        // Navegador no compatible
+        audioText.textContent = 'Tu navegador no soporta lectura por voz.';
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
     }
 });
 </script>
