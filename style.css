@@ -104,7 +104,7 @@ header.site-header {
 
 .nbc-hero-section {
     display: grid;
-    grid-template-columns: 1.35fr 1fr 290px; /* Col 1, Col 2, Col 3 (Sidebar en vivo) */
+    grid-template-columns: 1.35fr 1fr 290px;
     gap: 2rem;
     align-items: start;
     padding-bottom: 2.5rem;
@@ -113,7 +113,7 @@ header.site-header {
 }
 @media (max-width: 1024px) { 
     .nbc-hero-section { grid-template-columns: 1fr 1fr; } 
-    .nbc-hero-third-col { display: none; } /* Ocultar columna 3 en tablets */
+    .nbc-hero-third-col { display: none; }
 }
 @media (max-width: 768px) { 
     .nbc-hero-section { grid-template-columns: 1fr; } 
@@ -158,14 +158,9 @@ header.site-header {
 .al-momento-tag { color: var(--brand-red); font-weight: 700; text-transform: uppercase; }
 .al-momento-item h4 { font-size: 0.875rem; line-height: 1.35; font-weight: 700; color: #1e293b; margin: 0; }
 
-/* ESTILOS MODO EN VIVO (NUEVO) */
-.live-pulse-btn {
-    transition: background-color 0.2s ease, transform 0.1s ease;
-}
-.live-pulse-btn:hover {
-    background-color: #b91c1c !important;
-    transform: translateY(-1px);
-}
+/* ESTILOS MODO EN VIVO */
+.live-pulse-btn { transition: background-color 0.2s ease, transform 0.1s ease; }
+.live-pulse-btn:hover { background-color: #b91c1c !important; transform: translateY(-1px); }
 
 /* ==========================================================================
    4. FRANJA MULTIMEDIA Y LAYOUT PRINCIPAL
@@ -299,3 +294,66 @@ header.site-header {
    ========================================================================== */
 footer.site-footer { background: var(--nbc-dark-bg); color: #94a3b8; text-align: center; padding: 2.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); }
 footer.site-footer p { margin: 0; font-size: 0.9rem; }
+
+/* ==========================================================================
+   8. AJUSTES FINOS ESTILO NBC NEWS (Editorial Premium)
+   ========================================================================== */
+
+/* 1. Bordes rectos (NBC no usa bordes redondeados) */
+.nbc-hero-main-card .thumb-wrap,
+.nbc-hero-stack-item .thumb,
+.multimedia-thumb,
+.asym-thumb,
+.asym-list-thumb,
+.foxiz-card-item .card-thumb,
+.sidebar-thumb-top-32 {
+    border-radius: 0px !important; 
+}
+
+/* 2. Pegar el texto a la foto en la nota principal (Hero Col 1) */
+.nbc-hero-main-card .thumb-wrap {
+    margin-bottom: 0.5rem;
+}
+.nbc-hero-title {
+    letter-spacing: -0.8px;
+    line-height: 1.1;
+}
+
+/* 3. Títulos de Sección con línea superior NBC */
+.foxiz-block-header {
+    border-bottom: none;
+    border-top: 4px solid #0f172a;
+    padding-top: 0.75rem;
+    padding-bottom: 0;
+    margin-bottom: 1.25rem;
+}
+.foxiz-block-title {
+    font-size: 1.2rem;
+    letter-spacing: -0.5px;
+}
+
+/* 4. Títulos de las tarjetas más compactos */
+.nbc-hero-stack-item h4 {
+    font-size: 1.05rem;
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+}
+.asym-title {
+    letter-spacing: -0.4px;
+}
+.foxiz-card-item .card-title {
+    letter-spacing: -0.3px;
+}
+
+/* 5. "Al Momento" con un toque más agresivo */
+.al-momento-tag {
+    background: #dc2626;
+    color: #ffffff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0px;
+}
+
+/* 6. Ajuste de la barra superior (Ticker) */
+.gcm-ticker-bar {
+    border-bottom: 2px solid #dc2626;
+}
