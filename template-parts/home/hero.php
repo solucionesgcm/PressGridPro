@@ -1,12 +1,28 @@
 <?php
 /**
- * Hero Section Estilo NBC News - Front Page
+ * Hero Section - PressGrid Pro (Modo Cobertura Especial)
  */
 $used_ids = array();
+$pressgrid_opts = get_option('pressgrid_options');
+$is_special_coverage = isset($pressgrid_opts['live_status']) && $pressgrid_opts['live_status'] == '1';
 ?>
+
+<?php if ($is_special_coverage) : ?>
+    <!-- Banner Superior de Cobertura Especial / Elecciones -->
+    <div class="nbc-coverage-header-bar">
+        <div class="coverage-live-tag">
+            <span class="live-dot"></span>
+            COBERTURA ESPECIAL
+        </div>
+        <h2 class="coverage-main-topic">
+            <?php echo esc_html($pressgrid_opts['live_title'] ?? 'DECISIÓN EDITORIAL'); ?>
+        </h2>
+    </div>
+<?php endif; ?>
+
 <section class="nbc-hero-section">
     
-    <!-- Columna 1: Nota Principal (Large Card) -->
+    <!-- Columna 1: Nota Principal -->
     <div class="nbc-hero-col-1">
         <?php
         $main_hero_q = new WP_Query(array(
@@ -43,7 +59,7 @@ $used_ids = array();
         ?>
     </div>
 
-    <!-- Columna 2: Stack Secundario (3 Notas con Miniatura) -->
+    <!-- Columna 2: Stack Secundario -->
     <div class="nbc-hero-stack">
         <?php
         $secondary_posts = array();
@@ -106,7 +122,7 @@ $used_ids = array();
         ?>
     </div>
 
-    <!-- Columna 3: Al Momento (Feed Limpio Estilo NBC) -->
+    <!-- Columna 3: Al Momento / Cobertura en Vivo -->
     <div class="nbc-hero-third-col">
         <div class="nbc-al-momento-header">
             <h3 class="nbc-al-momento-title">
