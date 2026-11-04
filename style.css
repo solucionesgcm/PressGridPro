@@ -14,7 +14,7 @@ Text Domain: pressgrid
    ========================================================================== */
 :root {
     --bg-main: #ffffff;
-    --nbc-dark-bg: #0f172a;
+    --nbc-dark-bg: #060e1e; /* Azul más oscuro y rico extraído de NBC */
     --text-primary: #0f172a;
     --text-secondary: #334155;
     --text-muted: #64748b;
@@ -248,38 +248,224 @@ header.site-header {
 .podcast-play-btn { background: var(--brand-red); color: #ffffff; border: none; padding: 0.6rem 1rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; width: 100%; justify-content: center; }
 
 /* ==========================================================================
-   6. PÁGINA INDIVIDUAL (SINGLE.PHP)
+   6. PÁGINA INDIVIDUAL (CLON EXACTO DE NBC NEWS SINGLE)
    ========================================================================== */
-.gcm-single-hero-dark { background: var(--nbc-dark-bg); color: #ffffff; padding: 3.5rem 0 9rem 0; position: relative; z-index: 1; }
-.gcm-single-hero-inner { max-width: 860px; margin: 0 auto; }
-.gcm-hero-category { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--brand-red); display: block; margin-bottom: 0.5rem; }
-.gcm-hero-kicker-tag { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 0.5rem; }
-.gcm-hero-headline { font-size: 2.65rem; line-height: 1.15; font-weight: 900; letter-spacing: -0.5px; color: #ffffff; margin: 0 0 1.25rem 0; }
-@media (max-width: 768px) { .gcm-hero-headline { font-size: 1.9rem; } }
-.gcm-hero-subtitle { font-family: var(--font-serif-excerpt); font-size: 1.2rem; line-height: 1.55; color: #cbd5e1; margin-bottom: 1.75rem; }
-.byline-date-block-dark { font-size: 0.85rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-bottom: 1.25rem; display: flex; gap: 1.5rem; }
-.byline-date-block-dark .pub-date { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; }
-.byline-date-block-dark .byline-author strong { color: #ffffff; }
+.gcm-single-hero-dark { background: var(--nbc-dark-bg); color: #ffffff; padding: 3rem 0 6rem 0; position: relative; z-index: 1; }
 
-.gcm-audio-player-bar { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 40px; padding: 0.45rem 1rem; display: inline-flex; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
-.audio-play-btn { width: 28px; height: 28px; background: #ffffff; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-.audio-info { font-size: 0.8rem; font-weight: 600; color: #ffffff; }
+.nbc-single-grid {
+    display: grid;
+    grid-template-columns: 100px 1fr 300px; /* Izquierda vacía, Contenido, Sidebar */
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+@media (max-width: 992px) {
+    .nbc-single-grid { grid-template-columns: 1fr; }
+    .nbc-single-spacer { display: none; }
+}
 
+.nbc-single-main { grid-column: 2; }
+@media (max-width: 992px) { .nbc-single-main { grid-column: 1; } }
+
+.gcm-hero-category { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; display: block; margin-bottom: 0.5rem; }
+.gcm-hero-kicker-tag { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--brand-red); text-transform: uppercase; margin-bottom: 0.5rem; }
+
+/* Título y Subtítulo Exactos */
+.nbc-hero-title-single {
+    font-size: 3rem;
+    line-height: 1.1;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: #ffffff;
+    margin: 0 0 1rem 0;
+}
+@media (max-width: 768px) { .nbc-hero-title-single { font-size: 2rem; } }
+
+.nbc-hero-subtitle-single {
+    font-family: var(--font-serif-excerpt);
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: #cbd5e1;
+    margin-bottom: 2rem;
+}
+
+/* Reproductor de Audio Exacto NBC */
+.nbc-audio-player-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: transparent;
+    margin-bottom: 1rem;
+    max-width: 600px;
+}
+
+.nbc-audio-play-btn {
+    width: 44px;
+    height: 44px;
+    background: #ffffff;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.nbc-audio-content {
+    flex-grow: 1;
+}
+
+.nbc-audio-text-row {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.2rem;
+}
+.nbc-audio-text-row a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.nbc-audio-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-family: var(--font-mono);
+}
+
+.nbc-audio-progress-bar {
+    flex-grow: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    position: relative;
+    cursor: pointer;
+}
+.nbc-audio-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #ffffff;
+    width: 0%;
+}
+
+.nbc-audio-speed {
+    border: 1px solid #64748b;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+    font-weight: 700;
+}
+
+/* Imagen Destacada y Pie de Foto */
 .gcm-single-body-area { padding: 0 0 5rem 0; background: #ffffff; position: relative; z-index: 10; }
-.gcm-feat-hero-media-wrapper { position: relative; z-index: 30; top: -6rem; margin-bottom: -4.5rem; max-width: 1020px; margin-left: auto; margin-right: auto; }
-.gcm-feat-hero-media { width: 100%; overflow: hidden; box-shadow: 0 12px 35px rgba(0,0,0,0.2); border-radius: 6px; background: var(--nbc-dark-bg); }
-.gcm-feat-hero-media img { width: 100%; height: auto; display: block; }
 
-.gcm-nbc-sub-grid { display: grid; grid-template-columns: 1fr 300px; gap: 3rem; align-items: start; max-width: 1020px; margin: 0 auto; }
-@media (max-width: 992px) { .gcm-nbc-sub-grid { grid-template-columns: 1fr; } }
+.nbc-featured-image-wrapper {
+    position: relative;
+    z-index: 30;
+    top: -4rem;
+    margin-bottom: 0;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-.post-content { font-family: var(--font-serif-content); font-size: 1.05rem; line-height: 1.8; color: #1e293b; }
-.post-content p { margin-bottom: 1.75rem; }
-.post-content h2, .post-content h3 { font-family: var(--font-sans); font-weight: 900; color: #0f172a; margin-top: 2rem; margin-bottom: 1rem; }
+.nbc-featured-image {
+    width: 100%;
+    overflow: hidden;
+    background: #e2e8f0;
+}
+.nbc-featured-image img { width: 100%; height: auto; display: block; }
+
+.nbc-image-caption {
+    margin-top: 1rem;
+    font-family: var(--font-serif-excerpt);
+    font-size: 0.85rem;
+    color: #475569;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.nbc-caption-text {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+}
+.nbc-caption-text::before {
+    content: "——";
+    color: #94a3b8;
+    font-weight: 400;
+    flex-shrink: 0;
+}
+
+.nbc-photo-credit {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    color: #94a3b8;
+    padding-left: 1.8rem;
+}
+
+/* Barra de Acciones (Share / Add to Google) */
+.nbc-action-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.nbc-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #334155;
+    text-transform: uppercase;
+}
+.nbc-action-btn:hover { color: #0f172a; }
+.nbc-action-divider {
+    width: 1px;
+    height: 16px;
+    background: #cbd5e1;
+}
+
+/* Fecha y Autor */
+.nbc-meta-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-bottom: 2rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1rem;
+}
+.nbc-pub-date {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-family: var(--font-sans);
+}
+.nbc-author-name {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+/* Contenido (Texto) */
+.nbc-post-content {
+    font-family: var(--font-serif-content);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #1e293b;
+}
+.nbc-post-content p { margin-bottom: 1.5rem; }
+.nbc-post-content h2, .nbc-post-content h3 { font-family: var(--font-sans); font-weight: 900; color: #0f172a; margin-top: 2rem; margin-bottom: 1rem; }
 
 .gcm-post-nav-strip { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 1.25rem 0; margin-top: 3rem; font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700; }
 .gcm-post-nav-strip a { color: var(--text-primary); }
 
+/* Sidebar (Reutilizado) */
 .gcm-sidebar { border-left: 1px solid var(--border-color); padding-left: 2rem; }
 @media (max-width: 992px) { .gcm-sidebar { border-left: none; padding-left: 0; border-top: 2px solid var(--text-primary); padding-top: 2rem; } }
 .gcm-sidebar-widget h3.widget-title { font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; color: #0f172a; border-bottom: 2px solid #0f172a; padding-bottom: 0.4rem; margin-top: 0; margin-bottom: 1.4rem; }
@@ -299,7 +485,7 @@ footer.site-footer p { margin: 0; font-size: 0.9rem; }
    8. AJUSTES FINOS ESTILO NBC NEWS (Editorial Premium)
    ========================================================================== */
 
-/* 1. Bordes rectos (NBC no usa bordes redondeados) */
+/* 1. Bordes rectos */
 .nbc-hero-main-card .thumb-wrap,
 .nbc-hero-stack-item .thumb,
 .multimedia-thumb,
@@ -310,14 +496,8 @@ footer.site-footer p { margin: 0; font-size: 0.9rem; }
     border-radius: 0px !important; 
 }
 
-/* 2. Pegar el texto a la foto en la nota principal (Hero Col 1) */
-.nbc-hero-main-card .thumb-wrap {
-    margin-bottom: 0.5rem;
-}
-.nbc-hero-title {
-    letter-spacing: -0.8px;
-    line-height: 1.1;
-}
+/* 2. Títulos */
+.nbc-hero-title { letter-spacing: -0.8px; line-height: 1.1; }
 
 /* 3. Títulos de Sección con línea superior NBC */
 .foxiz-block-header {
@@ -327,33 +507,15 @@ footer.site-footer p { margin: 0; font-size: 0.9rem; }
     padding-bottom: 0;
     margin-bottom: 1.25rem;
 }
-.foxiz-block-title {
-    font-size: 1.2rem;
-    letter-spacing: -0.5px;
-}
+.foxiz-block-title { font-size: 1.2rem; letter-spacing: -0.5px; }
 
-/* 4. Títulos de las tarjetas más compactos */
-.nbc-hero-stack-item h4 {
-    font-size: 1.05rem;
-    line-height: 1.25;
-    letter-spacing: -0.3px;
-}
-.asym-title {
-    letter-spacing: -0.4px;
-}
-.foxiz-card-item .card-title {
-    letter-spacing: -0.3px;
-}
+/* 4. Títulos de tarjetas */
+.nbc-hero-stack-item h4 { font-size: 1.05rem; line-height: 1.25; letter-spacing: -0.3px; }
+.asym-title { letter-spacing: -0.4px; }
+.foxiz-card-item .card-title { letter-spacing: -0.3px; }
 
-/* 5. "Al Momento" con un toque más agresivo */
-.al-momento-tag {
-    background: #dc2626;
-    color: #ffffff;
-    padding: 0.1rem 0.4rem;
-    border-radius: 0px;
-}
+/* 5. "Al Momento" agresivo */
+.al-momento-tag { background: #dc2626; color: #ffffff; padding: 0.1rem 0.4rem; border-radius: 0px; }
 
-/* 6. Ajuste de la barra superior (Ticker) */
-.gcm-ticker-bar {
-    border-bottom: 2px solid #dc2626;
-}
+/* 6. Ticker */
+.gcm-ticker-bar { border-bottom: 2px solid #dc2626; }
