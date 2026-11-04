@@ -1,125 +1,108 @@
-<?php global $used_ids; ?>
+<?php
+/**
+ * Main Content Section - NBC News Asymmetric Style
+ * Version: 15.5.0
+ */
+?>
 
-<!-- BLOQUE FINANZAS -->
+<!-- BLOQUE 1: FINANZAS Y ECONOMÍA (Layout Asimétrico NBC) -->
 <section class="foxiz-block-section">
     <div class="foxiz-block-header">
         <h2 class="foxiz-block-title">Finanzas & Economía Global</h2>
     </div>
+
     <div class="asymmetric-layout-grid">
+        <!-- Columna Izquierda: Nota Lead de Sección -->
         <?php
-        $fin_q = new WP_Query(array(
-            'posts_per_page' => 4,
-            'post__not_in'   => $used_ids,
+        $fin_main_q = new WP_Query(array(
+            'posts_per_page' => 1,
             'category_name'  => 'finanzas',
             'ignore_sticky_posts' => true
         ));
-        $count = 0;
-        if ($fin_q->have_posts()) :
-            while ($fin_q->have_posts()) : $fin_q->the_post();
-                $used_ids[] = get_the_ID();
-                $count++;
-                if ($count === 1) :
+
+        if ($fin_main_q->have_posts()) :
+            while ($fin_main_q->have_posts()) : $fin_main_q->the_post();
         ?>
-                    <article class="asym-main-card">
-                        <a href="<?php the_permalink(); ?>" class="asym-thumb">
-                            <?php if (has_post_thumbnail()) the_post_thumbnail('large'); ?>
-                        </a>
-                        <span class="card-meta-tag">FINANZAS</span>
-                        <h3 class="asym-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                        <p class="asym-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 22); ?></p>
-                    </article>
-                    <div class="asym-side-list">
+                <a href="<?php the_permalink(); ?>" class="asym-main-card">
+                    <?php if (has_post_thumbnail()) : ?>
+                        <div class="asym-thumb"><?php the_post_thumbnail('medium_large'); ?></div>
+                    <?php endif; ?>
+                    <h3 class="asym-title"><?php the_title(); ?></h3>
+                    <p class="asym-excerpt"><?php echo has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 20); ?></p>
+                </a>
         <?php
-                else :
-        ?>
-                    <article class="asym-list-item">
-                        <a href="<?php the_permalink(); ?>" class="asym-list-thumb">
-                            <?php if (has_post_thumbnail()) the_post_thumbnail('thumbnail'); ?>
-                        </a>
-                        <div class="asym-list-info">
-                            <h4><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
-                            <span class="asym-date"><?php echo get_the_date('M j'); ?></span>
-                        </div>
-                    </article>
-        <?php
-                endif;
             endwhile;
-            echo '</div>';
             wp_reset_postdata();
         endif;
         ?>
+
+        <!-- Columna Derecha: Stack Secundario de Sección -->
+        <div class="asym-side-list">
+            <?php
+            $fin_side_q = new WP_Query(array(
+                'posts_per_page' => 3,
+                'category_name'  => 'finanzas',
+                'offset'         => 1,
+                'ignore_sticky_posts' => true
+            ));
+
+            if ($fin_side_q->have_posts()) :
+                while ($fin_side_q->have_posts()) : $fin_side_q->the_post();
+            ?>
+                    <a href="<?php the_permalink(); ?>" class="asym-list-item">
+                        <div class="asym-list-thumb">
+                            <?php if (has_post_thumbnail()) the_post_thumbnail('thumbnail'); ?>
+                        </div>
+                        <div class="asym-list-info">
+                            <h4><?php the_title(); ?></h4>
+                            <span class="asym-date"><?php echo get_the_date('M j'); ?></span>
+                        </div>
+                    </a>
+            <?php
+                endwhile;
+                wp_reset_postdata();
+            endif;
+            ?>
+        </div>
     </div>
 </section>
 
-<!-- BANNER NEWSLETTER -->
+<!-- BANNER DE BOLETÍN / NEWSLETTER -->
 <div class="gcm-newsletter-banner">
     <div class="news-banner-content">
         <h3>Inteligencia Financiera & Tecnología</h3>
-        <p>Recibe los análisis ejecutivos diarios directamente en tu correo.</p>
+        <p>Recibe un análisis ejecutivo de los mercados cada mañana en tu correo.</p>
     </div>
-    <form class="news-banner-form" action="#" method="POST">
-        <input type="email" name="email" placeholder="Tu correo ejecutivo..." required />
+    <form class="news-banner-form" onsubmit="event.preventDefault();">
+        <input type="email" placeholder="Tu correo electrónico..." required>
         <button type="submit">Suscribirme</button>
     </form>
 </div>
 
-<!-- BLOQUE TECNOLOGÍA -->
+<!-- BLOQUE 2: TECNOLOGÍA E IA (Grid 2x2 Estilo NBC) -->
 <section class="foxiz-block-section">
     <div class="foxiz-block-header">
         <h2 class="foxiz-block-title">Tecnología & Inteligencia Artificial</h2>
     </div>
+
     <div class="foxiz-grid-2x2">
         <?php
-        $tecno_q = new WP_Query(array(
+        $tech_q = new WP_Query(array(
             'posts_per_page' => 4,
-            'post__not_in'   => $used_ids,
             'category_name'  => 'tecnologia',
             'ignore_sticky_posts' => true
         ));
-        if ($tecno_q->have_posts()) :
-            while ($tecno_q->have_posts()) : $tecno_q->the_post();
-                $used_ids[] = get_the_ID();
-        ?>
-                <article class="foxiz-card-item">
-                    <a href="<?php the_permalink(); ?>" class="card-thumb">
-                        <?php if (has_post_thumbnail()) the_post_thumbnail('medium_large'); ?>
-                    </a>
-                    <h3 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                    <p class="card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 18); ?></p>
-                </article>
-        <?php
-            endwhile;
-            wp_reset_postdata();
-        endif;
-        ?>
-    </div>
-</section>
 
-<!-- BLOQUE OPINIÓN -->
-<section class="foxiz-block-section">
-    <div class="foxiz-block-header">
-        <h2 class="foxiz-block-title">Análisis & Columnas de Opinión</h2>
-    </div>
-    <div class="opinion-grid-3col">
-        <?php
-        $opinion_q = new WP_Query(array(
-            'posts_per_page' => 3,
-            'post__not_in'   => $used_ids,
-            'category_name'  => 'opinion',
-            'ignore_sticky_posts' => true
-        ));
-        if ($opinion_q->have_posts()) :
-            while ($opinion_q->have_posts()) : $opinion_q->the_post();
+        if ($tech_q->have_posts()) :
+            while ($tech_q->have_posts()) : $tech_q->the_post();
         ?>
-                <div class="opinion-card">
-                    <div class="author-row">
-                        <div class="author-avatar-ph">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                        </div>
-                        <span class="author-name"><?php the_author(); ?></span>
-                    </div>
-                    <h4 class="opinion-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
-                </div>
+                <a href="<?php the_permalink(); ?>" class="foxiz-card-item">
+                    <?php if (has_post_thumbnail()) : ?>
+                        <div class="card-thumb"><?php the_post_thumbnail('medium'); ?></div>
+                    <?php endif; ?>
+                    <h3 class="card-title"><?php the_title(); ?></h3>
+                    <p class="card-excerpt"><?php echo wp_trim_words(get_the_content(), 16); ?></p>
+                </a>
         <?php
             endwhile;
             wp_reset_postdata();
