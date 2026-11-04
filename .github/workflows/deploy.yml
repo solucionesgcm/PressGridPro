@@ -7,7 +7,7 @@ on:
 
 jobs:
   web-deploy:
-    name: Deploy Theme via rsync/SSH
+    name: Deploy Theme via SSH
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
