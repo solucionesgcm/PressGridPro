@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 10.58.0
+Version: 10.59.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -46,7 +46,7 @@ img { max-width: 100%; height: auto; }
 }
 
 /* ==========================================================================
-   2. HEADER & TICKER
+   2. HEADER & TICKER (Igual)
    ========================================================================== */
 .gcm-ticker-bar { background: #020617; color: #94a3b8; font-size: 0.775rem; border-bottom: 2px solid var(--brand-red); padding: 0.4rem 0; overflow: hidden; }
 .gcm-ticker-container { display: flex; align-items: center; gap: 1.25rem; }
@@ -169,14 +169,14 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .podcast-play-btn { background: var(--brand-red); color: #ffffff; border: none; padding: 0.6rem 1rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; width: 100%; justify-content: center; }
 
 /* ==========================================================================
-   5. SINGLE POST (FUERZA BRUTA PARA EL ANCHO COMPLETO)
+   5. SINGLE POST (DESTRUYENDO EL LÍMITE DE GUTENBERG)
    ========================================================================== */
 
 .nbc-master-grid {
     display: grid;
     grid-template-columns: 100px minmax(0, 1fr) 320px; 
     column-gap: 2rem; 
-    max-width: 100%; /* Toma todo el ancho de la pantalla */
+    max-width: 100% !important; /* Fuerza bruta al 100% */
     margin: 0 auto;
     padding: 0 3rem;
     width: 100%;
@@ -207,7 +207,7 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .nbc-cat-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #94a3b8; }
 .nbc-kicker-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--brand-red); margin-top: 0.3rem; }
 
-/* EL CONTENEDOR PRINCIPAL: OBLIGADO A ESTIRARSE */
+/* FORZANDO LA COLUMNA CENTRAL */
 .nbc-col-main {
     grid-column: 2;
     width: 100% !important;
@@ -223,7 +223,6 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     letter-spacing: -1.5px;
     margin: 0 0 1.5rem 0;
     width: 100% !important;
-    max-width: 100% !important;
 }
 @media (max-width: 768px) { .nbc-title { font-size: 2.2rem; } }
 
@@ -234,7 +233,6 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     color: #cbd5e1;
     margin-bottom: 2.5rem;
     width: 100% !important;
-    max-width: 100% !important;
 }
 
 /* Reproductor */
@@ -266,7 +264,7 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .nbc-audio-progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #ffffff; width: 0%; }
 .nbc-audio-speed { border: 1px solid #64748b; padding: 0.1rem 0.3rem; border-radius: 2px; font-weight: 700; }
 
-/* 2. IMAGEN FLOTANTE (OBLIGADA A ESTIRARSE) */
+/* 2. IMAGEN FLOTANTE (FORZADA) */
 .nbc-image-wrapper {
     position: relative;
     z-index: 30;
@@ -284,7 +282,6 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 }
 .nbc-image-container img { 
     width: 100% !important; 
-    max-width: 100% !important;
     height: auto; 
     display: block; 
     object-fit: cover;
@@ -310,9 +307,14 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .nbc-pub-date { font-size: 0.75rem; color: #64748b; font-family: var(--font-sans); }
 .nbc-author-name { font-size: 0.85rem; font-weight: 800; color: #0f172a; }
 
-/* EL TEXTO: OBLIGADO A ESTIRARSE Y ROMPER CUALQUIER LÍMITE DE WORDPRESS */
-.nbc-post-content, 
-.nbc-post-content > * {
+/* 
+ * AQUÍ ESTÁ LA MAGIA NEGRA: 
+ * Obligamos a Gutenberg y a todos sus bloques internos a medir el 100%.
+ */
+.nbc-post-content,
+.nbc-post-content > *,
+.nbc-post-content .wp-block-group__inner-container,
+.nbc-post-content .is-layout-constrained > * {
     font-family: var(--font-serif-content); 
     font-size: 1.1rem; 
     line-height: 1.7; 
