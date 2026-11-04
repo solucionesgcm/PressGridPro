@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 15.5.0
+Version: 15.6.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -46,32 +46,8 @@ img { max-width: 100%; height: auto; }
 }
 
 /* ==========================================================================
-   2. HEADER & TICKER
+   2. HEADER
    ========================================================================== */
-.gcm-ticker-bar { 
-    background: #020617; 
-    color: #94a3b8; 
-    font-size: 0.775rem; 
-    border-bottom: 2px solid var(--brand-red); 
-    padding: 0.4rem 0; 
-    overflow: hidden; 
-}
-.gcm-ticker-container { display: flex; align-items: center; gap: 1.25rem; }
-.ticker-badge { 
-    background: var(--brand-red); 
-    color: #ffffff; 
-    font-family: var(--font-mono); 
-    font-size: 0.65rem; 
-    font-weight: 800; 
-    padding: 0.15rem 0.45rem; 
-    border-radius: 2px; 
-    text-transform: uppercase; 
-    white-space: nowrap; 
-}
-.ticker-content { display: flex; gap: 1.5rem; overflow: hidden; white-space: nowrap; flex: 1; }
-.ticker-item strong { color: #f8fafc; }
-.ticker-item.highlight { color: #f8fafc; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
-
 header.site-header { 
     background: var(--nbc-dark-bg); 
     color: #ffffff; 
@@ -86,7 +62,7 @@ header.site-header {
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. HOME (PORTADA - HERO NBC STYLE)
+   3. HOME (PORTADA - HERO NBC STYLE EN FONDO BLANCO)
    ========================================================================== */
 .gcm-home-wrapper { 
     background: #ffffff;
