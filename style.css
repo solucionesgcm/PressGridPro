@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 11.4.0
+Version: 11.6.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -219,19 +219,23 @@ header.site-header {
     max-width: 620px !important;
 }
 
-/* Destructor de límites de Gutenberg */
+/* DESTRUCTOR DE GUTENBERG - Bloquea cualquier ancho extra */
 .nbc-post-content > *,
 .nbc-post-content p,
 .nbc-post-content h2,
 .nbc-post-content h3,
 .nbc-post-content blockquote,
 .nbc-post-content figure,
+.nbc-post-content .wp-block-group,
 .nbc-post-content .wp-block-group__inner-container,
+.nbc-post-content .is-layout-constrained,
 .nbc-post-content .is-layout-constrained > * {
     width: 100% !important;
     max-width: 620px !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .nbc-post-content p { margin-bottom: 1.5rem; }
