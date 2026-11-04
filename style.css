@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 13.2.0
+Version: 15.0.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -159,7 +159,7 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .opinion-title a { color: var(--text-primary); }
 
 /* ==========================================================================
-   4. SINGLE POST (EL ARTÍCULO CON HERO EXTENDIDO)
+   4. SINGLE POST (ALINEACIÓN PERFECTA Y CENTRADA)
    ========================================================================== */
 
 /* El Hero (Fondo Oscuro) */
@@ -168,18 +168,38 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     padding: 4rem 0 8rem 0; 
 }
 
-.nbc-hero-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: grid;
-    /* La cuadrícula base es 100px (cat) + 600px (texto) + 320px (sidebar) */
-    grid-template-columns: 100px 600px 320px; 
-    gap: 2rem;
-    justify-content: center;
+/* El Cuerpo (Fondo Blanco) */
+.nbc-body-section {
+    background-color: #ffffff;
+    padding-top: 8rem; 
+    padding-bottom: 5rem;
 }
-@media (max-width: 1100px) { .nbc-hero-container { grid-template-columns: 1fr; padding: 0 1.5rem; } }
 
+/* 
+ * AQUÍ ESTÁ LA MAGIA: 
+ * Ambos contenedores tienen exactamente el mismo ancho (1084px) 
+ * y están centrados con margin: 0 auto.
+ */
+.nbc-hero-container,
+.nbc-body-container {
+    display: grid;
+    grid-template-columns: 100px 600px 320px; /* 100 + 600 + 320 = 1020px + 64px de gap = 1084px */
+    gap: 2rem;
+    width: 1084px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+@media (max-width: 1100px) {
+    .nbc-hero-container,
+    .nbc-body-container {
+        width: 100%;
+        grid-template-columns: 1fr;
+        padding: 0 1.5rem;
+    }
+}
+
+/* Columna 1: Categoría */
 .nbc-cat-col { padding-top: 0.5rem; }
 .nbc-cat-text {
     font-family: var(--font-mono);
@@ -190,14 +210,15 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     display: block;
 }
 
-/* AQUÍ ESTÁ EL TRUCO: Ocupa la columna 2 y la 3 (600px + 320px) */
-.nbc-main-hero-col { 
-    grid-column: 2 / 4; 
+/* Columna 2: Título e Imagen */
+.nbc-main-hero-col, .nbc-article-main { 
+    grid-column: 2; 
     width: 100%;
+    min-width: 0;
 }
 
 .nbc-main-hero-col h1 {
-    font-size: 3.2rem; 
+    font-size: 2.8rem; 
     line-height: 1.1;
     font-weight: 900;
     letter-spacing: -1.5px;
@@ -216,7 +237,7 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     width: 100%;
 }
 
-/* La Imagen dentro del Hero (Mide los 952px del span) */
+/* La Imagen dentro del Hero */
 .nbc-image-wrapper {
     margin-bottom: -6rem; 
     position: relative;
@@ -229,28 +250,7 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     display: block;
 }
 
-/* El Cuerpo (Fondo Blanco) */
-.nbc-body-section {
-    background-color: #ffffff;
-    padding-top: 8rem; /* Espacio para la imagen que flota */
-    padding-bottom: 5rem;
-}
-
-.nbc-body-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: grid;
-    /* Misma cuadrícula para que todo quede alineado */
-    grid-template-columns: 100px 600px 320px; 
-    gap: 2rem;
-    justify-content: center;
-    align-items: start;
-}
-@media (max-width: 1100px) { .nbc-body-container { grid-template-columns: 1fr; padding: 0 1.5rem; } }
-
-.nbc-article-main { width: 100%; min-width: 0; }
-
+/* El Texto dentro del Cuerpo */
 .nbc-post-content {
     font-family: var(--font-serif-content);
     font-size: 1.1rem;
@@ -267,7 +267,8 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .nbc-post-content p { margin-bottom: 1.5rem; }
 .nbc-post-content h2, .nbc-post-content h3 { font-family: var(--font-sans); font-weight: 900; color: #0f172a; margin-top: 2rem; margin-bottom: 1rem; }
 
-.nbc-sidebar-col { width: 100%; }
+/* Columna 3: Sidebar */
+.nbc-side-col, .nbc-sidebar-col { width: 100%; }
 
 /* ==========================================================================
    5. SIDEBAR WIDGETS
