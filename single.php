@@ -5,76 +5,18 @@
     <?php 
     $photo_caption = get_post_meta(get_the_ID(), '_gcm_photo_caption', true);
     $photo_credit  = get_post_meta(get_the_ID(), '_gcm_photo_credit', true);
-    
-    $cats = get_the_category();
-    $category_name = !empty($cats) ? $cats[0]->name : 'EXCLUSIVO';
-    $kicker = get_post_meta(get_the_ID(), '_gcm_kicker', true);
-    
-    $clean_cat = strtolower(remove_accents(trim($category_name)));
-    $clean_kicker = strtolower(remove_accents(trim($kicker)));
-    
-    if ($clean_kicker === $clean_cat || empty($kicker)) {
-        $kicker = '';
-    }
     ?>
 
-    <!-- 1. HERO OSCURO -->
-    <section class="nbc-bg-dark">
-        <div class="nbc-master-grid">
+    <!-- 1. LLAMAMOS AL HERO -->
+    <?php get_template_part('template-parts/single/hero'); ?>
+
+    <!-- 2. CUERPO (Imagen y Texto) -->
+    <section class="nbc-body-section">
+        <div class="nbc-container-wide">
             
-            <!-- Columna 1: Categoría -->
-            <div class="nbc-col-cat">
-                <span class="nbc-cat-label"><?php echo esc_html($category_name); ?></span>
-                <?php if (!empty($kicker)) : ?>
-                    <span class="nbc-kicker-label"><?php echo esc_html($kicker); ?></span>
-                <?php endif; ?>
-            </div>
-
-            <!-- Columna 2: Título, Subtítulo y Audio (Estirado al 100%) -->
-            <div class="nbc-col-main">
-                <h1 class="nbc-title"><?php the_title(); ?></h1>
-
-                <?php 
-                $subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
-                if (!empty($subtitle)) : ?>
-                    <p class="nbc-subtitle"><?php echo esc_html($subtitle); ?></p>
-                <?php endif; ?>
-
-                <!-- Reproductor de Audio -->
-                <div class="nbc-audio-wrapper">
-                    <button id="play-audio-btn" class="nbc-audio-btn" aria-label="Escuchar artículo">
-                        <svg id="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="#0f172a"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        <svg id="icon-pause" style="display:none;" width="20" height="20" viewBox="0 0 24 24" fill="#0f172a"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-                    </button>
-                    
-                    <div class="nbc-audio-content">
-                        <div class="nbc-audio-text-row">
-                            <span id="audio-text">Listen to this article with a free profile</span>
-                        </div>
-                        <div class="nbc-audio-progress-row">
-                            <span id="audio-current-time">00:00</span>
-                            <div class="nbc-audio-progress-bar" id="audio-progress-container">
-                                <div class="nbc-audio-progress-fill" id="audio-progress-fill"></div>
-                            </div>
-                            <span id="audio-duration">04:28</span>
-                            <span class="nbc-audio-speed">1x</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Columna 3: Vacía -->
-            <div class="nbc-col-side"></div>
-
-        </div>
-    </section>
-
-    <!-- 2. IMAGEN FLOTANTE (Misma cuadrícula) -->
-    <?php if (has_post_thumbnail()) : ?>
-        <div class="nbc-image-wrapper">
-            <div class="nbc-master-grid">
-                <div class="nbc-col-cat"></div>
-                <div class="nbc-col-main">
+            <!-- Imagen flotante -->
+            <?php if (has_post_thumbnail()) : ?>
+                <div class="nbc-image-wrapper">
                     <div class="nbc-image-container">
                         <?php the_post_thumbnail('full'); ?>
                     </div>
@@ -85,47 +27,38 @@
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="nbc-col-side"></div>
-            </div>
-        </div>
-    <?php endif; ?>
+            <?php endif; ?>
 
-    <!-- 3. CUERPO Y SIDEBAR (Misma cuadrícula) -->
-    <section class="nbc-bg-light">
-        <div class="nbc-master-grid">
-            
-            <div class="nbc-col-cat"></div>
+            <!-- Layout de 2 columnas: Texto y Sidebar -->
+            <div class="nbc-body-grid">
+                
+                <main class="nbc-body-main">
+                    <div class="nbc-action-bar">
+                        <a href="#" class="nbc-action-btn">SHARE</a>
+                        <div class="nbc-action-divider"></div>
+                        <a href="#" class="nbc-action-btn">ADD GCM NOTICIAS TO GOOGLE</a>
+                    </div>
 
-            <!-- Columna 2: Texto del Artículo (Estirado al 100%) -->
-            <main class="nbc-col-main">
-                <div class="nbc-action-bar">
-                    <a href="#" class="nbc-action-btn">SHARE</a>
-                    <div class="nbc-action-divider"></div>
-                    <a href="#" class="nbc-action-btn">ADD GCM NOTICIAS TO GOOGLE</a>
-                </div>
+                    <div class="nbc-meta-info">
+                        <span class="nbc-pub-date"><?php echo get_the_date('M. j, Y, g:i A T'); ?></span>
+                        <span class="nbc-author-name">By <?php the_author(); ?></span>
+                    </div>
 
-                <div class="nbc-meta-info">
-                    <span class="nbc-pub-date"><?php echo get_the_date('M. j, Y, g:i A T'); ?></span>
-                    <span class="nbc-author-name">By <?php the_author(); ?></span>
-                </div>
+                    <div class="nbc-post-content" id="article-content-for-tts">
+                        <?php the_content(); ?>
+                    </div>
 
-                <div class="nbc-post-content" id="article-content-for-tts">
-                    <?php the_content(); ?>
-                </div>
+                    <div class="gcm-post-nav-strip">
+                        <div class="nav-prev"><?php previous_post_link('%link', '← Nota Anterior: %title'); ?></div>
+                        <div class="nav-next"><?php next_post_link('%title: %link →'); ?></div>
+                    </div>
+                </main>
 
-                <div class="gcm-post-nav-strip">
-                    <div class="nav-prev"><?php previous_post_link('%link', '← Nota Anterior: %title'); ?></div>
-                    <div class="nav-next"><?php next_post_link('%title: %link →'); ?></div>
-                </div>
-            </main>
-
-            <!-- Columna 3: Sidebar -->
-            <aside class="nbc-col-side">
-                <div class="nbc-sidebar-sticky">
+                <aside class="nbc-body-sidebar">
                     <?php get_template_part('template-parts/home/sidebar'); ?>
-                </div>
-            </aside>
+                </aside>
 
+            </div>
         </div>
     </section>
 
