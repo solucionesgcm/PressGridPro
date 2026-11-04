@@ -28,7 +28,11 @@ add_action('after_setup_theme', 'pressgrid_setup');
 
 function pressgrid_enqueue_scripts() {
     wp_enqueue_style('pressgrid-google-fonts', 'https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600;700;800;900&display=swap', array(), null);
-    wp_enqueue_style('pressgrid-style', get_stylesheet_uri(), array('pressgrid-google-fonts'), '10.38.0');
+    
+    // AQUI ESTÁ LA MAGIA: Detecta cuándo fue la última vez que modificaste el style.css
+    $style_version = filemtime(get_stylesheet_directory() . '/style.css');
+    
+    wp_enqueue_style('pressgrid-style', get_stylesheet_uri(), array('pressgrid-google-fonts'), $style_version);
 }
 add_action('wp_enqueue_scripts', 'pressgrid_enqueue_scripts');
 
@@ -85,7 +89,7 @@ function pressgrid_render_unified_meta_box($post) {
     echo '<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif; background:#f8fafc; border:1px solid #cbd5e1; border-radius:6px; padding:1.15rem;">';
     
     echo '<div style="margin-bottom:1rem;">';
-    echo '<label style="display:block; font-weight:700; font-size:0.825rem; margin-bottom:0.3rem;">Kicker / Ante-título:</label>';
+    echo '<label style="display:block; font-weight:700; font-size:0.825rem; margin-bottom:0.3rem;">Kicker / Ante-título (Aparece en rojo):</label>';
     echo '<input type="text" name="gcm_kicker" value="' . esc_attr($kicker) . '" style="width:100%; padding:0.5rem; border:1px solid #cbd5e1; border-radius:4px;" />';
     echo '</div>';
     
@@ -95,7 +99,7 @@ function pressgrid_render_unified_meta_box($post) {
     echo '</div>';
 
     echo '<div style="margin-bottom:1rem;">';
-    echo '<label style="display:block; font-weight:700; font-size:0.825rem; margin-bottom:0.3rem;">URL del Audio MP3 (Opcional):</label>';
+    echo '<label style="display:block; font-weight:700; font-size:0.825rem; margin-bottom:0.3rem;">URL del Audio MP3 (Opcional - Dejar vacío para voz del navegador):</label>';
     echo '<input type="text" name="gcm_audio_url" value="' . esc_attr($audio_url) . '" placeholder="https://..." style="width:100%; padding:0.5rem; border:1px solid #cbd5e1; border-radius:4px;" />';
     echo '</div>';
 
