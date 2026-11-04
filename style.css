@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 10.59.0
+Version: 10.60.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -169,23 +169,62 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .podcast-play-btn { background: var(--brand-red); color: #ffffff; border: none; padding: 0.6rem 1rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; width: 100%; justify-content: center; }
 
 /* ==========================================================================
-   5. SINGLE POST (DESTRUYENDO EL LÍMITE DE GUTENBERG)
+   5. SINGLE POST (FLEXBOX: A PRUEBA DE BALAS)
    ========================================================================== */
 
+/* 
+ * EL TRUCO FINAL: Usar Flexbox.
+ * Le decimos al contenedor principal que se expanda al 100% de la pantalla.
+ */
 .nbc-master-grid {
-    display: grid;
-    grid-template-columns: 100px minmax(0, 1fr) 320px; 
-    column-gap: 2rem; 
-    max-width: 100% !important; /* Fuerza bruta al 100% */
+    display: flex; /* Usamos flex en lugar de grid */
+    width: 100% !important;
+    max-width: 100% !important;
     margin: 0 auto;
     padding: 0 3rem;
+    box-sizing: border-box;
+}
+
+/* La columna de la categoría mantiene un ancho fijo */
+.nbc-col-cat {
+    width: 120px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0.5rem;
+}
+
+/* La columna central (la nota) crece hasta ocupar TODO el espacio restante */
+.nbc-col-main {
+    flex-grow: 1;
+    min-width: 0; /* Permite que el contenido fluya sin romper el flexbox */
     width: 100%;
 }
 
+/* El sidebar mantiene su ancho fijo a la derecha */
+.nbc-col-side {
+    width: 320px;
+    flex-shrink: 0;
+    margin-left: 3rem; /* Separación entre el texto y el sidebar */
+    padding-top: 0;
+}
+
+/* Responsive: En móviles se apilan */
 @media (max-width: 1100px) {
     .nbc-master-grid {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         padding: 0 1.5rem;
+    }
+    .nbc-col-cat {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .nbc-col-side {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        padding-top: 2rem;
     }
 }
 
@@ -196,25 +235,8 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     padding: 3.5rem 0 8rem 0; 
 }
 
-.nbc-col-cat {
-    grid-column: 1;
-    display: flex;
-    flex-direction: column;
-    padding-top: 0.5rem;
-}
-@media (max-width: 1100px) { .nbc-col-cat { grid-column: 1; margin-bottom: 1rem; } }
-
 .nbc-cat-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #94a3b8; }
 .nbc-kicker-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--brand-red); margin-top: 0.3rem; }
-
-/* FORZANDO LA COLUMNA CENTRAL */
-.nbc-col-main {
-    grid-column: 2;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0;
-}
-@media (max-width: 1100px) { .nbc-col-main { grid-column: 1; } }
 
 .nbc-title {
     font-size: 3.8rem;
@@ -222,7 +244,7 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     font-weight: 900;
     letter-spacing: -1.5px;
     margin: 0 0 1.5rem 0;
-    width: 100% !important;
+    width: 100%;
 }
 @media (max-width: 768px) { .nbc-title { font-size: 2.2rem; } }
 
@@ -232,7 +254,7 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     line-height: 1.4;
     color: #cbd5e1;
     margin-bottom: 2.5rem;
-    width: 100% !important;
+    width: 100%;
 }
 
 /* Reproductor */
@@ -264,28 +286,17 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .nbc-audio-progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #ffffff; width: 0%; }
 .nbc-audio-speed { border: 1px solid #64748b; padding: 0.1rem 0.3rem; border-radius: 2px; font-weight: 700; }
 
-/* 2. IMAGEN FLOTANTE (FORZADA) */
+/* 2. IMAGEN FLOTANTE */
 .nbc-image-wrapper {
     position: relative;
     z-index: 30;
     margin-top: -6rem;
     margin-bottom: 2rem;
-    width: 100% !important;
+    width: 100%;
 }
 
-.nbc-image-container { 
-    width: 100% !important; 
-    max-width: 100% !important; 
-    overflow: hidden; 
-    background: #e2e8f0; 
-    display: block; 
-}
-.nbc-image-container img { 
-    width: 100% !important; 
-    height: auto; 
-    display: block; 
-    object-fit: cover;
-}
+.nbc-image-container { width: 100%; overflow: hidden; background: #e2e8f0; display: block; }
+.nbc-image-container img { width: 100%; height: auto; display: block; object-fit: cover; }
 
 .nbc-image-caption { margin-top: 1rem; font-family: var(--font-serif-excerpt); font-size: 0.85rem; color: #475569; line-height: 1.4; display: flex; flex-direction: column; gap: 0.3rem; }
 .nbc-caption-text { display: flex; align-items: flex-start; gap: 0.6rem; }
@@ -308,13 +319,15 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .nbc-author-name { font-size: 0.85rem; font-weight: 800; color: #0f172a; }
 
 /* 
- * AQUÍ ESTÁ LA MAGIA NEGRA: 
- * Obligamos a Gutenberg y a todos sus bloques internos a medir el 100%.
+ * AQUÍ MATAMOS EL LÍMITE DE GUTENBERG
+ * Obligamos a TODOS los bloques internos a medir el 100% de su columna.
  */
-.nbc-post-content,
+.nbc-post-content, 
 .nbc-post-content > *,
 .nbc-post-content .wp-block-group__inner-container,
-.nbc-post-content .is-layout-constrained > * {
+.nbc-post-content .is-layout-constrained > *,
+.nbc-post-content .wp-block-image,
+.nbc-post-content figure {
     font-family: var(--font-serif-content); 
     font-size: 1.1rem; 
     line-height: 1.7; 
@@ -329,14 +342,6 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 
 .gcm-post-nav-strip { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 1.25rem 0; margin-top: 3rem; font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700; }
 .gcm-post-nav-strip a { color: var(--text-primary); }
-
-/* El Sidebar */
-.nbc-col-side {
-    grid-column: 3;
-    padding-top: 0; 
-    width: 100%;
-}
-@media (max-width: 1100px) { .nbc-col-side { grid-column: 1; padding-top: 2rem; border-top: 1px solid var(--border-color); } }
 
 /* ==========================================================================
    6. FOOTER
