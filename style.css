@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 13.0.0
+Version: 13.2.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -67,19 +67,27 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
    3. HOME (PORTADA)
    ========================================================================== */
 .gcm-home-wrapper { padding-top: 1.75rem; padding-bottom: 3rem; }
+.nbc-hero-section { display: grid; grid-template-columns: 1.35fr 1fr 290px; gap: 2rem; align-items: start; padding-bottom: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+@media (max-width: 1024px) { .nbc-hero-section { grid-template-columns: 1fr 1fr; } .nbc-hero-third-col { display: none; } }
+@media (max-width: 768px) { .nbc-hero-section { grid-template-columns: 1fr; } }
+
 .nbc-hero-main-card { display: block; }
 .nbc-hero-main-card .thumb-wrap { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #111827; margin-bottom: 0.5rem; border-radius: 0px; }
 .nbc-hero-main-card .thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
 .nbc-hero-kicker { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--brand-red); text-transform: uppercase; margin-bottom: 0.35rem; }
 .nbc-hero-title { font-size: 2.1rem; line-height: 1.1; font-weight: 900; letter-spacing: -0.8px; margin: 0 0 0.6rem 0; color: var(--text-primary); }
 .nbc-hero-excerpt { font-family: var(--font-serif-excerpt); font-size: 1.05rem; color: #475569; margin: 0; }
+
 .nbc-hero-stack { display: flex; flex-direction: column; gap: 1.5rem; border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0 1.5rem; }
+@media (max-width: 1024px) { .nbc-hero-stack { border-right: none; padding-right: 0; } }
+@media (max-width: 768px) { .nbc-hero-stack { border-left: none; padding: 0; } }
 .nbc-hero-stack-item { display: flex; flex-direction: column; border-bottom: 1px solid #f1f5f9; padding-bottom: 1.25rem; }
 .nbc-hero-stack-item:last-child { border-bottom: none; padding-bottom: 0; }
 .nbc-hero-stack-item .thumb { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 0px; margin-bottom: 0.75rem; background: #e2e8f0; }
 .nbc-hero-stack-item .thumb img { width: 100%; height: 100%; object-fit: cover; }
 .nbc-hero-stack-item .meta-kicker { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--brand-red); margin-bottom: 0.25rem; display: block; }
 .nbc-hero-stack-item h4 { font-size: 1.05rem; line-height: 1.25; font-weight: 800; letter-spacing: -0.3px; margin: 0; color: #0f172a; }
+
 .nbc-hero-third-col { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 1.25rem; min-height: 400px; display: flex; flex-direction: column; }
 .nbc-al-momento-header { border-bottom: 2px solid var(--text-primary); padding-bottom: 0.4rem; margin-bottom: 1rem; }
 .nbc-al-momento-title { font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin: 0; display: flex; align-items: center; gap: 0.4rem; }
@@ -90,19 +98,25 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .al-momento-time { color: #64748b; }
 .al-momento-tag { background: #dc2626; color: #ffffff; padding: 0.1rem 0.4rem; border-radius: 0px; font-weight: 700; text-transform: uppercase; }
 .al-momento-item h4 { font-size: 0.875rem; line-height: 1.35; font-weight: 700; color: #1e293b; margin: 0; }
+
 .gcm-multimedia-dark-strip { background: var(--nbc-dark-bg); color: #ffffff; padding: 2.25rem 0; margin: 2rem 0; }
 .multimedia-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; color: #94a3b8; display: block; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
 .multimedia-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+@media (max-width: 900px) { .multimedia-grid { grid-template-columns: repeat(2, 1fr); } }
 .multimedia-card { color: #ffffff; display: block; }
 .multimedia-thumb { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 0px; background: #1e293b; margin-bottom: 0.75rem; }
 .multimedia-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .video-play-icon { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.75); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .multimedia-card h4 { font-size: 0.875rem; line-height: 1.3; font-weight: 700; margin: 0; color: #f1f5f9; }
+
 .foxiz-main-layout { display: grid; grid-template-columns: 1fr 310px; gap: 2.5rem; align-items: start; }
+@media (max-width: 992px) { .foxiz-main-layout { grid-template-columns: 1fr; } }
 .foxiz-block-section { margin-bottom: 3.5rem; }
 .foxiz-block-header { border-bottom: none; border-top: 4px solid #0f172a; padding-top: 0.75rem; padding-bottom: 0; margin-bottom: 1.25rem; }
 .foxiz-block-title { font-size: 1.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; margin: 0; color: var(--text-primary); }
+
 .asymmetric-layout-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.75rem; }
+@media (max-width: 768px) { .asymmetric-layout-grid { grid-template-columns: 1fr; } }
 .asym-main-card { display: block; }
 .asym-thumb { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 0px; margin-bottom: 0.75rem; background: #e2e8f0; }
 .asym-thumb img { width: 100%; height: 100%; object-fit: cover; }
@@ -117,20 +131,26 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .asym-list-info h4 { font-size: 0.9rem; font-weight: 700; line-height: 1.3; margin: 0 0 0.25rem 0; }
 .asym-list-info h4 a { color: var(--text-primary); }
 .asym-date { font-family: var(--font-mono); font-size: 0.685rem; color: var(--text-muted); }
+
 .gcm-newsletter-banner { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.75rem; margin-bottom: 3.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
+@media (max-width: 768px) { .gcm-newsletter-banner { flex-direction: column; text-align: center; } }
 .news-banner-content h3 { font-size: 1.1rem; font-weight: 900; margin: 0 0 0.25rem 0; color: #0f172a; }
 .news-banner-content p { font-size: 0.875rem; color: #475569; margin: 0; }
 .news-banner-form { display: flex; gap: 0.5rem; }
 .news-banner-form input { padding: 0.55rem 0.85rem; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.85rem; min-width: 220px; }
 .news-banner-form button { background: var(--brand-red); color: #ffffff; border: none; padding: 0.55rem 1.15rem; border-radius: 4px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
+
 .foxiz-grid-2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+@media (max-width: 600px) { .foxiz-grid-2x2 { grid-template-columns: 1fr; } }
 .foxiz-card-item { display: flex; flex-direction: column; }
 .foxiz-card-item .card-thumb { width: 100%; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 0px; background: #e2e8f0; margin-bottom: 0.75rem; display: block; }
 .foxiz-card-item .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .foxiz-card-item .card-title { font-size: 1.05rem; line-height: 1.25; font-weight: 800; letter-spacing: -0.3px; margin: 0 0 0.4rem 0; }
 .foxiz-card-item .card-title a { color: var(--text-primary); }
 .foxiz-card-item .card-excerpt { font-family: var(--font-serif-excerpt); font-size: 0.875rem; color: var(--text-secondary); line-height: 1.45; margin: 0; }
+
 .opinion-grid-3col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+@media (max-width: 600px) { .opinion-grid-3col { grid-template-columns: 1fr; } }
 .opinion-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.25rem; border-radius: 4px; }
 .opinion-card .author-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; }
 .opinion-card .author-avatar-ph { width: 28px; height: 28px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
@@ -139,13 +159,13 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .opinion-title a { color: var(--text-primary); }
 
 /* ==========================================================================
-   4. SINGLE POST (EL ARTÍCULO CON TU ARQUITECTURA)
+   4. SINGLE POST (EL ARTÍCULO CON HERO EXTENDIDO)
    ========================================================================== */
 
 /* El Hero (Fondo Oscuro) */
 .nbc-hero-section {
     background-color: var(--nbc-dark-bg);
-    padding: 4rem 0 8rem 0; /* El padding inferior permite que la imagen flote */
+    padding: 4rem 0 8rem 0; 
 }
 
 .nbc-hero-container {
@@ -153,7 +173,8 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     margin: 0 auto;
     padding: 0 2rem;
     display: grid;
-    grid-template-columns: 100px 600px 320px; /* Cat | Título/Imagen | Espacio Sidebar */
+    /* La cuadrícula base es 100px (cat) + 600px (texto) + 320px (sidebar) */
+    grid-template-columns: 100px 600px 320px; 
     gap: 2rem;
     justify-content: center;
 }
@@ -169,13 +190,17 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     display: block;
 }
 
-.nbc-main-hero-col { width: 100%; }
+/* AQUÍ ESTÁ EL TRUCO: Ocupa la columna 2 y la 3 (600px + 320px) */
+.nbc-main-hero-col { 
+    grid-column: 2 / 4; 
+    width: 100%;
+}
 
 .nbc-main-hero-col h1 {
-    font-size: 2.8rem;
+    font-size: 3.2rem; 
     line-height: 1.1;
     font-weight: 900;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
     color: #ffffff;
     margin: 0 0 1.5rem 0;
     width: 100%;
@@ -184,16 +209,16 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 
 .nbc-excerpt {
     font-family: var(--font-serif-excerpt);
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     line-height: 1.4;
     color: #cbd5e1;
     margin-bottom: 2.5rem;
     width: 100%;
 }
 
-/* La Imagen dentro del Hero */
+/* La Imagen dentro del Hero (Mide los 952px del span) */
 .nbc-image-wrapper {
-    margin-bottom: -6rem; /* Sube el texto de abajo, o baja la imagen */
+    margin-bottom: -6rem; 
     position: relative;
     z-index: 10;
     width: 100%;
@@ -216,7 +241,8 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     margin: 0 auto;
     padding: 0 2rem;
     display: grid;
-    grid-template-columns: 100px 600px 320px; /* Cat (vacío) | Texto | Sidebar */
+    /* Misma cuadrícula para que todo quede alineado */
+    grid-template-columns: 100px 600px 320px; 
     gap: 2rem;
     justify-content: center;
     align-items: start;
@@ -232,7 +258,6 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     color: #1e293b;
     width: 100%;
 }
-/* Destructor de Gutenberg */
 .nbc-post-content > *, .nbc-post-content p, .nbc-post-content h2, .nbc-post-content h3, .nbc-post-content blockquote, .nbc-post-content figure, .nbc-post-content .wp-block-group__inner-container, .nbc-post-content .is-layout-constrained > * {
     width: 100% !important;
     max-width: 100% !important;
