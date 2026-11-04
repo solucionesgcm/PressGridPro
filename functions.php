@@ -1,8 +1,10 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
+// 1. Cargar el panel de administración
 require_once get_template_directory() . '/inc/theme-options.php';
 
+// 2. Configuración base del tema
 function pressgrid_setup() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
@@ -26,19 +28,24 @@ function pressgrid_setup() {
 }
 add_action('after_setup_theme', 'pressgrid_setup');
 
-// ENCOLE DE ESTILOS Y FUENTES CON CACHE-BUSTING
+// 3. Encolado de Estilos y Fuentes (Rendimiento Optimizado)
 function pressgrid_enqueue_scripts() {
+    // Fuentes de Google
     wp_enqueue_style('pressgrid-google-fonts', 'https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600;700;800;900&display=swap', array(), null);
     
+    // Hoja de estilos principal (Con versión fija para caché)
     wp_enqueue_style('pressgrid-style', get_stylesheet_uri(), array('pressgrid-google-fonts'), '10.38.0');
 }
 add_action('wp_enqueue_scripts', 'pressgrid_enqueue_scripts');
 
+// 4. Registro de Meta Boxes Editoriales
 function pressgrid_cleanup_and_register_single_meta_box() {
+    // Limpieza de meta boxes antiguos (legacy)
     remove_meta_box('gcm_post_metadata_box', 'post', 'normal');
     remove_meta_box('gcm_advanced_meta_box', 'post', 'normal');
     remove_meta_box('gcm_post_meta_box', 'post', 'normal');
 
+    // Meta Box lateral (Visibilidad)
     add_meta_box(
         'pressgrid_sidebar_editorial_meta_box',
         'PRESSGRID — Visibilidad Portada',
@@ -48,6 +55,7 @@ function pressgrid_cleanup_and_register_single_meta_box() {
         'high'
     );
 
+    // Meta Box principal (Datos Editoriales)
     add_meta_box(
         'pressgrid_unified_editorial_meta_box',
         'PRESSGRID — Datos Editoriales Avanzados',
@@ -59,6 +67,7 @@ function pressgrid_cleanup_and_register_single_meta_box() {
 }
 add_action('add_meta_boxes', 'pressgrid_cleanup_and_register_single_meta_box', 99);
 
+// 5. Renderizado del Meta Box Lateral
 function pressgrid_render_sidebar_meta_box($post) {
     wp_nonce_field('pressgrid_save_sidebar_meta_box', 'pressgrid_sidebar_meta_box_nonce');
 
@@ -66,15 +75,16 @@ function pressgrid_render_sidebar_meta_box($post) {
     $is_secondary = get_post_meta($post->ID, '_gcm_is_secondary', true);
     
     echo '<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;">';
-    echo '<label style="display:flex; align-items:center; gap:0.5rem; font-weight:700; font-size:0.825rem; margin-bottom:0.4rem;">';
+    echo '<label style="display:flex; align-items:center; gap:0.5rem; font-weight:700; font-size:0.825rem; margin-bottom:0.6rem;">';
     echo '<input type="checkbox" name="gcm_is_featured" value="1" ' . checked($is_featured, '1', false) . ' /> Nota Principal (Hero Col 1)';
     echo '</label>';
-    echo '<label style="display:flex; align-items:center; gap:0.5rem; font-weight:700; font-size:0.825rem; margin-bottom:0.4rem;">';
+    echo '<label style="display:flex; align-items:center; gap:0.5rem; font-weight:700; font-size:0.825rem; margin-bottom:0.6rem;">';
     echo '<input type="checkbox" name="gcm_is_secondary" value="1" ' . checked($is_secondary, '1', false) . ' /> Nota Secundaria (Hero Col 2)';
     echo '</label>';
     echo '</div>';
 }
 
+// 6. Renderizado del Meta Box Principal
 function pressgrid_render_unified_meta_box($post) {
     wp_nonce_field('pressgrid_save_unified_meta_box', 'pressgrid_unified_meta_box_nonce');
 
@@ -82,29 +92,36 @@ function pressgrid_render_unified_meta_box($post) {
     $subtitle = get_post_meta($post->ID, '_gcm_subtitle', true);
 
     echo '<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif; background:#f8fafc; border:1px solid #cbd5e1; border-radius:6px; padding:1.15rem;">';
+    
     echo '<div style="margin-bottom:1rem;">';
     echo '<label style="display:block; font-weight:700; font-size:0.825rem; margin-bottom:0.3rem;">Kicker / Ante-título:</label>';
     echo '<input type="text" name="gcm_kicker" value="' . esc_attr($kicker) . '" style="width:100%; padding:0.5rem; border:1px solid #cbd5e1; border-radius:4px;" />';
     echo '</div>';
+    
     echo '<div>';
     echo '<label style="display:block; font-weight:700; font-size:0.825rem; margin-bottom:0.3rem;">Bajada / Subtítulo:</label>';
     echo '<textarea name="gcm_subtitle" rows="3" style="width:100%; padding:0.5rem; border:1px solid #cbd5e1; border-radius:4px;">' . esc_textarea($subtitle) . '</textarea>';
     echo '</div>';
+    
     echo '</div>';
 }
 
+// 7. Guardado Seguro de los Meta Boxes
 function pressgrid_save_unified_meta_box($post_id) {
+    // Verificación de seguridad para el Meta Box Lateral
     if (isset($_POST['pressgrid_sidebar_meta_box_nonce']) && wp_verify_nonce($_POST['pressgrid_sidebar_meta_box_nonce'], 'pressgrid_save_sidebar_meta_box')) {
         update_post_meta($post_id, '_gcm_is_featured', isset($_POST['gcm_is_featured']) ? '1' : '0');
         update_post_meta($post_id, '_gcm_is_secondary', isset($_POST['gcm_is_secondary']) ? '1' : '0');
     }
 
+    // Verificación de seguridad para el Meta Box Principal
     if (!isset($_POST['pressgrid_unified_meta_box_nonce']) || !wp_verify_nonce($_POST['pressgrid_unified_meta_box_nonce'], 'pressgrid_save_unified_meta_box')) return;
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     if (!current_user_can('edit_post', $post_id)) return;
 
+    // Sanitización y guardado
     if (isset($_POST['gcm_kicker'])) update_post_meta($post_id, '_gcm_kicker', sanitize_text_field($_POST['gcm_kicker']));
     if (isset($_POST['gcm_subtitle'])) update_post_meta($post_id, '_gcm_subtitle', sanitize_textarea_field($_POST['gcm_subtitle']));
 }
 add_action('save_post', 'pressgrid_save_unified_meta_box');
-?>
+// Nota: Sin etiqueta de cierre ?> para evitar errores de "headers already sent" en WordPress.
