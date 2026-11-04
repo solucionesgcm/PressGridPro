@@ -1,7 +1,7 @@
 <?php
 /**
  * Single Article Main Template - PressGrid Pro
- * Version: 15.7.0
+ * Version: 15.8.0
  */
 get_header(); ?>
 
@@ -34,33 +34,7 @@ get_header(); ?>
                 </article>
 
                 <aside class="gcm-sidebar">
-                    <div class="gcm-sidebar-widget">
-                        <h3 class="widget-title">Tendencias Destacadas</h3>
-                        <?php
-                        $rel_q = new WP_Query(array(
-                            'posts_per_page'      => 4,
-                            'post__not_in'        => array(get_the_ID()),
-                            'ignore_sticky_posts' => true
-                        ));
-
-                        if ($rel_q->have_posts()) :
-                            while ($rel_q->have_posts()) : $rel_q->the_post();
-                        ?>
-                                <a href="<?php the_permalink(); ?>" class="sidebar-news-card-nbc">
-                                    <div class="sidebar-thumb-top-32">
-                                        <?php if (has_post_thumbnail()) the_post_thumbnail('medium'); ?>
-                                    </div>
-                                    <div class="sidebar-card-info-nbc">
-                                        <h4><?php the_title(); ?></h4>
-                                        <span class="meta-time"><?php echo get_the_date('M j, Y'); ?></span>
-                                    </div>
-                                </a>
-                        <?php
-                            endwhile;
-                            wp_reset_postdata();
-                        endif;
-                        ?>
-                    </div>
+                    <?php get_template_part('template-parts/sidebar/most-read'); ?>
                 </aside>
 
             </div>
