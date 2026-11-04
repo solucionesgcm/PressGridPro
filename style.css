@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 11.1.0
+Version: 11.3.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -46,16 +46,38 @@ img { max-width: 100%; height: auto; }
 }
 
 /* ==========================================================================
-   2. HEADER & TICKER (Igual)
+   2. HEADER & TICKER
    ========================================================================== */
-.gcm-ticker-bar { background: #020617; color: #94a3b8; font-size: 0.775rem; border-bottom: 2px solid var(--brand-red); padding: 0.4rem 0; overflow: hidden; }
+.gcm-ticker-bar { 
+    background: #020617; 
+    color: #94a3b8; 
+    font-size: 0.775rem; 
+    border-bottom: 2px solid var(--brand-red); 
+    padding: 0.4rem 0; 
+    overflow: hidden; 
+}
 .gcm-ticker-container { display: flex; align-items: center; gap: 1.25rem; }
-.ticker-badge { background: var(--brand-red); color: #ffffff; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 2px; text-transform: uppercase; white-space: nowrap; }
+.ticker-badge { 
+    background: var(--brand-red); 
+    color: #ffffff; 
+    font-family: var(--font-mono); 
+    font-size: 0.65rem; 
+    font-weight: 800; 
+    padding: 0.15rem 0.45rem; 
+    border-radius: 2px; 
+    text-transform: uppercase; 
+    white-space: nowrap; 
+}
 .ticker-content { display: flex; gap: 1.5rem; overflow: hidden; white-space: nowrap; flex: 1; }
 .ticker-item strong { color: #f8fafc; }
 .ticker-item.highlight { color: #f8fafc; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
 
-header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.2rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+header.site-header { 
+    background: var(--nbc-dark-bg); 
+    color: #ffffff; 
+    padding: 1.2rem 0; 
+    border-bottom: 1px solid rgba(255,255,255,0.08); 
+}
 .header-container { display: flex; justify-content: space-between; align-items: center; }
 .logo h1 { margin: 0; font-size: 1.85rem; font-weight: 900; letter-spacing: -0.5px; }
 .logo a { color: #ffffff; }
@@ -64,30 +86,32 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. SINGLE POST (3 Bloques: Hero, Imagen, Cuerpo)
+   3. SINGLE POST (GRID MAESTRO DE 3 COLUMNAS)
    ========================================================================== */
 
-/* 1. HERO OSCURO */
-.nbc-hero-section {
-    background-color: var(--nbc-dark-bg);
-    padding: 4rem 0 8rem 0; /* 8rem abajo para que la imagen flote */
-}
-
-.nbc-hero-container {
-    max-width: 1300px;
+/* La Cuadrícula Maestra: 100px Cat | 620px Nota | 320px Sidebar */
+.nbc-grid {
+    display: grid;
+    grid-template-columns: 100px 620px 320px; 
+    gap: 2rem; 
+    justify-content: center; /* Centra todo el bloque en la pantalla */
+    max-width: 100%; 
     margin: 0 auto;
     padding: 0 2rem;
-    display: flex;
-    gap: 3rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
-    .nbc-hero-container { flex-direction: column; gap: 1rem; }
+@media (max-width: 1100px) {
+    .nbc-grid { 
+        grid-template-columns: 1fr; 
+        padding: 0 1.5rem; 
+        gap: 1.5rem;
+    }
 }
 
+/* Columna 1: Categoría */
 .nbc-cat-col {
-    width: 120px;
-    flex-shrink: 0;
     padding-top: 0.5rem;
 }
 .nbc-cat-text {
@@ -99,73 +123,94 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     display: block;
 }
 
-.nbc-title-col {
-    flex-grow: 1;
+/* Columna 2: La Nota (Título, Imagen, Texto) */
+.nbc-main-col {
+    min-width: 0;
+    width: 100%;
 }
 
-.nbc-title-col h1 {
-    font-size: 3.8rem;
-    line-height: 1.05;
+/* Fondo Oscuro (Hero) */
+.nbc-hero-bg {
+    background-color: var(--nbc-dark-bg);
+    padding: 4rem 0 8rem 0; /* 8rem abajo para que la imagen flote */
+}
+
+.nbc-main-col h1 {
+    font-size: 3.2rem; /* Tamaño ajustado para el ancho de 620px */
+    line-height: 1.1;
     font-weight: 900;
-    letter-spacing: -1.5px;
+    letter-spacing: -1px;
     color: #ffffff;
     margin: 0 0 1.5rem 0;
+    width: 100%;
 }
-@media (max-width: 768px) { .nbc-title-col h1 { font-size: 2.2rem; } }
+@media (max-width: 768px) { .nbc-main-col h1 { font-size: 2.2rem; } }
 
 .nbc-excerpt {
     font-family: var(--font-serif-excerpt);
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     line-height: 1.4;
     color: #cbd5e1;
     margin-bottom: 2.5rem;
+    width: 100%;
 }
 
-/* 2. IMAGEN FLOTANTE */
-.nbc-image-container {
-    max-width: 1300px;
-    margin: -6rem auto 2rem auto; /* Sube para pisar el Hero */
-    padding: 0 2rem;
+/* Fondo Blanco (Imagen y Texto) */
+.nbc-body-bg {
+    background-color: #ffffff;
+    padding-bottom: 5rem;
+}
+
+/* Imagen flotante */
+.nbc-image-wrapper {
+    margin-top: -6rem; 
+    margin-bottom: 2rem;
     position: relative;
     z-index: 10;
+    width: 100%;
 }
 
-.nbc-image-inner {
-    max-width: 1100px; /* La imagen es un poco más angosta que el título (como en NBC) */
-}
-.nbc-image-inner img {
+.nbc-image-wrapper img {
     width: 100%;
     height: auto;
     display: block;
 }
 
-/* 3. CUERPO: TEXTO Y SIDEBAR */
-.nbc-body-section {
-    background-color: #ffffff;
-    padding-bottom: 5rem;
+.nbc-image-caption {
+    margin-top: 0.5rem;
+    font-family: var(--font-serif-excerpt);
+    font-size: 0.85rem;
+    color: #475569;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.nbc-caption-text {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+}
+.nbc-caption-text::before {
+    content: "——";
+    color: #94a3b8;
+    font-weight: 400;
+    flex-shrink: 0;
+}
+.nbc-photo-credit {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    color: #94a3b8;
+    padding-left: 1.8rem;
 }
 
-.nbc-body-container {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: grid;
-    grid-template-columns: 1fr 320px; /* Texto 100%, Sidebar 320px */
-    gap: 4rem;
-    align-items: start;
-}
-
-@media (max-width: 1024px) {
-    .nbc-body-container { grid-template-columns: 1fr; gap: 2rem; }
-}
-
-/* El texto */
+/* Texto del Artículo */
 .nbc-post-content {
     font-family: var(--font-serif-content);
     font-size: 1.1rem;
     line-height: 1.7;
     color: #1e293b;
-    min-width: 0;
+    width: 100%;
 }
 
 /* Destructor de límites de Gutenberg */
@@ -174,7 +219,9 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 .nbc-post-content h2,
 .nbc-post-content h3,
 .nbc-post-content blockquote,
-.nbc-post-content figure {
+.nbc-post-content figure,
+.nbc-post-content .wp-block-group__inner-container,
+.nbc-post-content .is-layout-constrained > * {
     width: 100% !important;
     max-width: 100% !important;
     margin-left: 0 !important;
@@ -189,7 +236,7 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
     margin-bottom: 1rem; 
 }
 
-/* El Sidebar */
+/* Columna 3: Sidebar */
 .nbc-sidebar-col {
     width: 100%;
 }
@@ -197,7 +244,15 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 /* ==========================================================================
    4. SIDEBAR WIDGETS
    ========================================================================== */
-.sidebar-header-title { font-size: 0.9rem; font-weight: 900; text-transform: uppercase; border-bottom: 2px solid var(--text-primary); padding-bottom: 0.4rem; margin-top: 0; margin-bottom: 1.5rem; }
+.sidebar-header-title { 
+    font-size: 0.9rem; 
+    font-weight: 900; 
+    text-transform: uppercase; 
+    border-bottom: 2px solid var(--text-primary); 
+    padding-bottom: 0.4rem; 
+    margin-top: 0; 
+    margin-bottom: 1.5rem; 
+}
 .top-ranked-list { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
 .top-rank-item { display: flex; gap: 1rem; align-items: flex-start; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.85rem; }
 .top-rank-item:last-child { border-bottom: none; }
@@ -213,5 +268,11 @@ header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.
 /* ==========================================================================
    5. FOOTER
    ========================================================================== */
-footer.site-footer { background: var(--nbc-dark-bg); color: #94a3b8; text-align: center; padding: 2.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); }
+footer.site-footer { 
+    background: var(--nbc-dark-bg); 
+    color: #94a3b8; 
+    text-align: center; 
+    padding: 2.5rem 0; 
+    border-top: 1px solid rgba(255,255,255,0.1); 
+}
 footer.site-footer p { margin: 0; font-size: 0.9rem; }
