@@ -2,7 +2,7 @@
 
 <?php while (have_posts()) : the_post(); ?>
 
-    <!-- HERO OSCURO ESTILO NBC NEWS -->
+    <!-- 1. HERO OSCURO (Titular, Bajada y Autor) -->
     <section class="gcm-single-hero-dark">
         <div class="container">
             <div class="gcm-single-hero-inner">
@@ -35,6 +35,7 @@
                     <span class="byline-author">Por <strong><?php the_author(); ?></strong></span>
                 </div>
 
+                <!-- Reproductor de Audio (Visual) -->
                 <div class="gcm-audio-player-bar">
                     <button class="audio-play-btn" aria-label="Escuchar artículo">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="#0f172a"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -45,10 +46,11 @@
         </div>
     </section>
 
-    <!-- CUERPO DEL ARTÍCULO + SIDEBAR -->
+    <!-- 2. CUERPO DEL ARTÍCULO Y SIDEBAR -->
     <section class="gcm-single-body-area">
         <div class="container">
 
+            <!-- Imagen Destacada Flotante -->
             <?php if (has_post_thumbnail()) : ?>
                 <div class="gcm-feat-hero-media-wrapper">
                     <div class="gcm-feat-hero-media">
@@ -59,46 +61,21 @@
 
             <div class="gcm-nbc-sub-grid">
                 
+                <!-- Artículo Principal -->
                 <article class="gcm-article-main-column">
                     <div class="post-content">
                         <?php the_content(); ?>
                     </div>
 
+                    <!-- Botones Siguiente / Anterior -->
                     <div class="gcm-post-nav-strip">
                         <div class="nav-prev"><?php previous_post_link('%link', '← Nota Anterior: %title'); ?></div>
-                        <div class="nav-next"><?php next_post_link('%link', 'Siguiente Nota: %title →'); ?></div>
+                        <div class="nav-next"><?php next_post_link('%title: %link →'); ?></div>
                     </div>
                 </article>
 
-                <aside class="gcm-sidebar">
-                    <div class="gcm-sidebar-widget">
-                        <h3 class="widget-title">Tendencias B2B</h3>
-                        <?php
-                        $rel_q = new WP_Query(array(
-                            'posts_per_page' => 4,
-                            'post__not_in'   => array(get_the_ID()),
-                            'ignore_sticky_posts' => true
-                        ));
-
-                        if ($rel_q->have_posts()) :
-                            while ($rel_q->have_posts()) : $rel_q->the_post();
-                        ?>
-                                <a href="<?php the_permalink(); ?>" class="sidebar-news-card-nbc">
-                                    <div class="sidebar-thumb-top-32">
-                                        <?php if (has_post_thumbnail()) the_post_thumbnail('medium'); ?>
-                                    </div>
-                                    <div class="sidebar-card-info-nbc">
-                                        <h4><?php the_title(); ?></h4>
-                                        <span class="meta-time"><?php echo get_the_date('M j, Y'); ?></span>
-                                    </div>
-                                </a>
-                        <?php
-                            endwhile;
-                            wp_reset_postdata();
-                        endif;
-                        ?>
-                    </div>
-                </aside>
+                <!-- Sidebar Reutilizado -->
+                <?php get_template_part('template-parts/home/sidebar'); ?>
 
             </div>
 
