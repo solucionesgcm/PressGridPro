@@ -124,4 +124,4 @@ function pressgrid_save_unified_meta_box($post_id) {
     if (isset($_POST['gcm_subtitle'])) update_post_meta($post_id, '_gcm_subtitle', sanitize_textarea_field($_POST['gcm_subtitle']));
 }
 add_action('save_post', 'pressgrid_save_unified_meta_box');
-// Nota: Sin etiqueta de cierre ?> para evitar errores de "headers already sent" en WordPress.
+// Nota: Sin etiqueta de cierre ?>
