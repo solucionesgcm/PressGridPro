@@ -16,10 +16,10 @@ jobs:
       - name: Deploy with rsync
         uses: burnett01/rsync-deployments@7.0.1
         with:
-          # -a: modo archivo, -v: verbose, -z: compresión, -r: recursivo, --delete: borra archivos viejos
           switches: -avzr --delete --exclude='.git*' --exclude='README.md' --exclude='.github/'
           path: ./
-          remote_path: /public_html/wp-content/themes/PressGridPro/
+          # RUTA CORREGIDA PARA HOSTINGER (Dominio secundario)
+          remote_path: ~/domains/gcmnoticias.com/public_html/wp-content/themes/PressGridPro/
           remote_host: ${{ secrets.SSH_HOST }}
           remote_user: ${{ secrets.SSH_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
