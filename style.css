@@ -271,7 +271,7 @@ header.site-header {
     font-family: var(--font-mono);
     font-size: 2rem;
     font-weight: 900;
-    font-style: italic;
+    font-style: normal;
     color: var(--brand-red);
     line-height: 0.9;
     flex-shrink: 0;
