@@ -11,19 +11,18 @@
     $category_name = !empty($cats) ? $cats[0]->name : 'EXCLUSIVO';
     $kicker = get_post_meta(get_the_ID(), '_gcm_kicker', true);
     
-    // Comparamos eliminando acentos, espacios y pasando a minúsculas
     $clean_cat = strtolower(remove_accents(trim($category_name)));
     $clean_kicker = strtolower(remove_accents(trim($kicker)));
     
-    if ($clean_kicker === $clean_cat) {
-        $kicker = ''; // Si son iguales, ocultamos el kicker
+    if ($clean_kicker === $clean_cat || empty($kicker)) {
+        $kicker = '';
     }
     ?>
 
-    <!-- 1. ENCABEZADO OSCURO -->
+    <!-- 1. ENCABEZADO OSCURO TIPO NBC NEWS -->
     <section class="gcm-single-hero-dark">
         <div class="container">
-            <div class="nbc-article-header">
+            <div class="nbc-hero-content">
                 
                 <div class="nbc-category-bar">
                     <span class="nbc-cat-label"><?php echo esc_html($category_name); ?></span>
@@ -41,7 +40,7 @@
                     <p class="nbc-hero-subtitle-single"><?php echo esc_html($subtitle); ?></p>
                 <?php endif; ?>
 
-                <!-- Reproductor de Audio -->
+                <!-- Reproductor de Audio NBC (Estilo exacto) -->
                 <div class="nbc-audio-player-container">
                     <button id="play-audio-btn" class="nbc-audio-play-btn" aria-label="Escuchar artículo">
                         <svg id="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="#0f172a"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -50,15 +49,16 @@
                     
                     <div class="nbc-audio-content">
                         <div class="nbc-audio-text-row">
-                            <span id="audio-text">Escuchar este artículo con voz natural</span>
+                            <span id="audio-text">Listen to this article with a free profile</span>
                         </div>
                         <div class="nbc-audio-progress-row">
                             <span id="audio-current-time">00:00</span>
                             <div class="nbc-audio-progress-bar" id="audio-progress-container">
                                 <div class="nbc-audio-progress-fill" id="audio-progress-fill"></div>
                             </div>
-                            <span id="audio-duration">--:--</span>
+                            <span id="audio-duration">04:28</span>
                             <span class="nbc-audio-speed">1x</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="margin-left: 5px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
                         </div>
                     </div>
                 </div>
@@ -66,11 +66,10 @@
         </div>
     </section>
 
-    <!-- 2. CUERPO BLANCO -->
+    <!-- 2. CUERPO E IMAGEN FLOTANTE -->
     <section class="gcm-single-body-area">
         <div class="container">
 
-            <!-- Imagen Flotante -->
             <?php if (has_post_thumbnail()) : ?>
                 <div class="nbc-featured-image-wrapper">
                     <div class="nbc-featured-image">
@@ -89,6 +88,7 @@
                 </div>
             <?php endif; ?>
 
+            <!-- Layout de 2 columnas: Artículo y Sidebar -->
             <div class="nbc-article-layout">
                 
                 <main class="nbc-article-main">
@@ -130,7 +130,7 @@
 
 <?php endwhile; ?>
 
-<!-- SCRIPT: SÍNTESIS DE VOZ INTELIGENTE -->
+<!-- SCRIPT: SÍNTESIS DE VOZ INTELIGENTE (Buscando voces naturales) -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('play-audio-btn');
@@ -194,28 +194,31 @@ document.addEventListener('DOMContentLoaded', function() {
         isSpeaking = false;
         iconPlay.style.display = 'block';
         iconPause.style.display = 'none';
-        audioText.textContent = 'Escuchar este artículo con voz natural';
+        audioText.textContent = 'Listen to this article with a free profile';
         utterance = null;
     }
 
-    // EL SELECTOR DE VOZ INTELIGENTE
+    // SELECTOR DE VOZ AGRESIVO (Busca las más naturales primero)
     function getBestVoice() {
         const voices = window.speechSynthesis.getVoices();
         
-        // 1. Prioridad Máxima: Voces "Naturales" de Microsoft/Apple o Google en Español México/US
-        let best = voices.find(v => v.lang.includes('es-MX') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Premium')));
+        // 1. Voces "Naturales" de Apple o Microsoft (Alta calidad)
+        let best = voices.find(v => v.lang.includes('es-') && (v.name.includes('Natural') || v.name.includes('Premium')));
         if (best) return best;
 
-        // 2. Voces de Google en cualquier Español
-        best = voices.find(v => v.lang.startsWith('es-') && v.name.includes('Google'));
+        // 2. Voces de Google (Chrome las tiene excelentes)
+        best = voices.find(v => v.lang.includes('es-') && v.name.includes('Google'));
         if (best) return best;
 
-        // 3. Voces Nativas de Mac (Paulina, Mónica) o Windows (Sabina, Helena)
+        // 3. Voces específicas conocidas por ser buenas en español
         best = voices.find(v => v.lang.includes('es-MX') && (v.name.includes('Paulina') || v.name.includes('Mónica') || v.name.includes('Sabina')));
         if (best) return best;
+        
+        best = voices.find(v => v.lang.includes('es-US') && (v.name.includes('Paulina') || v.name.includes('Mónica')));
+        if (best) return best;
 
-        // 4. Cualquier voz en Español de LATAM
-        best = voices.find(v => v.lang.includes('es-US') || v.lang.includes('es-419'));
+        // 4. Cualquier voz en Español de LATAM o US
+        best = voices.find(v => v.lang.includes('es-US') || v.lang.includes('es-419') || v.lang.includes('es-MX'));
         if (best) return best;
 
         // 5. La primera en español que encuentre
@@ -223,11 +226,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if ('speechSynthesis' in window) {
-        
-        // Cargar voces (a veces el navegador tarda en cargarlas)
-        let voicesReady = false;
         window.speechSynthesis.onvoiceschanged = function() {
-            voicesReady = true;
+            // Precargar voces
+            window.speechSynthesis.getVoices();
         };
 
         btn.addEventListener('click', function() {
@@ -236,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 startTimer();
                 iconPlay.style.display = 'none';
                 iconPause.style.display = 'block';
-                audioText.textContent = 'Pausar lectura';
+                audioText.textContent = 'Pause reading';
                 return;
             }
 
@@ -245,34 +246,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 stopTimer();
                 iconPlay.style.display = 'block';
                 iconPause.style.display = 'none';
-                audioText.textContent = 'Reanudar lectura';
+                audioText.textContent = 'Resume reading';
                 return;
             }
 
             if (!utterance || !window.speechSynthesis.speaking) {
                 const text = getArticleText();
-                if (!text) {
-                    audioText.textContent = 'No hay texto para leer.';
-                    return;
-                }
+                if (!text) return;
 
                 utterance = new SpeechSynthesisUtterance(text);
                 
                 const bestVoice = getBestVoice();
                 if (bestVoice) {
                     utterance.voice = bestVoice;
-                    // Mostrar qué voz se está usando para depurar
-                    console.log("Leyendo con la voz:", bestVoice.name, bestVoice.lang);
+                    console.log("VOZ SELECCIONADA:", bestVoice.name, bestVoice.lang);
+                } else {
+                    console.warn("No se encontró ninguna voz en español.");
                 }
                 
-                utterance.rate = 1;
+                utterance.rate = 0.95; // Un poco más lento suena más natural
                 utterance.pitch = 1;
 
                 utterance.onstart = function() {
                     isSpeaking = true;
                     iconPlay.style.display = 'none';
                     iconPause.style.display = 'block';
-                    audioText.textContent = 'Pausar lectura';
+                    audioText.textContent = 'Pause reading';
                     startTimer();
                 };
 
@@ -289,10 +288,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.speechSynthesis.speak(utterance);
             }
         });
-    } else {
-        audioText.textContent = 'Tu navegador no soporta lectura por voz.';
-        btn.style.opacity = '0.5';
-        btn.style.cursor = 'not-allowed';
     }
 });
 </script>

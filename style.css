@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 10.41.0
+Version: 10.42.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -87,7 +87,7 @@ header.site-header {
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. PORTADA Y HOME (Grid NBC)
+   3. PORTADA Y HOME
    ========================================================================== */
 .gcm-home-wrapper { padding-top: 1.75rem; padding-bottom: 3rem; }
 
@@ -224,16 +224,19 @@ header.site-header {
 .podcast-play-btn { background: var(--brand-red); color: #ffffff; border: none; padding: 0.6rem 1rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; width: 100%; justify-content: center; }
 
 /* ==========================================================================
-   5. SINGLE POST (ARTÍCULO)
+   5. SINGLE POST (ARTÍCULO - ESTRUCTURA NBC EXACTA)
    ========================================================================== */
-.gcm-single-hero-dark { background: var(--nbc-dark-bg); color: #ffffff; padding: 3.5rem 0 6rem 0; position: relative; z-index: 1; }
+.gcm-single-hero-dark { background: var(--nbc-dark-bg); color: #ffffff; padding: 4rem 0 10rem 0; position: relative; z-index: 1; }
 
-.nbc-article-header {
-    max-width: 800px;
+/* El texto está alineado a la izquierda con un margen grande */
+.nbc-hero-content {
+    max-width: 1100px;
     margin: 0 auto;
+    padding-left: 8%; /* Margen izquierdo tipo NBC */
+    padding-right: 15%;
 }
+@media (max-width: 992px) { .nbc-hero-content { padding-left: 0; padding-right: 0; } }
 
-/* Barra Unificada de Categoría y Kicker */
 .nbc-category-bar {
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -243,28 +246,29 @@ header.site-header {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
 }
 .nbc-cat-label { color: #94a3b8; }
 .nbc-cat-divider { color: #475569; }
 .nbc-kicker-label { color: var(--brand-red); }
 
 .nbc-hero-title-single {
-    font-size: 3rem;
-    line-height: 1.1;
+    font-size: 3.5rem;
+    line-height: 1.05;
     font-weight: 900;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
     color: #ffffff;
-    margin: 0 0 1rem 0;
+    margin: 0 0 1.5rem 0;
 }
 @media (max-width: 768px) { .nbc-hero-title-single { font-size: 2.2rem; } }
 
 .nbc-hero-subtitle-single {
     font-family: var(--font-serif-excerpt);
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     line-height: 1.4;
     color: #cbd5e1;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    max-width: 800px;
 }
 
 /* Reproductor de Audio */
@@ -278,8 +282,8 @@ header.site-header {
 }
 
 .nbc-audio-play-btn {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     background: #ffffff;
     border: none;
     border-radius: 50%;
@@ -292,7 +296,7 @@ header.site-header {
 
 .nbc-audio-content { flex-grow: 1; }
 
-.nbc-audio-text-row { font-size: 0.85rem; font-weight: 600; color: #ffffff; margin-bottom: 0.2rem; }
+.nbc-audio-text-row { font-size: 0.85rem; font-weight: 600; color: #ffffff; margin-bottom: 0.3rem; }
 .nbc-audio-text-row a { color: #ffffff; text-decoration: underline; }
 
 .nbc-audio-progress-row { display: flex; align-items: center; gap: 0.75rem; font-size: 0.75rem; color: #94a3b8; font-family: var(--font-mono); }
@@ -304,14 +308,16 @@ header.site-header {
 
 .gcm-single-body-area { padding: 0 0 5rem 0; background: #ffffff; position: relative; z-index: 10; }
 
+/* LA IMAGEN FLOTA Y ES MÁS ANGOSTA QUE EL CONTENEDOR */
 .nbc-featured-image-wrapper {
     position: relative;
     z-index: 30;
-    top: -4rem;
-    margin-bottom: 0;
-    max-width: 1000px;
+    top: -8rem; /* Sube para pisar el fondo azul */
+    margin-bottom: -6rem;
+    max-width: 960px;
     margin-left: auto;
     margin-right: auto;
+    padding: 0 1.5rem;
 }
 
 .nbc-featured-image { width: 100%; overflow: hidden; background: #e2e8f0; }
@@ -322,13 +328,16 @@ header.site-header {
 .nbc-caption-text::before { content: "——"; color: #94a3b8; font-weight: 400; flex-shrink: 0; }
 .nbc-photo-credit { font-family: var(--font-sans); font-size: 0.7rem; color: #94a3b8; padding-left: 1.8rem; }
 
+/* EL TEXTO Y EL SIDEBAR */
 .nbc-article-layout {
     display: grid;
     grid-template-columns: 1fr 300px;
     gap: 4rem;
-    max-width: 1100px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding-top: 2rem;
+    padding-top: 3rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 @media (max-width: 992px) {
     .nbc-article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 0; }
