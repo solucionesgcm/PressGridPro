@@ -7,46 +7,54 @@
     $category_name = !empty($cats) ? $cats[0]->name : 'EXCLUSIVO';
     ?>
 
-    <!-- 1. HERO OSCURO -->
+    <!-- 1. HERO OSCURO (Categoría, Título y Imagen) -->
     <section class="nbc-hero-section">
         <div class="nbc-hero-container">
+            
             <!-- Categoría -->
             <div class="nbc-cat-col">
                 <span class="nbc-cat-text"><?php echo esc_html($category_name); ?></span>
             </div>
-            <!-- Título y Subtítulo -->
-            <div class="nbc-title-col">
+
+            <!-- Título, Subtítulo e Imagen -->
+            <div class="nbc-main-hero-col">
                 <h1><?php the_title(); ?></h1>
+                
                 <?php 
                 $subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
                 if (!empty($subtitle)) : 
                 ?>
                     <p class="nbc-excerpt"><?php echo esc_html($subtitle); ?></p>
                 <?php endif; ?>
-            </div>
-        </div>
-    </section>
 
-    <!-- 2. CUERPO BLANCO (Imagen, Texto, Sidebar) -->
-    <section class="nbc-body-section">
-        <div class="nbc-body-container">
-            
-            <!-- Columna del Artículo (620px) -->
-            <main class="nbc-article-main">
-                <!-- Imagen Flotante -->
+                <!-- Imagen (Aquí flota hacia el fondo blanco) -->
                 <?php if (has_post_thumbnail()) : ?>
                     <div class="nbc-image-wrapper">
                         <?php the_post_thumbnail('full'); ?>
                     </div>
                 <?php endif; ?>
+            </div>
 
-                <!-- Texto -->
+            <!-- Columna vacía para mantener la simetría -->
+            <div class="nbc-side-col"></div>
+
+        </div>
+    </section>
+
+    <!-- 2. CUERPO BLANCO (Texto y Sidebar) -->
+    <section class="nbc-body-section">
+        <div class="nbc-body-container">
+            
+            <div class="nbc-cat-col"></div> <!-- Espacio vacío -->
+
+            <!-- Texto (600px) -->
+            <main class="nbc-article-main">
                 <div class="nbc-post-content">
                     <?php the_content(); ?>
                 </div>
             </main>
 
-            <!-- Columna del Sidebar (320px) -->
+            <!-- Sidebar (320px) -->
             <aside class="nbc-sidebar-col">
                 <?php get_template_part('template-parts/home/sidebar'); ?>
             </aside>
