@@ -18,12 +18,12 @@
     }
     ?>
 
-    <!-- 1. HERO OSCURO -->
-    <section class="nbc-hero-dark">
+    <!-- 1. HERO OSCURO (Fondo a todo lo ancho) -->
+    <section class="nbc-bg-dark">
         <div class="nbc-container">
             
             <!-- Columna 1: Categoría -->
-            <div class="nbc-cat-col">
+            <div class="nbc-col-cat">
                 <span class="nbc-cat-label"><?php echo esc_html($category_name); ?></span>
                 <?php if (!empty($kicker)) : ?>
                     <span class="nbc-kicker-label"><?php echo esc_html($kicker); ?></span>
@@ -31,7 +31,7 @@
             </div>
 
             <!-- Columna 2: Título, Subtítulo y Audio -->
-            <div class="nbc-main-col">
+            <div class="nbc-col-main">
                 <h1 class="nbc-title"><?php the_title(); ?></h1>
 
                 <?php 
@@ -41,8 +41,8 @@
                 <?php endif; ?>
 
                 <!-- Reproductor de Audio -->
-                <div class="nbc-audio-player-container">
-                    <button id="play-audio-btn" class="nbc-audio-play-btn" aria-label="Escuchar artículo">
+                <div class="nbc-audio-wrapper">
+                    <button id="play-audio-btn" class="nbc-audio-btn" aria-label="Escuchar artículo">
                         <svg id="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="#0f172a"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         <svg id="icon-pause" style="display:none;" width="20" height="20" viewBox="0 0 24 24" fill="#0f172a"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                     </button>
@@ -64,41 +64,41 @@
                 </div>
             </div>
 
+            <!-- Columna 3: Vacía en el Hero -->
+            <div class="nbc-col-side"></div>
+
         </div>
     </section>
 
-    <!-- 2. IMAGEN FLOTANTE -->
+    <!-- 2. IMAGEN FLOTANTE (Rompe el fondo) -->
     <?php if (has_post_thumbnail()) : ?>
         <div class="nbc-image-wrapper">
             <div class="nbc-container">
-                <div></div> <!-- Espacio vacío para la columna 1 -->
-                <div class="nbc-main-col">
+                <div class="nbc-col-cat"></div>
+                <div class="nbc-col-main">
                     <div class="nbc-image-container">
                         <?php the_post_thumbnail('full'); ?>
                     </div>
                     <?php if (!empty($photo_caption) || !empty($photo_credit)) : ?>
                         <div class="nbc-image-caption">
-                            <?php if (!empty($photo_caption)) : ?>
-                                <div class="nbc-caption-text"><?php echo esc_html($photo_caption); ?></div>
-                            <?php endif; ?>
-                            <?php if (!empty($photo_credit)) : ?>
-                                <div class="nbc-photo-credit"><?php echo esc_html($photo_credit); ?></div>
-                            <?php endif; ?>
+                            <?php if (!empty($photo_caption)) : ?><div class="nbc-caption-text"><?php echo esc_html($photo_caption); ?></div><?php endif; ?>
+                            <?php if (!empty($photo_credit)) : ?><div class="nbc-photo-credit"><?php echo esc_html($photo_credit); ?></div><?php endif; ?>
                         </div>
                     <?php endif; ?>
                 </div>
+                <div class="nbc-col-side"></div>
             </div>
         </div>
     <?php endif; ?>
 
-    <!-- 3. CUERPO DEL ARTÍCULO Y SIDEBAR -->
-    <section class="nbc-body-section">
+    <!-- 3. CUERPO Y SIDEBAR (Fondo blanco) -->
+    <section class="nbc-bg-light">
         <div class="nbc-container">
             
-            <div></div> <!-- Espacio vacío para la columna 1 -->
+            <div class="nbc-col-cat"></div>
 
-            <!-- Columna 2: Contenido -->
-            <main class="nbc-main-col">
+            <!-- Columna 2: Texto del Artículo -->
+            <main class="nbc-col-main">
                 <div class="nbc-action-bar">
                     <a href="#" class="nbc-action-btn">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
@@ -127,8 +127,10 @@
             </main>
 
             <!-- Columna 3: Sidebar -->
-            <aside class="nbc-sidebar-col">
-                <?php get_template_part('template-parts/home/sidebar'); ?>
+            <aside class="nbc-col-side">
+                <div class="nbc-sidebar-sticky">
+                    <?php get_template_part('template-parts/home/sidebar'); ?>
+                </div>
             </aside>
 
         </div>
@@ -136,7 +138,7 @@
 
 <?php endwhile; ?>
 
-<!-- SCRIPT: SÍNTESIS DE VOZ -->
+<!-- SCRIPT: SÍNTESIS DE VOZ (Intacto) -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('play-audio-btn');

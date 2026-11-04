@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 10.48.0
+Version: 10.51.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -48,41 +48,18 @@ img { max-width: 100%; height: auto; }
 /* ==========================================================================
    2. HEADER & TICKER
    ========================================================================== */
-.gcm-ticker-bar {
-    background: #020617;
-    color: #94a3b8;
-    font-size: 0.775rem;
-    border-bottom: 2px solid var(--brand-red);
-    padding: 0.4rem 0;
-    overflow: hidden;
-}
+.gcm-ticker-bar { background: #020617; color: #94a3b8; font-size: 0.775rem; border-bottom: 2px solid var(--brand-red); padding: 0.4rem 0; overflow: hidden; }
 .gcm-ticker-container { display: flex; align-items: center; gap: 1.25rem; }
-.ticker-badge {
-    background: var(--brand-red);
-    color: #ffffff;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: 800;
-    padding: 0.15rem 0.45rem;
-    border-radius: 2px;
-    text-transform: uppercase;
-    white-space: nowrap;
-}
+.ticker-badge { background: var(--brand-red); color: #ffffff; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 2px; text-transform: uppercase; white-space: nowrap; }
 .ticker-content { display: flex; gap: 1.5rem; overflow: hidden; white-space: nowrap; flex: 1; }
 .ticker-item strong { color: #f8fafc; }
 .ticker-item.highlight { color: #f8fafc; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
 
-header.site-header {
-    background: var(--nbc-dark-bg);
-    color: #ffffff;
-    padding: 1.2rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-}
+header.site-header { background: var(--nbc-dark-bg); color: #ffffff; padding: 1.2rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
 .header-container { display: flex; justify-content: space-between; align-items: center; }
 .logo h1 { margin: 0; font-size: 1.85rem; font-weight: 900; letter-spacing: -0.5px; }
 .logo a { color: #ffffff; }
 .logo .highlight { color: var(--brand-red); }
-
 .main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.8rem; }
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
@@ -90,18 +67,15 @@ header.site-header {
    3. PORTADA Y HOME (Sin cambios)
    ========================================================================== */
 .gcm-home-wrapper { padding-top: 1.75rem; padding-bottom: 3rem; }
-
 .nbc-hero-section { display: grid; grid-template-columns: 1.35fr 1fr 290px; gap: 2rem; align-items: start; padding-bottom: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
 @media (max-width: 1024px) { .nbc-hero-section { grid-template-columns: 1fr 1fr; } .nbc-hero-third-col { display: none; } }
 @media (max-width: 768px) { .nbc-hero-section { grid-template-columns: 1fr; } }
-
 .nbc-hero-main-card { display: block; }
 .nbc-hero-main-card .thumb-wrap { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #111827; margin-bottom: 0.5rem; border-radius: 0px; }
 .nbc-hero-main-card .thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
 .nbc-hero-kicker { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--brand-red); text-transform: uppercase; margin-bottom: 0.35rem; }
 .nbc-hero-title { font-size: 2.1rem; line-height: 1.1; font-weight: 900; letter-spacing: -0.8px; margin: 0 0 0.6rem 0; color: var(--text-primary); }
 .nbc-hero-excerpt { font-family: var(--font-serif-excerpt); font-size: 1.05rem; color: #475569; margin: 0; }
-
 .nbc-hero-stack { display: flex; flex-direction: column; gap: 1.5rem; border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0 1.5rem; }
 @media (max-width: 1024px) { .nbc-hero-stack { border-right: none; padding-right: 0; } }
 @media (max-width: 768px) { .nbc-hero-stack { border-left: none; padding: 0; } }
@@ -111,7 +85,6 @@ header.site-header {
 .nbc-hero-stack-item .thumb img { width: 100%; height: 100%; object-fit: cover; }
 .nbc-hero-stack-item .meta-kicker { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--brand-red); margin-bottom: 0.25rem; display: block; }
 .nbc-hero-stack-item h4 { font-size: 1.05rem; line-height: 1.25; font-weight: 800; letter-spacing: -0.3px; margin: 0; color: #0f172a; }
-
 .nbc-hero-third-col { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 1.25rem; min-height: 400px; display: flex; flex-direction: column; }
 .nbc-al-momento-header { border-bottom: 2px solid var(--text-primary); padding-bottom: 0.4rem; margin-bottom: 1rem; }
 .nbc-al-momento-title { font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin: 0; display: flex; align-items: center; gap: 0.4rem; }
@@ -122,10 +95,8 @@ header.site-header {
 .al-momento-time { color: #64748b; }
 .al-momento-tag { background: #dc2626; color: #ffffff; padding: 0.1rem 0.4rem; border-radius: 0px; font-weight: 700; text-transform: uppercase; }
 .al-momento-item h4 { font-size: 0.875rem; line-height: 1.35; font-weight: 700; color: #1e293b; margin: 0; }
-
 .live-pulse-btn { transition: background-color 0.2s ease, transform 0.1s ease; }
 .live-pulse-btn:hover { background-color: #b91c1c !important; transform: translateY(-1px); }
-
 .gcm-multimedia-dark-strip { background: var(--nbc-dark-bg); color: #ffffff; padding: 2.25rem 0; margin: 2rem 0; }
 .multimedia-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; color: #94a3b8; display: block; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
 .multimedia-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
@@ -135,13 +106,11 @@ header.site-header {
 .multimedia-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .video-play-icon { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.75); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .multimedia-card h4 { font-size: 0.875rem; line-height: 1.3; font-weight: 700; margin: 0; color: #f1f5f9; }
-
 .foxiz-main-layout { display: grid; grid-template-columns: 1fr 310px; gap: 2.5rem; align-items: start; }
 @media (max-width: 992px) { .foxiz-main-layout { grid-template-columns: 1fr; } }
 .foxiz-block-section { margin-bottom: 3.5rem; }
 .foxiz-block-header { border-bottom: none; border-top: 4px solid #0f172a; padding-top: 0.75rem; padding-bottom: 0; margin-bottom: 1.25rem; }
 .foxiz-block-title { font-size: 1.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; margin: 0; color: var(--text-primary); }
-
 .asymmetric-layout-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.75rem; }
 @media (max-width: 768px) { .asymmetric-layout-grid { grid-template-columns: 1fr; } }
 .asym-main-card { display: block; }
@@ -158,7 +127,6 @@ header.site-header {
 .asym-list-info h4 { font-size: 0.9rem; font-weight: 700; line-height: 1.3; margin: 0 0 0.25rem 0; }
 .asym-list-info h4 a { color: var(--text-primary); }
 .asym-date { font-family: var(--font-mono); font-size: 0.685rem; color: var(--text-muted); }
-
 .gcm-newsletter-banner { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.75rem; margin-bottom: 3.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
 @media (max-width: 768px) { .gcm-newsletter-banner { flex-direction: column; text-align: center; } }
 .news-banner-content h3 { font-size: 1.1rem; font-weight: 900; margin: 0 0 0.25rem 0; color: #0f172a; }
@@ -166,7 +134,6 @@ header.site-header {
 .news-banner-form { display: flex; gap: 0.5rem; }
 .news-banner-form input { padding: 0.55rem 0.85rem; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.85rem; min-width: 220px; }
 .news-banner-form button { background: var(--brand-red); color: #ffffff; border: none; padding: 0.55rem 1.15rem; border-radius: 4px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
-
 .foxiz-grid-2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
 @media (max-width: 600px) { .foxiz-grid-2x2 { grid-template-columns: 1fr; } }
 .foxiz-card-item { display: flex; flex-direction: column; }
@@ -175,7 +142,6 @@ header.site-header {
 .foxiz-card-item .card-title { font-size: 1.05rem; line-height: 1.25; font-weight: 800; letter-spacing: -0.3px; margin: 0 0 0.4rem 0; }
 .foxiz-card-item .card-title a { color: var(--text-primary); }
 .foxiz-card-item .card-excerpt { font-family: var(--font-serif-excerpt); font-size: 0.875rem; color: var(--text-secondary); line-height: 1.45; margin: 0; }
-
 .opinion-grid-3col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 @media (max-width: 600px) { .opinion-grid-3col { grid-template-columns: 1fr; } }
 .opinion-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.25rem; border-radius: 4px; }
@@ -188,7 +154,7 @@ header.site-header {
 /* ==========================================================================
    4. SIDEBAR Y WIDGETS
    ========================================================================== */
-.foxiz-sidebar-col, .nbc-sidebar-col { position: sticky; top: 20px; }
+.foxiz-sidebar-col, .nbc-col-side { position: sticky; top: 20px; }
 .sidebar-header-title { font-size: 0.9rem; font-weight: 900; text-transform: uppercase; border-bottom: 2px solid var(--text-primary); padding-bottom: 0.4rem; margin-top: 0; margin-bottom: 1.5rem; }
 .top-ranked-list { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
 .top-rank-item { display: flex; gap: 1rem; align-items: flex-start; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.85rem; }
@@ -203,10 +169,10 @@ header.site-header {
 .podcast-play-btn { background: var(--brand-red); color: #ffffff; border: none; padding: 0.6rem 1rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; width: 100%; justify-content: center; }
 
 /* ==========================================================================
-   5. SINGLE POST (ARTÍCULO CON GRID MAESTRA 3 COLUMNAS)
+   5. SINGLE POST (GRID MAESTRO EXACTO)
    ========================================================================== */
 
-/* El contenedor universal con las 3 columnas exactas */
+/* El contenedor de 3 columnas que se repite en toda la página */
 .nbc-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -223,29 +189,29 @@ header.site-header {
     }
 }
 
-/* 1. HERO OSCURO */
-.nbc-hero-dark { 
-    background: var(--nbc-dark-bg); 
+/* 1. FONDO OSCURO (Fila 1) */
+.nbc-bg-dark { 
+    background-color: var(--nbc-dark-bg); 
     color: #ffffff; 
     padding: 3.5rem 0 8rem 0; 
 }
 
-.nbc-cat-col {
+.nbc-col-cat {
     grid-column: 1;
     display: flex;
     flex-direction: column;
     padding-top: 0.5rem;
 }
-@media (max-width: 992px) { .nbc-cat-col { grid-column: 1; margin-bottom: 1rem; } }
+@media (max-width: 992px) { .nbc-col-cat { grid-column: 1; margin-bottom: 1rem; } }
 
 .nbc-cat-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #94a3b8; }
 .nbc-kicker-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--brand-red); margin-top: 0.3rem; }
 
-.nbc-main-col {
+.nbc-col-main {
     grid-column: 2;
-    min-width: 0; /* Previene que el grid se desborde */
+    min-width: 0;
 }
-@media (max-width: 992px) { .nbc-main-col { grid-column: 1; } }
+@media (max-width: 992px) { .nbc-col-main { grid-column: 1; } }
 
 .nbc-title {
     font-size: 3.5rem;
@@ -264,17 +230,16 @@ header.site-header {
     margin-bottom: 2.5rem;
 }
 
-/* Reproductor de Audio */
-.nbc-audio-player-container {
+/* Reproductor */
+.nbc-audio-wrapper {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: transparent;
     margin-bottom: 1rem;
     width: 100%;
-    max-width: 600px; /* No se estira al infinito */
+    max-width: 600px;
 }
-.nbc-audio-play-btn {
+.nbc-audio-btn {
     width: 44px;
     height: 44px;
     background: #ffffff;
@@ -294,12 +259,12 @@ header.site-header {
 .nbc-audio-progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #ffffff; width: 0%; }
 .nbc-audio-speed { border: 1px solid #64748b; padding: 0.1rem 0.3rem; border-radius: 2px; font-weight: 700; }
 
-/* 2. IMAGEN FLOTANTE */
+/* 2. IMAGEN FLOTANTE (Fila 2) */
 .nbc-image-wrapper {
     position: relative;
     z-index: 30;
-    top: -6rem;
-    margin-bottom: -4rem;
+    margin-top: -6rem;
+    margin-bottom: 2rem;
 }
 
 .nbc-image-container { width: 100%; overflow: hidden; background: #e2e8f0; }
@@ -310,9 +275,13 @@ header.site-header {
 .nbc-caption-text::before { content: "——"; color: #94a3b8; font-weight: 400; flex-shrink: 0; }
 .nbc-photo-credit { font-family: var(--font-sans); font-size: 0.7rem; color: #94a3b8; padding-left: 1.8rem; }
 
-/* 3. CUERPO Y SIDEBAR */
-.nbc-body-section { padding: 0 0 5rem 0; background: #ffffff; }
+/* 3. FONDO BLANCO (Fila 3: Texto y Sidebar) */
+.nbc-bg-light { 
+    background-color: #ffffff; 
+    padding-bottom: 5rem;
+}
 
+/* Barra de Acciones */
 .nbc-action-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
 .nbc-action-btn { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 700; color: #334155; text-transform: uppercase; }
 .nbc-action-btn:hover { color: #0f172a; }
@@ -329,11 +298,12 @@ header.site-header {
 .gcm-post-nav-strip { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 1.25rem 0; margin-top: 3rem; font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700; }
 .gcm-post-nav-strip a { color: var(--text-primary); }
 
-.nbc-sidebar-col {
+/* El Sidebar vive en su columna, alineado con la imagen */
+.nbc-col-side {
     grid-column: 3;
-    padding-top: 1rem; /* Alineación con el inicio del texto */
+    padding-top: 1rem; /* Ajusta visualmente para alinear con el texto */
 }
-@media (max-width: 992px) { .nbc-sidebar-col { grid-column: 1; padding-top: 2rem; border-top: 1px solid var(--border-color); } }
+@media (max-width: 992px) { .nbc-col-side { grid-column: 1; padding-top: 2rem; border-top: 1px solid var(--border-color); } }
 
 /* ==========================================================================
    6. FOOTER
