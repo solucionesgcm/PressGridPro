@@ -18,21 +18,23 @@
     }
     ?>
 
-    <!-- 1. ENCABEZADO OSCURO (Todo alineado al grid) -->
+    <!-- 1. ENCABEZADO OSCURO (3 Columnas: Categoría, Título, Espacio Sidebar) -->
     <section class="gcm-single-hero-dark">
         <div class="container nbc-main-container">
             <div class="nbc-hero-grid">
                 
-                <!-- Columna Izquierda (Texto) -->
-                <div class="nbc-hero-text-col">
+                <!-- Columna Izquierda Extrema: Categoría -->
+                <div class="nbc-hero-category-col">
                     <div class="nbc-category-bar">
                         <span class="nbc-cat-label"><?php echo esc_html($category_name); ?></span>
                         <?php if (!empty($kicker)) : ?>
-                            <span class="nbc-cat-divider">|</span>
-                            <span class="nbc-kicker-label"><?php echo esc_html($kicker); ?></span>
+                            <br><span class="nbc-kicker-label"><?php echo esc_html($kicker); ?></span>
                         <?php endif; ?>
                     </div>
+                </div>
 
+                <!-- Columna Central: Texto -->
+                <div class="nbc-hero-text-col">
                     <h1 class="nbc-hero-title-single"><?php the_title(); ?></h1>
 
                     <?php 
@@ -65,7 +67,7 @@
                     </div>
                 </div>
 
-                <!-- Columna Derecha (Espacio vacío para alinear con sidebar) -->
+                <!-- Columna Derecha (Espacio vacío para el sidebar) -->
                 <div class="nbc-hero-spacer-col"></div>
 
             </div>
@@ -78,7 +80,7 @@
             
             <div class="nbc-article-grid">
                 
-                <!-- Columna Izquierda (Imagen y Contenido) -->
+                <!-- Columna Central (Imagen y Contenido) -->
                 <main class="nbc-article-main">
                     
                     <!-- Imagen que flota hacia arriba -->
@@ -139,7 +141,7 @@
 
 <?php endwhile; ?>
 
-<!-- SCRIPT: SÍNTESIS DE VOZ MEJORADA -->
+<!-- SCRIPT: SÍNTESIS DE VOZ (Se mantiene igual) -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('play-audio-btn');
@@ -157,12 +159,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let isSpeaking = false;
     let voices = [];
 
-    // Cargar voces (con un pequeño delay para navegadores lentos)
     function loadVoices() {
         voices = window.speechSynthesis.getVoices();
-        if (voices.length === 0) {
-            setTimeout(loadVoices, 250);
-        }
+        if (voices.length === 0) setTimeout(loadVoices, 250);
     }
     window.speechSynthesis.onvoiceschanged = loadVoices;
     loadVoices();
@@ -188,13 +187,10 @@ document.addEventListener('DOMContentLoaded', function() {
         timerInterval = setInterval(() => {
             elapsed = (Date.now() - startTime) / 1000;
             timeCurrent.textContent = formatTime(elapsed);
-            
             const text = getArticleText();
             const wordCount = text.split(/\s+/).length;
             const estimatedDuration = (wordCount / 150) * 60;
-            
             timeDuration.textContent = formatTime(estimatedDuration);
-            
             if (estimatedDuration > 0) {
                 const percent = Math.min((elapsed / estimatedDuration) * 100, 100);
                 progressFill.style.width = percent + '%';
@@ -202,9 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
 
-    function stopTimer() {
-        clearInterval(timerInterval);
-    }
+    function stopTimer() { clearInterval(timerInterval); }
 
     function resetPlayer() {
         stopTimer();
@@ -218,28 +212,18 @@ document.addEventListener('DOMContentLoaded', function() {
         utterance = null;
     }
 
-    // BUSCADOR AGRESIVO DE VOCES PREMIUM
     function getBestVoice() {
         if (voices.length === 0) return null;
-        
-        // 1. Google US / México
         let best = voices.find(v => v.lang.includes('es-MX') && v.name.includes('Google'));
         if (best) return best;
         best = voices.find(v => v.lang.includes('es-US') && v.name.includes('Google'));
         if (best) return best;
-        
-        // 2. Voces Naturales/Premium (Apple/Microsoft)
         best = voices.find(v => v.lang.includes('es-') && (v.name.includes('Natural') || v.name.includes('Premium')));
         if (best) return best;
-
-        // 3. Voces clásicas de Mac/Windows
         best = voices.find(v => v.name.includes('Paulina') || v.name.includes('Sabina') || v.name.includes('Mónica'));
         if (best) return best;
-
-        // 4. Cualquier latina
         best = voices.find(v => v.lang.includes('es-419') || v.lang.includes('es-MX'));
         if (best) return best;
-
         return voices.find(v => v.lang.startsWith('es-'));
     }
 
@@ -253,7 +237,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 audioText.textContent = 'Pause reading';
                 return;
             }
-
             if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
                 window.speechSynthesis.pause();
                 stopTimer();
@@ -262,22 +245,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 audioText.textContent = 'Resume reading';
                 return;
             }
-
             if (!utterance || !window.speechSynthesis.speaking) {
                 const text = getArticleText();
                 if (!text) return;
-
                 utterance = new SpeechSynthesisUtterance(text);
-                
                 const bestVoice = getBestVoice();
-                if (bestVoice) {
-                    utterance.voice = bestVoice;
-                    console.log("Leyendo con:", bestVoice.name);
-                }
-                
+                if (bestVoice) utterance.voice = bestVoice;
                 utterance.rate = 1;
                 utterance.pitch = 1;
-
                 utterance.onstart = function() {
                     isSpeaking = true;
                     iconPlay.style.display = 'none';
@@ -285,17 +260,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     audioText.textContent = 'Pause reading';
                     startTimer();
                 };
-
-                utterance.onend = function() {
-                    resetPlayer();
-                };
-
+                utterance.onend = function() { resetPlayer(); };
                 utterance.onerror = function(e) {
-                    console.error('Error en síntesis de voz:', e);
                     audioText.textContent = 'Error al leer el artículo.';
                     resetPlayer();
                 };
-
                 window.speechSynthesis.speak(utterance);
             }
         });
