@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 15.1.0
+Version: 15.2.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -86,7 +86,7 @@ header.site-header {
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. HOME (PORTADA - HERO EN FONDO BLANCO PURO)
+   3. HOME (PORTADA - HERO CLEAN NBC STYLE EN BLANCO)
    ========================================================================== */
 .gcm-home-wrapper { 
     background: #ffffff;
@@ -96,10 +96,10 @@ header.site-header {
 
 .nbc-home-hero-white { 
     display: grid; 
-    grid-template-columns: 1.4fr 1fr 310px; 
-    gap: 1.75rem; 
+    grid-template-columns: 1.45fr 1fr 300px; 
+    gap: 1.5rem; 
     align-items: start; 
-    padding-bottom: 2.25rem; 
+    padding-bottom: 2rem; 
     margin-bottom: 2rem; 
     border-bottom: 1px solid var(--border-color); 
     background: #ffffff;
@@ -113,47 +113,50 @@ header.site-header {
 }
 
 /* Columna 1: Nota Principal (Fondo Blanco) */
+.nbc-hero-main-col {
+    padding-right: 0.5rem;
+}
 .nbc-hero-lead-card { display: block; text-decoration: none; color: inherit; }
 .nbc-hero-lead-card .lead-thumb-wrap { 
     width: 100%; 
     aspect-ratio: 16 / 9; 
     overflow: hidden; 
     background: #f1f5f9; 
-    margin-bottom: 1rem; 
-    border-radius: 4px; 
+    margin-bottom: 0.85rem; 
+    border-radius: 2px; 
 }
 .nbc-hero-lead-card .lead-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
 .lead-kicker { 
     font-family: var(--font-mono); 
-    font-size: 0.75rem; 
+    font-size: 0.725rem; 
     font-weight: 700; 
     color: var(--brand-red); 
     text-transform: uppercase; 
     letter-spacing: 0.5px;
-    margin-bottom: 0.35rem; 
+    margin-bottom: 0.3rem; 
     display: block;
 }
 .lead-title { 
-    font-size: 2.15rem; 
-    line-height: 1.15; 
+    font-size: 2.1rem; 
+    line-height: 1.12; 
     font-weight: 900; 
     letter-spacing: -0.6px; 
-    margin: 0 0 0.6rem 0; 
+    margin: 0 0 0.55rem 0; 
     color: var(--text-primary); 
 }
 .lead-excerpt { 
     font-family: var(--font-serif-excerpt); 
-    font-size: 1.05rem; 
-    line-height: 1.5;
+    font-size: 1rem; 
+    line-height: 1.48;
     color: var(--text-secondary); 
     margin: 0; 
 }
 
-/* Columna 2: Stack Secundario (Fondo Blanco) */
+/* Columna 2: Stack Secundario (4 Notas Ajustadas) */
 .nbc-hero-stack-col { 
     display: flex; 
     flex-direction: column; 
-    gap: 1.25rem; 
+    gap: 0.95rem; 
     border-left: 1px solid var(--border-color); 
     border-right: 1px solid var(--border-color); 
     padding: 0 1.25rem; 
@@ -166,53 +169,52 @@ header.site-header {
 }
 .nbc-stack-card { 
     display: flex; 
-    gap: 1rem; 
+    gap: 0.85rem; 
     align-items: start; 
     text-decoration: none; 
     color: inherit; 
     border-bottom: 1px solid #f1f5f9; 
-    padding-bottom: 1rem; 
+    padding-bottom: 0.85rem; 
 }
 .nbc-stack-card:last-child { border-bottom: none; padding-bottom: 0; }
 .nbc-stack-card .stack-thumb { 
-    width: 110px; 
-    height: 75px; 
+    width: 100px; 
+    height: 68px; 
     flex-shrink: 0; 
     overflow: hidden; 
-    border-radius: 3px; 
+    border-radius: 2px; 
     background: #e2e8f0; 
 }
 .nbc-stack-card .stack-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .stack-kicker { 
     font-family: var(--font-mono); 
-    font-size: 0.685rem; 
+    font-size: 0.65rem; 
     font-weight: 700; 
     text-transform: uppercase; 
     color: var(--brand-red); 
-    margin-bottom: 0.2rem; 
+    margin-bottom: 0.15rem; 
     display: block; 
 }
 .stack-info h4 { 
-    font-size: 0.95rem; 
-    line-height: 1.3; 
+    font-size: 0.9rem; 
+    line-height: 1.28; 
     font-weight: 800; 
     margin: 0; 
     color: var(--text-primary); 
 }
 
-/* Columna 3: Al Momento (Feed Limpio) */
+/* Columna 3: Al Momento (Limpio y Transparente) */
 .nbc-hero-latest-col { 
-    background: #f8fafc; 
-    border: 1px solid var(--border-color); 
-    border-radius: 6px; 
-    padding: 1.25rem; 
+    background: transparent; 
+    border: none; 
+    padding: 0; 
     display: flex; 
     flex-direction: column; 
 }
 .latest-header { 
     border-bottom: 2px solid var(--text-primary); 
     padding-bottom: 0.4rem; 
-    margin-bottom: 0.75rem; 
+    margin-bottom: 0.6rem; 
 }
 .latest-title { 
     font-size: 0.825rem; 
@@ -227,7 +229,7 @@ header.site-header {
 .latest-feed-list { display: flex; flex-direction: column; flex: 1; }
 .latest-feed-item { 
     display: block; 
-    padding: 0.75rem 0; 
+    padding: 0.65rem 0; 
     border-bottom: 1px solid var(--border-color); 
     text-decoration: none;
 }
@@ -237,21 +239,21 @@ header.site-header {
     align-items: center; 
     gap: 0.5rem; 
     font-family: var(--font-mono); 
-    font-size: 0.685rem; 
-    margin-bottom: 0.25rem; 
+    font-size: 0.65rem; 
+    margin-bottom: 0.2rem; 
 }
 .latest-time { color: var(--text-muted); }
 .latest-tag { color: var(--brand-red); font-weight: 700; text-transform: uppercase; }
 .latest-feed-item h4 { 
-    font-size: 0.875rem; 
-    line-height: 1.35; 
+    font-size: 0.85rem; 
+    line-height: 1.3; 
     font-weight: 700; 
     color: var(--text-primary); 
     margin: 0; 
 }
 
 /* ==========================================================================
-   4. FRANJA MULTIMEDIA (FONDO OSCURO) & SECCIONES INFERIORES
+   4. FRANJA MULTIMEDIA & SECCIONES INFERIORES
    ========================================================================== */
 .gcm-multimedia-dark-strip { background: var(--nbc-dark-bg); color: #ffffff; padding: 2.25rem 0; margin: 2rem 0; }
 .multimedia-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; color: #94a3b8; display: block; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
@@ -287,7 +289,7 @@ header.site-header {
 .asym-date { font-family: var(--font-mono); font-size: 0.685rem; color: var(--text-muted); }
 
 /* ==========================================================================
-   5. SINGLE POST (ARTÍCULO INDIVIDUAL EN FONDO AZUL OSCURO)
+   5. SINGLE POST
    ========================================================================== */
 .gcm-single-hero-dark { 
     background: var(--nbc-dark-bg); 
