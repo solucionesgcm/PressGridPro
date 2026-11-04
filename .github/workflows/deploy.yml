@@ -18,8 +18,9 @@ jobs:
         with:
           switches: -avzr --delete --exclude='.git*' --exclude='README.md' --exclude='.github/'
           path: ./
-          # RUTA CORREGIDA PARA HOSTINGER (Dominio secundario)
           remote_path: ~/domains/gcmnoticias.com/public_html/wp-content/themes/PressGridPro/
           remote_host: ${{ secrets.SSH_HOST }}
           remote_user: ${{ secrets.SSH_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # 👇 ESTA ES LA LÍNEA QUE FALTA PARA QUE FUNCIONE
+          remote_port: 65002 
