@@ -1,7 +1,7 @@
 <?php
 /**
- * Main Content Body - PressGrid Pro Clean Flow with Strict Global ID Exclusion
- * Version: 17.3.0
+ * Main Content Body - PressGrid Pro Flow with Strict Unique Loop
+ * Version: 17.7.0
  * 
  * @package PressGrid_Pro
  */
@@ -12,7 +12,7 @@ if (!is_array($pgp_used_ids)) {
 }
 ?>
 
-<!-- 1. SUB-HERO HORIZONTAL DE 4 COLUMNAS (NOTAS ÚNICAS SIN REPETIR HERO) -->
+<!-- 1. SUB-HERO HORIZONTAL DE 4 COLUMNAS (NOTAS ÚNICAS SIN REPETICIÓN) -->
 <section class="pgp-subhero-strip">
     <div class="subhero-grid">
         <?php
