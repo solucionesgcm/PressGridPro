@@ -1,7 +1,7 @@
 <?php
 /**
- * Home Hero Section - PressGrid Pro Hybrid Layout (Featured Sub-Lead + 2 Compact Items)
- * Version: 16.6.0
+ * Home Hero Section - PressGrid Pro Hybrid Layout
+ * Version: 16.8.0
  * 
  * @package PressGrid_Pro
  */
@@ -47,7 +47,7 @@ $pgp_used_ids = array();
         ?>
     </div>
 
-    <!-- Columna 2: Layout Híbrido PressGrid (1 Sub-Lead 16:9 Arriba + 2 Notas Lista Abajo) -->
+    <!-- Columna 2: Layout Híbrido (1 Sub-Lead 16:9 Arriba + 2 Notas Lista Abajo) -->
     <div class="pgp-hero-stack-col">
         <?php
         $sec_hero_q = new WP_Query(array(
@@ -97,7 +97,6 @@ $pgp_used_ids = array();
             for ($i = 1; $i < count($sec_posts); $i++) :
                 $post_item = $sec_posts[$i];
                 setup_postdata($post_item);
-                $item_kicker = get_post_meta($post_item->ID, '_pgp_kicker', true);
             ?>
                 <a href="<?php echo get_permalink($post_item->ID); ?>" class="pgp-stack-card">
                     <div class="stack-thumb">
@@ -106,9 +105,6 @@ $pgp_used_ids = array();
                         <?php endif; ?>
                     </div>
                     <div class="stack-info">
-                        <?php if (!empty($item_kicker)) : ?>
-                            <span class="stack-kicker"><?php echo esc_html($item_kicker); ?></span>
-                        <?php endif; ?>
                         <h4><?php echo get_the_title($post_item->ID); ?></h4>
                     </div>
                 </a>
@@ -119,7 +115,7 @@ $pgp_used_ids = array();
         </div>
     </div>
 
-    <!-- Columna 3: Feed Al Momento -->
+    <!-- Columna 3: Feed Al Momento (Sin Categorías Redundantes) -->
     <div class="pgp-hero-latest-col">
         <div class="latest-header">
             <h3 class="latest-title">
@@ -139,13 +135,10 @@ $pgp_used_ids = array();
             if ($am_stream_q->have_posts()) :
                 while ($am_stream_q->have_posts()) : $am_stream_q->the_post();
                     $time_diff = human_time_diff(get_post_time('U', true), current_time('timestamp'));
-                    $cats = get_the_category();
-                    $cat_name = !empty($cats) ? $cats[0]->name : 'NOTICIAS';
             ?>
                     <a href="<?php the_permalink(); ?>" class="latest-feed-item">
                         <div class="latest-meta">
                             <span class="latest-time">Hace <?php echo esc_html($time_diff); ?></span>
-                            <span class="latest-tag"><?php echo esc_html($cat_name); ?></span>
                         </div>
                         <h4><?php the_title(); ?></h4>
                     </a>
