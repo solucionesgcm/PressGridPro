@@ -1,7 +1,7 @@
 <?php
 /**
- * Main Content Body - PressGrid Pro Clean Sections
- * Version: 16.8.0
+ * Main Content Body - PressGrid Pro Clean Flow
+ * Version: 17.2.0
  * 
  * @package PressGrid_Pro
  */
@@ -12,7 +12,7 @@ if (!is_array($pgp_used_ids)) {
 }
 ?>
 
-<!-- 1. SUB-HERO HORIZONTAL DE 4 COLUMNAS (CLEAN CARDS SIN KICKER) -->
+<!-- 1. SUB-HERO HORIZONTAL DE 4 COLUMNAS (COBERTURA DESTACADA DINÁMICA) -->
 <section class="pgp-subhero-strip">
     <div class="subhero-grid">
         <?php
