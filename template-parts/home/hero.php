@@ -1,7 +1,7 @@
 <?php
 /**
  * Home Hero Section - PressGrid Pro
- * Version: 18.1.0 (Con soporte estricto para Alerta Flash / Al Momento)
+ * Version: 19.0.0 (Control Editorial 100% Manual por Metaboxes)
  * 
  * @package PressGrid_Pro
  */
@@ -13,7 +13,7 @@ if (!is_array($pgp_used_ids)) {
 
 <section class="pgp-home-hero-white">
     
-    <!-- Columna 1: Nota Principal (Main Lead Manual Estricto) -->
+    <!-- Columna 1: Nota Principal (Únicamente la marcada manualmente) -->
     <div class="pgp-hero-main-col">
         <?php
         $main_hero_q = new WP_Query(array(
@@ -33,13 +33,6 @@ if (!is_array($pgp_used_ids)) {
             ),
             'ignore_sticky_posts' => true
         ));
-
-        if (!$main_hero_q->have_posts()) {
-            $main_hero_q = new WP_Query(array(
-                'posts_per_page'      => 1,
-                'ignore_sticky_posts' => true
-            ));
-        }
 
         if ($main_hero_q->have_posts()) :
             while ($main_hero_q->have_posts()) : $main_hero_q->the_post();
@@ -67,7 +60,7 @@ if (!is_array($pgp_used_ids)) {
         ?>
     </div>
 
-    <!-- Columna 2: Layout Híbrido (1 Sub-Lead 16:9 + 3 Notas Compactas Excluyendo Alertas Flash) -->
+    <!-- Columna 2: Notas Secundarias (Únicamente las marcadas como Secundarias) -->
     <div class="pgp-hero-stack-col">
         <?php
         $sec_hero_q = new WP_Query(array(
@@ -76,26 +69,18 @@ if (!is_array($pgp_used_ids)) {
             'meta_query'          => array(
                 'relation' => 'OR',
                 array(
-                    'key'     => '_pgp_is_breaking',
-                    'compare' => 'NOT EXISTS'
+                    'key'     => '_pgp_is_secondary',
+                    'value'   => '1',
+                    'compare' => '='
                 ),
                 array(
-                    'key'     => '_pgp_is_breaking',
+                    'key'     => '_gcm_is_secondary',
                     'value'   => '1',
-                    'compare' => '!='
+                    'compare' => '='
                 )
             ),
             'ignore_sticky_posts' => true
         ));
-
-        // Fallback si no hay suficientes notas sin flag de breaking
-        if ($sec_hero_q->post_count < 4) {
-            $sec_hero_q = new WP_Query(array(
-                'posts_per_page'      => 4,
-                'post__not_in'        => $pgp_used_ids,
-                'ignore_sticky_posts' => true
-            ));
-        }
 
         $sec_posts = array();
         if ($sec_hero_q->have_posts()) {
@@ -126,9 +111,11 @@ if (!is_array($pgp_used_ids)) {
         ?>
 
         <!-- Divider Horizontal -->
-        <div class="pgp-col2-divider"></div>
+        <?php if (!empty($sec_posts[1])) : ?>
+            <div class="pgp-col2-divider"></div>
+        <?php endif; ?>
 
-        <!-- 2. Fila Inferior: 3 Notas Secundarias Compactas -->
+        <!-- 2. Fila Inferior: Notas Secundarias Compactas -->
         <div class="pgp-col2-bottom-list">
             <?php
             for ($i = 1; $i < count($sec_posts); $i++) :
@@ -152,7 +139,7 @@ if (!is_array($pgp_used_ids)) {
         </div>
     </div>
 
-    <!-- Columna 3: Feed Al Momento (Incluye Notas Marcadas como Flash / Breaking) -->
+    <!-- Columna 3: Feed Al Momento (Únicamente notas marcadas como Alerta Flash / Al Momento) -->
     <div class="pgp-hero-latest-col">
         <div class="latest-header">
             <h3 class="latest-title">AL MOMENTO</h3>
@@ -160,10 +147,16 @@ if (!is_array($pgp_used_ids)) {
         
         <div class="latest-feed-list">
             <?php
-            // Traer las 5 notas más recientes ignorando sólo lo mostrado en la Columna 1
             $am_stream_q = new WP_Query(array(
                 'posts_per_page'      => 5,
-                'post__not_in'        => array($pgp_used_ids[0]), // Solo excluye la nota principal
+                'post__not_in'        => $pgp_used_ids,
+                'meta_query'          => array(
+                    array(
+                        'key'     => '_pgp_is_breaking',
+                        'value'   => '1',
+                        'compare' => '='
+                    )
+                ),
                 'ignore_sticky_posts' => true
             ));
 
