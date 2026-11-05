@@ -1,19 +1,19 @@
 <?php
 /**
- * Standard Home Hero - NBC News Style (Clean White Layout 4-Items)
- * Version: 15.4.0
+ * Home Hero Section - PressGrid Pro
+ * Version: 16.2.0
  */
-$used_ids = array();
+$pgp_used_ids = array();
 ?>
 
-<section class="nbc-home-hero-white">
+<section class="pgp-home-hero-white">
     
-    <!-- Columna 1: Nota Principal (Direct Titular + Excerpt, Sin Kicker) -->
-    <div class="nbc-hero-main-col">
+    <!-- Columna 1: Nota Principal -->
+    <div class="pgp-hero-main-col">
         <?php
         $main_hero_q = new WP_Query(array(
             'posts_per_page'      => 1,
-            'meta_key'            => '_gcm_is_featured',
+            'meta_key'            => '_pgp_is_featured',
             'meta_value'          => '1',
             'ignore_sticky_posts' => true
         ));
@@ -23,9 +23,9 @@ $used_ids = array();
 
         if ($main_hero_q->have_posts()) :
             while ($main_hero_q->have_posts()) :$main_hero_q->the_post();
-                $used_ids[] = get_the_ID();$subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
+                $pgp_used_ids[] = get_the_ID();$subtitle = get_post_meta(get_the_ID(), '_pgp_subtitle', true);
         ?>
-                <a href="<?php the_permalink(); ?>" class="nbc-hero-lead-card">
+                <a href="<?php the_permalink(); ?>" class="pgp-hero-lead-card">
                     <?php if (has_post_thumbnail()) : ?>
                         <div class="lead-thumb-wrap"><?php the_post_thumbnail('large'); ?></div>
                     <?php endif; ?>
@@ -43,22 +43,22 @@ $used_ids = array();
         ?>
     </div>
 
-    <!-- Columna 2: Stack Secundario (4 Notas con Miniatura Compacta) -->
-    <div class="nbc-hero-stack-col">
+    <!-- Columna 2: Stack Secundario -->
+    <div class="pgp-hero-stack-col">
         <?php
         $secondary_posts = array();
 
         $sec_hero_q = new WP_Query(array(
             'posts_per_page'      => 4,
-            'post__not_in'        => $used_ids,
-            'meta_key'            => '_gcm_is_secondary',
+            'post__not_in'        => $pgp_used_ids,
+            'meta_key'            => '_pgp_is_secondary',
             'meta_value'          => '1',
             'ignore_sticky_posts' => true
         ));
 
         if ($sec_hero_q->have_posts()) {
             while ($sec_hero_q->have_posts()) {$sec_hero_q->the_post();
-                $secondary_posts[] = get_post();$used_ids[] = get_the_ID();
+                $secondary_posts[] = get_post();$pgp_used_ids[] = get_the_ID();
             }
             wp_reset_postdata();
         }
@@ -66,13 +66,13 @@ $used_ids = array();
         $needed = 4 - count($secondary_posts);
         if ($needed > 0) {$fill_q = new WP_Query(array(
                 'posts_per_page'      => $needed,
-                'post__not_in'        => $used_ids,
+                'post__not_in'        => $pgp_used_ids,
                 'ignore_sticky_posts' => true
             ));
 
             if ($fill_q->have_posts()) {
                 while ($fill_q->have_posts()) {$fill_q->the_post();
-                    $secondary_posts[] = get_post();$used_ids[] = get_the_ID();
+                    $secondary_posts[] = get_post();$pgp_used_ids[] = get_the_ID();
                 }
                 wp_reset_postdata();
             }
@@ -80,14 +80,12 @@ $used_ids = array();
 
         foreach ($secondary_posts as$post_obj) :
             setup_postdata($post_obj);
-            $side_kicker = get_post_meta($post_obj->ID, '_gcm_kicker', true);
+            $side_kicker = get_post_meta($post_obj->ID, '_pgp_kicker', true);
         ?>
-            <a href="<?php echo get_permalink($post_obj->ID); ?>" class="nbc-stack-card">
+            <a href="<?php echo get_permalink($post_obj->ID); ?>" class="pgp-stack-card">
                 <div class="stack-thumb">
                     <?php if (has_post_thumbnail($post_obj->ID)) : ?>
                         <?php echo get_the_post_thumbnail($post_obj->ID, 'medium'); ?>
-                    <?php else: ?>
-                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&q=80" alt="GCM Noticias">
                     <?php endif; ?>
                 </div>
                 <div class="stack-info">
@@ -103,8 +101,8 @@ $used_ids = array();
         ?>
     </div>
 
-    <!-- Columna 3: Feed Al Momento (Limpio y Transparente) -->
-    <div class="nbc-hero-latest-col">
+    <!-- Columna 3: Feed Al Momento -->
+    <div class="pgp-hero-latest-col">
         <div class="latest-header">
             <h3 class="latest-title">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
@@ -116,7 +114,7 @@ $used_ids = array();
             <?php
             $am_stream_q = new WP_Query(array(
                 'posts_per_page'      => 5,
-                'post__not_in'        => $used_ids,
+                'post__not_in'        => $pgp_used_ids,
                 'ignore_sticky_posts' => true
             ));
 
