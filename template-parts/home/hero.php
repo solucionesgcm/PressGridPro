@@ -1,7 +1,7 @@
 <?php
 /**
- * Home Hero Section - PressGrid Pro Hybrid Layout
- * Version: 18.0.0 (Búsqueda estricta de Nota Principal Manual)
+ * Home Hero Section - PressGrid Pro
+ * Version: 18.1.0 (Con soporte estricto para Alerta Flash / Al Momento)
  * 
  * @package PressGrid_Pro
  */
@@ -16,7 +16,6 @@ if (!is_array($pgp_used_ids)) {
     <!-- Columna 1: Nota Principal (Main Lead Manual Estricto) -->
     <div class="pgp-hero-main-col">
         <?php
-        // 1. Buscar la nota marcada explícitamente como Principal
         $main_hero_q = new WP_Query(array(
             'posts_per_page'      => 1,
             'meta_query'          => array(
@@ -35,7 +34,6 @@ if (!is_array($pgp_used_ids)) {
             'ignore_sticky_posts' => true
         ));
 
-        // 2. Fallback automático SOLAMENTE si no existe NINGUNA nota marcada manualmente
         if (!$main_hero_q->have_posts()) {
             $main_hero_q = new WP_Query(array(
                 'posts_per_page'      => 1,
@@ -69,14 +67,35 @@ if (!is_array($pgp_used_ids)) {
         ?>
     </div>
 
-    <!-- Columna 2: Layout Híbrido (1 Sub-Lead 16:9 + 3 Notas Compactas Inferiores) -->
+    <!-- Columna 2: Layout Híbrido (1 Sub-Lead 16:9 + 3 Notas Compactas Excluyendo Alertas Flash) -->
     <div class="pgp-hero-stack-col">
         <?php
         $sec_hero_q = new WP_Query(array(
             'posts_per_page'      => 4,
             'post__not_in'        => $pgp_used_ids,
+            'meta_query'          => array(
+                'relation' => 'OR',
+                array(
+                    'key'     => '_pgp_is_breaking',
+                    'compare' => 'NOT EXISTS'
+                ),
+                array(
+                    'key'     => '_pgp_is_breaking',
+                    'value'   => '1',
+                    'compare' => '!='
+                )
+            ),
             'ignore_sticky_posts' => true
         ));
+
+        // Fallback si no hay suficientes notas sin flag de breaking
+        if ($sec_hero_q->post_count < 4) {
+            $sec_hero_q = new WP_Query(array(
+                'posts_per_page'      => 4,
+                'post__not_in'        => $pgp_used_ids,
+                'ignore_sticky_posts' => true
+            ));
+        }
 
         $sec_posts = array();
         if ($sec_hero_q->have_posts()) {
@@ -133,7 +152,7 @@ if (!is_array($pgp_used_ids)) {
         </div>
     </div>
 
-    <!-- Columna 3: Feed Al Momento (5 Notas Cronológicas) -->
+    <!-- Columna 3: Feed Al Momento (Incluye Notas Marcadas como Flash / Breaking) -->
     <div class="pgp-hero-latest-col">
         <div class="latest-header">
             <h3 class="latest-title">AL MOMENTO</h3>
@@ -141,9 +160,10 @@ if (!is_array($pgp_used_ids)) {
         
         <div class="latest-feed-list">
             <?php
+            // Traer las 5 notas más recientes ignorando sólo lo mostrado en la Columna 1
             $am_stream_q = new WP_Query(array(
                 'posts_per_page'      => 5,
-                'post__not_in'        => $pgp_used_ids,
+                'post__not_in'        => array($pgp_used_ids[0]), // Solo excluye la nota principal
                 'ignore_sticky_posts' => true
             ));
 
