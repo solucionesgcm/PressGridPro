@@ -1,7 +1,7 @@
 <?php
 /**
  * Home Hero Section - PressGrid Pro Hybrid Layout
- * Version: 16.8.0
+ * Version: 17.0.0
  * 
  * @package PressGrid_Pro
  */
@@ -37,7 +37,7 @@ $pgp_used_ids = array();
                     <h1 class="lead-title"><?php the_title(); ?></h1>
                     
                     <p class="lead-excerpt">
-                        <?php echo !empty($subtitle) ? esc_html($subtitle) : (has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 24)); ?>
+                        <?php echo !empty($subtitle) ? esc_html($subtitle) : (has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 20)); ?>
                     </p>
                 </a>
         <?php
@@ -47,7 +47,7 @@ $pgp_used_ids = array();
         ?>
     </div>
 
-    <!-- Columna 2: Layout Híbrido (1 Sub-Lead 16:9 Arriba + 2 Notas Lista Abajo) -->
+    <!-- Columna 2: Layout Híbrido Compacto -->
     <div class="pgp-hero-stack-col">
         <?php
         $sec_hero_q = new WP_Query(array(
@@ -66,20 +66,16 @@ $pgp_used_ids = array();
             wp_reset_postdata();
         }
 
-        // 1. Nota Sub-Principal Superior (Con Foto 16:9 Grande)
+        // 1. Nota Sub-Principal Superior
         if (!empty($sec_posts[0])) :
             $post_top = $sec_posts[0];
             setup_postdata($post_top);
-            $top_kicker = get_post_meta($post_top->ID, '_pgp_kicker', true);
         ?>
             <a href="<?php echo get_permalink($post_top->ID); ?>" class="pgp-col2-top-lead">
                 <?php if (has_post_thumbnail($post_top->ID)) : ?>
                     <div class="col2-top-thumb">
                         <?php echo get_the_post_thumbnail($post_top->ID, 'medium_large'); ?>
                     </div>
-                <?php endif; ?>
-                <?php if (!empty($top_kicker)) : ?>
-                    <span class="stack-kicker"><?php echo esc_html($top_kicker); ?></span>
                 <?php endif; ?>
                 <h3 class="col2-top-title"><?php echo get_the_title($post_top->ID); ?></h3>
             </a>
@@ -91,7 +87,7 @@ $pgp_used_ids = array();
         <!-- Divider Horizontal -->
         <div class="pgp-col2-divider"></div>
 
-        <!-- 2. Notas Secundarias Inferiores (Formato Compacto) -->
+        <!-- 2. Notas Secundarias Inferiores -->
         <div class="pgp-col2-bottom-list">
             <?php
             for ($i = 1; $i < count($sec_posts); $i++) :
@@ -115,7 +111,7 @@ $pgp_used_ids = array();
         </div>
     </div>
 
-    <!-- Columna 3: Feed Al Momento (Sin Categorías Redundantes) -->
+    <!-- Columna 3: Feed Al Momento -->
     <div class="pgp-hero-latest-col">
         <div class="latest-header">
             <h3 class="latest-title">

@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 16.9.0
+Version: 17.0.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid-pro
 */
@@ -74,7 +74,7 @@ header.site-header {
     display: grid; 
     grid-template-columns: 1.45fr 1fr 300px; 
     gap: 1.5rem; 
-    align-items: stretch; /* OBLIGA A TODAS LAS COLUMNAS A TENER LA MISMA ALTURA */
+    align-items: start; 
     padding-bottom: 1.5rem; 
     margin-bottom: 1.5rem; 
     border-bottom: 1px solid var(--border-color); 
@@ -96,35 +96,33 @@ header.site-header {
     aspect-ratio: 16 / 9; 
     overflow: hidden; 
     background: #f1f5f9; 
-    margin-bottom: 0.9rem; 
+    margin-bottom: 0.75rem; 
     border-radius: 2px; 
 }
 .pgp-hero-lead-card .lead-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
 .lead-title { 
-    font-size: 2.25rem; 
+    font-size: 2.15rem; 
     line-height: 1.12; 
     font-weight: 900; 
     letter-spacing: -0.7px; 
-    margin: 0 0 0.6rem 0; 
+    margin: 0 0 0.5rem 0; 
     color: var(--text-primary); 
 }
 .lead-excerpt { 
     font-family: var(--font-serif-excerpt); 
-    font-size: 1.025rem; 
-    line-height: 1.48;
+    font-size: 0.975rem; 
+    line-height: 1.45;
     color: var(--text-secondary); 
     margin: 0; 
 }
 
-/* Columna 2: Layout Híbrido (Distribución Flexible Vertical) */
+/* Columna 2: Layout Híbrido Compacto */
 .pgp-hero-stack-col { 
     display: flex; 
     flex-direction: column; 
-    justify-content: space-between; /* DISTRIBUYE EL ESPACIO PARA ELIMINAR EL HUECO BLANCO */
     border-left: 1px solid var(--border-color); 
     border-right: 1px solid var(--border-color); 
     padding: 0 1.25rem; 
-    height: 100%;
 }
 @media (max-width: 1024px) { 
     .pgp-hero-stack-col { border-right: none; padding-right: 0; } 
@@ -138,6 +136,7 @@ header.site-header {
     display: block;
     text-decoration: none;
     color: inherit;
+    margin-bottom: 0.75rem;
 }
 .pgp-col2-top-lead .col2-top-thumb {
     width: 100%;
@@ -145,7 +144,7 @@ header.site-header {
     overflow: hidden;
     border-radius: 2px;
     background: #e2e8f0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
 .pgp-col2-top-lead .col2-top-thumb img {
     width: 100%;
@@ -153,8 +152,8 @@ header.site-header {
     object-fit: cover;
 }
 .col2-top-title {
-    font-size: 1.15rem;
-    line-height: 1.22;
+    font-size: 1.05rem;
+    line-height: 1.25;
     font-weight: 800;
     letter-spacing: -0.3px;
     margin: 0;
@@ -165,20 +164,19 @@ header.site-header {
 .pgp-col2-divider {
     height: 1px;
     background-color: var(--border-color);
-    margin: 0.75rem 0;
+    margin: 0.4rem 0 0.75rem 0;
 }
 
 /* Lista Inferior Compacta */
 .pgp-col2-bottom-list {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    justify-content: flex-end;
+    gap: 0.65rem;
 }
 
 .pgp-stack-card { 
     display: flex; 
-    gap: 0.85rem; 
+    gap: 0.75rem; 
     align-items: center; 
     text-decoration: none; 
     color: inherit; 
@@ -191,8 +189,8 @@ header.site-header {
 }
 
 .pgp-stack-card .stack-thumb { 
-    width: 85px; 
-    height: 58px; 
+    width: 76px; 
+    height: 52px; 
     flex-shrink: 0; 
     overflow: hidden; 
     border-radius: 2px; 
@@ -205,8 +203,8 @@ header.site-header {
 }
 
 .stack-info h4 { 
-    font-size: 0.875rem; 
-    line-height: 1.28; 
+    font-size: 0.85rem; 
+    line-height: 1.25; 
     font-weight: 800; 
     margin: 0; 
     color: var(--text-primary); 
@@ -219,17 +217,15 @@ header.site-header {
     padding: 0; 
     display: flex; 
     flex-direction: column; 
-    justify-content: space-between;
-    height: 100%;
 }
 .latest-header { border-bottom: 2px solid var(--text-primary); padding-bottom: 0.4rem; margin-bottom: 0.6rem; }
 .latest-title { font-size: 0.825rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin: 0; display: flex; align-items: center; gap: 0.4rem; }
-.latest-feed-list { display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
-.latest-feed-item { display: block; padding: 0.55rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; }
+.latest-feed-list { display: flex; flex-direction: column; }
+.latest-feed-item { display: block; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; }
 .latest-feed-item:last-child { border-bottom: none; padding-bottom: 0; }
-.latest-meta { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.65rem; margin-bottom: 0.2rem; }
+.latest-meta { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.65rem; margin-bottom: 0.15rem; }
 .latest-time { color: var(--text-muted); }
-.latest-feed-item h4 { font-size: 0.85rem; line-height: 1.3; font-weight: 800; color: var(--text-primary); margin: 0; }
+.latest-feed-item h4 { font-size: 0.825rem; line-height: 1.28; font-weight: 800; color: var(--text-primary); margin: 0; }
 
 /* ==========================================================================
    4. SUB-HERO HORIZONTAL & LÍNEAS DIVISIONARIAS
