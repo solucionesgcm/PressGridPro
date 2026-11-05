@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 16.2.0
+Version: 16.4.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid-pro
 */
@@ -62,7 +62,7 @@ header.site-header {
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. HOME (PORTADA - HERO EN BLANCO)
+   3. HOME HERO (CENTRADO VERTICAL & ESPACIADO SIMÉTRICO)
    ========================================================================== */
 .pgp-home-wrapper { 
     background: #ffffff;
@@ -74,9 +74,9 @@ header.site-header {
     display: grid; 
     grid-template-columns: 1.45fr 1fr 300px; 
     gap: 1.5rem; 
-    align-items: start; 
-    padding-bottom: 1rem; 
-    margin-bottom: 0.5rem; 
+    align-items: stretch; /* Estira las columnas para igualar la altura del Lead */
+    padding-bottom: 1.5rem; 
+    margin-bottom: 1.5rem; 
     border-bottom: 1px solid var(--border-color); 
     background: #ffffff;
 }
@@ -88,7 +88,7 @@ header.site-header {
     .pgp-home-hero-white { grid-template-columns: 1fr; } 
 }
 
-/* Columna 1: Nota Principal */
+/* Columna 1: Nota Principal (Lead Directo) */
 .pgp-hero-main-col { padding-right: 0.5rem; }
 .pgp-hero-lead-card { display: block; text-decoration: none; color: inherit; }
 .pgp-hero-lead-card .lead-thumb-wrap { 
@@ -116,14 +116,15 @@ header.site-header {
     margin: 0; 
 }
 
-/* Columna 2: Stack Secundario */
+/* Columna 2: Stack Secundario (4 Notas Distribuidas Uniformemente) */
 .pgp-hero-stack-col { 
     display: flex; 
     flex-direction: column; 
-    gap: 0.95rem; 
+    justify-content: space-between; /* Reparación del hueco inferior: reparte espacio sobrante */
     border-left: 1px solid var(--border-color); 
     border-right: 1px solid var(--border-color); 
     padding: 0 1.25rem; 
+    height: 100%;
 }
 @media (max-width: 1024px) { 
     .pgp-hero-stack-col { border-right: none; padding-right: 0; } 
@@ -131,19 +132,23 @@ header.site-header {
 @media (max-width: 768px) { 
     .pgp-hero-stack-col { border-left: none; padding: 0; } 
 }
+
 .pgp-stack-card { 
     display: flex; 
     gap: 0.85rem; 
-    align-items: start; 
+    align-items: center; /* Centra verticalmente la miniatura con el texto */
     text-decoration: none; 
     color: inherit; 
     border-bottom: 1px solid #f1f5f9; 
-    padding-bottom: 0.85rem; 
+    padding-bottom: 0.75rem; 
+    padding-top: 0.25rem;
 }
+.pgp-stack-card:first-child { padding-top: 0; }
 .pgp-stack-card:last-child { border-bottom: none; padding-bottom: 0; }
+
 .pgp-stack-card .stack-thumb { 
-    width: 100px; 
-    height: 68px; 
+    width: 96px; 
+    height: 64px; 
     flex-shrink: 0; 
     overflow: hidden; 
     border-radius: 2px; 
@@ -180,11 +185,11 @@ header.site-header {
 .latest-feed-item h4 { font-size: 0.85rem; line-height: 1.3; font-weight: 800; color: var(--text-primary); margin: 0; }
 
 /* ==========================================================================
-   4. SUB-HERO & FRANJA MULTIMEDIA
+   4. SUB-HERO HORIZONTAL & LÍNEAS DIVISIONARIAS SIMÉTRICAS
    ========================================================================== */
 .pgp-subhero-strip {
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
     margin-bottom: 2rem;
 }
 .subhero-grid {
@@ -194,7 +199,7 @@ header.site-header {
 }
 @media (max-width: 900px) { .subhero-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 550px) { .subhero-grid { grid-template-columns: 1fr; } }
-.subhero-card { display: block; text-decoration: none; color: inherit; }
+.subhero-card { display: flex; flex-direction: column; justify-content: flex-start; text-decoration: none; color: inherit; }
 .subhero-thumb {
     width: 100%;
     aspect-ratio: 16 / 9;
