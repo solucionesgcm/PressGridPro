@@ -1,11 +1,14 @@
 <?php
 /**
- * Home Hero Section - PressGrid Pro Clean Architecture
- * Version: 17.1.0
+ * Home Hero Section - PressGrid Pro Hybrid Layout with Global ID Tracking
+ * Version: 17.3.0
  * 
  * @package PressGrid_Pro
  */
-$pgp_used_ids = array();
+global $pgp_used_ids;
+if (!is_array($pgp_used_ids)) {
+    $pgp_used_ids = array();
+}
 ?>
 
 <section class="pgp-home-hero-white">
@@ -51,7 +54,7 @@ $pgp_used_ids = array();
     <div class="pgp-hero-stack-col">
         <?php
         $sec_hero_q = new WP_Query(array(
-            'posts_per_page'      => 4, // 1 principal + 3 secundarias
+            'posts_per_page'      => 4,
             'post__not_in'        => $pgp_used_ids,
             'ignore_sticky_posts' => true
         ));
@@ -127,6 +130,7 @@ $pgp_used_ids = array();
 
             if ($am_stream_q->have_posts()) :
                 while ($am_stream_q->have_posts()) : $am_stream_q->the_post();
+                    $pgp_used_ids[] = get_the_ID();
                     $time_diff = human_time_diff(get_post_time('U', true), current_time('timestamp'));
             ?>
                     <a href="<?php the_permalink(); ?>" class="latest-feed-item">
