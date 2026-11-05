@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 15.8.1
+Version: 15.9.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid
 */
@@ -66,8 +66,8 @@ header.site-header {
    ========================================================================== */
 .gcm-home-wrapper { 
     background: #ffffff;
-    padding-top: 1.5rem; 
-    padding-bottom: 3.5rem; 
+    padding-top: 1rem; 
+    padding-bottom: 1.5rem; 
 }
 
 .nbc-home-hero-white { 
@@ -75,8 +75,8 @@ header.site-header {
     grid-template-columns: 1.45fr 1fr 300px; 
     gap: 1.5rem; 
     align-items: start; 
-    padding-bottom: 2rem; 
-    margin-bottom: 2rem; 
+    padding-bottom: 1rem; 
+    margin-bottom: 0.5rem; 
     border-bottom: 1px solid var(--border-color); 
     background: #ffffff;
 }
@@ -88,7 +88,7 @@ header.site-header {
     .nbc-home-hero-white { grid-template-columns: 1fr; } 
 }
 
-/* Columna 1: Nota Principal */
+/* Columna 1: Nota Principal (Titular Directo sin Kicker) */
 .nbc-hero-main-col { padding-right: 0.5rem; }
 .nbc-hero-lead-card { display: block; text-decoration: none; color: inherit; }
 .nbc-hero-lead-card .lead-thumb-wrap { 
@@ -180,9 +180,9 @@ header.site-header {
 .latest-feed-item h4 { font-size: 0.85rem; line-height: 1.3; font-weight: 800; color: var(--text-primary); margin: 0; }
 
 /* ==========================================================================
-   4. FRANJA MULTIMEDIA & CUERPO PRINCIPAL
+   4. FRANJA MULTIMEDIA & CUERPO PRINCIPAL (MAIN CONTENT)
    ========================================================================== */
-.gcm-multimedia-dark-strip { background: var(--nbc-dark-bg); color: #ffffff; padding: 2.25rem 0; margin: 2rem 0; }
+.gcm-multimedia-dark-strip { background: var(--nbc-dark-bg); color: #ffffff; padding: 2.25rem 0; margin: 1.5rem 0 2rem 0; }
 .multimedia-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; color: #94a3b8; display: block; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
 .multimedia-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 @media (max-width: 900px) { .multimedia-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -232,7 +232,7 @@ header.site-header {
 .news-banner-form button { background: var(--brand-red); color: #ffffff; border: none; padding: 0.5rem 1.1rem; border-radius: 3px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
 
 /* ==========================================================================
-   5. WIDGET: LO MÁS LEÍDO (ESTILO NBC NEWS)
+   5. WIDGET: LO MÁS LEÍDO (NÚMEROS RECTOS MONOSPACIADOS)
    ========================================================================== */
 .gcm-most-read-widget .widget-title {
     font-size: 0.85rem;
@@ -293,7 +293,7 @@ header.site-header {
 }
 
 /* ==========================================================================
-   6. SINGLE POST
+   6. SINGLE POST (HERO OSCURO + CUERPO EN BLANCO)
    ========================================================================== */
 .gcm-single-hero-dark { 
     background: var(--nbc-dark-bg); 
