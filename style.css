@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 17.4.0
+Version: 17.5.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid-pro
 */
@@ -12,7 +12,7 @@ Text Domain: pressgrid-pro
 /* ==========================================================================
    1. IMPORTACIÓN DE FUENTES & RESET GENERAL
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800&family=DM+Mono:wght@500;700&family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700&family=DM+Mono:wght@500;700&family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap');
 
 :root {
     --bg-main: #ffffff;
@@ -50,7 +50,7 @@ img { max-width: 100%; height: auto; }
     padding: 0 1.5rem;
 }
 
-/* Aplicación general de Barlow Condensed a todos los encabezados */
+/* Base Display para Encabezados */
 h1, h2, h3, h4, h5, h6, 
 .lead-title, 
 .col2-top-title, 
@@ -87,7 +87,7 @@ header.site-header {
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. HOME HERO (BARLOW CONDENSED 32PX EN MAIN LEAD)
+   3. HOME HERO (CALIBRACIÓN DE PESOS TIPOGRÁFICOS)
    ========================================================================== */
 .pgp-home-wrapper { 
     background: #ffffff;
@@ -113,7 +113,7 @@ header.site-header {
     .pgp-home-hero-white { grid-template-columns: 1fr; } 
 }
 
-/* Columna 1: Nota Principal (Titular a 32px / 2rem) */
+/* Columna 1: Nota Principal (Headline Destacado a Weight 700) */
 .pgp-hero-main-col { padding-right: 0.5rem; }
 .pgp-hero-lead-card { display: block; text-decoration: none; color: inherit; }
 .pgp-hero-lead-card .lead-thumb-wrap { 
@@ -128,10 +128,10 @@ header.site-header {
 
 .lead-title { 
     font-family: var(--font-display);
-    font-size: 32px; /* 32px exactos solicitados */
-    line-height: 1.08; 
-    font-weight: 800; 
-    letter-spacing: -0.2px; 
+    font-size: 32px; 
+    line-height: 1.1; 
+    font-weight: 700; /* Peso equilibrado para el lead */
+    letter-spacing: -0.1px; 
     margin: 0 0 0.5rem 0; 
     color: var(--text-primary); 
 }
@@ -181,9 +181,9 @@ header.site-header {
 }
 .col2-top-title {
     font-family: var(--font-display);
-    font-size: 1.25rem;
-    line-height: 1.15;
-    font-weight: 800;
+    font-size: 1.2rem;
+    line-height: 1.18;
+    font-weight: 700;
     margin: 0;
     color: var(--text-primary);
 }
@@ -195,7 +195,7 @@ header.site-header {
     margin: 0.35rem 0 0.65rem 0;
 }
 
-/* Lista Inferior Compacta de 3 Notas */
+/* Lista Inferior Compacta (Weight 600) */
 .pgp-col2-bottom-list {
     display: flex;
     flex-direction: column;
@@ -234,12 +234,12 @@ header.site-header {
     font-family: var(--font-display);
     font-size: 1.05rem; 
     line-height: 1.18; 
-    font-weight: 800; 
+    font-weight: 600; /* Suavizado a Semi-Bold */
     margin: 0; 
     color: var(--text-primary); 
 }
 
-/* Columna 3: Feed Al Momento */
+/* Columna 3: Feed Al Momento (Limpieza Tipográfica) */
 .pgp-hero-latest-col { 
     background: transparent; 
     border: none; 
@@ -270,7 +270,7 @@ header.site-header {
     font-family: var(--font-display);
     font-size: 1.05rem; 
     line-height: 1.18; 
-    font-weight: 800; 
+    font-weight: 600; /* Suavizado a Semi-Bold */
     color: var(--text-primary); 
     margin: 0; 
 }
@@ -302,9 +302,9 @@ header.site-header {
 .subhero-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .subhero-title {
     font-family: var(--font-display);
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     line-height: 1.18;
-    font-weight: 800;
+    font-weight: 600; /* Suavizado */
     margin: 0;
     color: var(--text-primary);
 }
@@ -318,7 +318,7 @@ header.site-header {
 .pgp-block-header { border-bottom: 2px solid #0f172a; padding-bottom: 0.4rem; margin-bottom: 1.25rem; }
 .pgp-block-title { 
     font-family: var(--font-display);
-    font-size: 1.4rem; 
+    font-size: 1.35rem; 
     font-weight: 800; 
     text-transform: uppercase; 
     letter-spacing: 0.2px; 
@@ -333,8 +333,8 @@ header.site-header {
 .asym-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .asym-title { 
     font-family: var(--font-display);
-    font-size: 1.5rem; 
-    font-weight: 800; 
+    font-size: 1.45rem; 
+    font-weight: 700; 
     line-height: 1.15; 
     margin: 0 0 0.4rem 0; 
     color: var(--text-primary); 
@@ -347,8 +347,8 @@ header.site-header {
 .asym-list-item:last-child { border-bottom: none; padding-bottom: 0; }
 .asym-list-info h4 { 
     font-family: var(--font-display);
-    font-size: 1.125rem; 
-    font-weight: 800; 
+    font-size: 1.1rem; 
+    font-weight: 600; /* Suavizado a Semi-Bold */
     line-height: 1.18; 
     margin: 0; 
     color: var(--text-primary); 
@@ -362,9 +362,9 @@ header.site-header {
 .pgp-card-3col .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .pgp-card-3col .card-title { 
     font-family: var(--font-display);
-    font-size: 1.15rem; 
+    font-size: 1.1rem; 
     line-height: 1.18; 
-    font-weight: 800; 
+    font-weight: 600; /* Suavizado */
     margin: 0; 
     color: var(--text-primary); 
 }
@@ -398,9 +398,9 @@ header.site-header {
 .rank-number { font-family: var(--font-mono); font-size: 2rem; font-weight: 900; font-style: normal; color: var(--brand-red); line-height: 0.9; flex-shrink: 0; letter-spacing: -1px; }
 .rank-info h4 { 
     font-family: var(--font-display);
-    font-size: 1.125rem; 
+    font-size: 1.1rem; 
     line-height: 1.18; 
-    font-weight: 800; 
+    font-weight: 600; /* Suavizado a Semi-Bold */
     margin: 0 0 0.3rem 0; 
     color: var(--text-primary); 
 }
@@ -416,7 +416,7 @@ header.site-header {
     font-family: var(--font-display);
     font-size: 3.25rem; 
     line-height: 1.08; 
-    font-weight: 800; 
+    font-weight: 700; 
     color: #ffffff; 
     margin: 0 0 1.25rem 0; 
 }
