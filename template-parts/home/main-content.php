@@ -1,10 +1,16 @@
 <?php
 /**
- * Main Content Body - PressGrid Pro
- * Version: 16.3.0
+ * Main Content Body - PressGrid Pro Flow Layout with ID Exclusion
+ * Version: 16.7.0
  * 
  * @package PressGrid_Pro
  */
+
+// Heredar o inicializar el array de IDs usados para evitar repeticiones en el cuerpo
+global $pgp_used_ids;
+if (!is_array($pgp_used_ids)) {
+    $pgp_used_ids = array();
+}
 ?>
 
 <!-- 1. SUB-HERO HORIZONTAL DE 4 COLUMNAS (NOTAS DESTACADAS SECUNDARIAS) -->
@@ -13,12 +19,13 @@
         <?php
         $subhero_q = new WP_Query(array(
             'posts_per_page'      => 4,
-            'ignore_sticky_posts' => true,
-            'offset'              => 5 // Desplazamiento para omitir las notas asignadas al hero
+            'post__not_in'        => $pgp_used_ids,
+            'ignore_sticky_posts' => true
         ));
 
         if ($subhero_q->have_posts()) :
             while ($subhero_q->have_posts()) : $subhero_q->the_post();
+                $pgp_used_ids[] = get_the_ID();
                 $kicker = get_post_meta(get_the_ID(), '_pgp_kicker', true);
                 $cats   = get_the_category();
                 $tag    = !empty($kicker) ? $kicker : (!empty($cats) ? $cats[0]->name : 'COBERTURA');
@@ -55,11 +62,21 @@
                 $fin_main_q = new WP_Query(array(
                     'posts_per_page'      => 1,
                     'category_name'       => 'finanzas',
+                    'post__not_in'        => $pgp_used_ids,
                     'ignore_sticky_posts' => true
                 ));
 
+                if (!$fin_main_q->have_posts()) {
+                    $fin_main_q = new WP_Query(array(
+                        'posts_per_page'      => 1,
+                        'post__not_in'        => $pgp_used_ids,
+                        'ignore_sticky_posts' => true
+                    ));
+                }
+
                 if ($fin_main_q->have_posts()) :
                     while ($fin_main_q->have_posts()) : $fin_main_q->the_post();
+                        $pgp_used_ids[] = get_the_ID();
                 ?>
                         <a href="<?php the_permalink(); ?>" class="asym-main-card">
                             <?php if (has_post_thumbnail()) : ?>
@@ -79,12 +96,13 @@
                     $fin_side_q = new WP_Query(array(
                         'posts_per_page'      => 3,
                         'category_name'       => 'finanzas',
-                        'offset'              => 1,
+                        'post__not_in'        => $pgp_used_ids,
                         'ignore_sticky_posts' => true
                     ));
 
                     if ($fin_side_q->have_posts()) :
                         while ($fin_side_q->have_posts()) : $fin_side_q->the_post();
+                            $pgp_used_ids[] = get_the_ID();
                     ?>
                             <a href="<?php the_permalink(); ?>" class="asym-list-item">
                                 <div class="asym-list-info">
@@ -113,7 +131,7 @@
             </form>
         </div>
 
-        <!-- BLOQUE 2: TECNOLOGÍA & IA (GRID DE 3 COLUMNAS) -->
+        <!-- BLOQUE 2: TECNOLOGÍA & IA (GRID DE 3 COLUMNAS SIN DUPLICADOS) -->
         <section class="pgp-block-section">
             <div class="pgp-block-header">
                 <h2 class="pgp-block-title">Tecnología & IA</h2>
@@ -124,11 +142,21 @@
                 $tech_q = new WP_Query(array(
                     'posts_per_page'      => 3,
                     'category_name'       => 'tecnologia',
+                    'post__not_in'        => $pgp_used_ids,
                     'ignore_sticky_posts' => true
                 ));
 
+                if (!$tech_q->have_posts()) {
+                    $tech_q = new WP_Query(array(
+                        'posts_per_page'      => 3,
+                        'post__not_in'        => $pgp_used_ids,
+                        'ignore_sticky_posts' => true
+                    ));
+                }
+
                 if ($tech_q->have_posts()) :
                     while ($tech_q->have_posts()) : $tech_q->the_post();
+                        $pgp_used_ids[] = get_the_ID();
                 ?>
                         <a href="<?php the_permalink(); ?>" class="pgp-card-3col">
                             <?php if (has_post_thumbnail()) : ?>
@@ -146,7 +174,7 @@
 
     </div><!-- /.pgp-main-feed-col -->
 
-    <!-- SIDEBAR DERECHO ÚNICO (DENTRO DE LA RETÍCULA PRINCIPAL) -->
+    <!-- SIDEBAR DERECHO ÚNICO INTEGRADO -->
     <?php get_template_part('template-parts/home/sidebar'); ?>
 
 </div><!-- /.pgp-main-layout -->
