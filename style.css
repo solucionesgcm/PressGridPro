@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 16.4.0
+Version: 16.5.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid-pro
 */
@@ -62,7 +62,7 @@ header.site-header {
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. HOME HERO (CENTRADO VERTICAL & ESPACIADO SIMÉTRICO)
+   3. HOME HERO (PORTADA ESTILO NBC - RETÍCULA 3 COLUMNAS)
    ========================================================================== */
 .pgp-home-wrapper { 
     background: #ffffff;
@@ -74,7 +74,7 @@ header.site-header {
     display: grid; 
     grid-template-columns: 1.45fr 1fr 300px; 
     gap: 1.5rem; 
-    align-items: stretch; /* Estira las columnas para igualar la altura del Lead */
+    align-items: start; 
     padding-bottom: 1.5rem; 
     margin-bottom: 1.5rem; 
     border-bottom: 1px solid var(--border-color); 
@@ -88,7 +88,7 @@ header.site-header {
     .pgp-home-hero-white { grid-template-columns: 1fr; } 
 }
 
-/* Columna 1: Nota Principal (Lead Directo) */
+/* Columna 1: Nota Principal (Main Lead Directo) */
 .pgp-hero-main-col { padding-right: 0.5rem; }
 .pgp-hero-lead-card { display: block; text-decoration: none; color: inherit; }
 .pgp-hero-lead-card .lead-thumb-wrap { 
@@ -116,15 +116,13 @@ header.site-header {
     margin: 0; 
 }
 
-/* Columna 2: Stack Secundario (4 Notas Distribuidas Uniformemente) */
+/* Columna 2: Layout Híbrido NBC (1 Sub-Lead 16:9 + 2 Notas en Lista) */
 .pgp-hero-stack-col { 
     display: flex; 
     flex-direction: column; 
-    justify-content: space-between; /* Reparación del hueco inferior: reparte espacio sobrante */
     border-left: 1px solid var(--border-color); 
     border-right: 1px solid var(--border-color); 
     padding: 0 1.25rem; 
-    height: 100%;
 }
 @media (max-width: 1024px) { 
     .pgp-hero-stack-col { border-right: none; padding-right: 0; } 
@@ -133,28 +131,77 @@ header.site-header {
     .pgp-hero-stack-col { border-left: none; padding: 0; } 
 }
 
+/* Sub-Lead Superior 16:9 */
+.pgp-col2-top-lead {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 0.85rem;
+}
+.pgp-col2-top-lead .col2-top-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 2px;
+    background: #e2e8f0;
+    margin-bottom: 0.5rem;
+}
+.pgp-col2-top-lead .col2-top-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.col2-top-title {
+    font-size: 1.15rem;
+    line-height: 1.22;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+/* División Horizontal entre Sub-Lead y Notas Inferiores */
+.pgp-col2-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 0.4rem 0 0.85rem 0;
+}
+
+/* Lista Inferior Compacta de 2 Notas */
+.pgp-col2-bottom-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
 .pgp-stack-card { 
     display: flex; 
     gap: 0.85rem; 
-    align-items: center; /* Centra verticalmente la miniatura con el texto */
+    align-items: center; 
     text-decoration: none; 
     color: inherit; 
     border-bottom: 1px solid #f1f5f9; 
     padding-bottom: 0.75rem; 
-    padding-top: 0.25rem;
 }
-.pgp-stack-card:first-child { padding-top: 0; }
-.pgp-stack-card:last-child { border-bottom: none; padding-bottom: 0; }
+.pgp-stack-card:last-child { 
+    border-bottom: none; 
+    padding-bottom: 0; 
+}
 
 .pgp-stack-card .stack-thumb { 
-    width: 96px; 
-    height: 64px; 
+    width: 85px; 
+    height: 60px; 
     flex-shrink: 0; 
     overflow: hidden; 
     border-radius: 2px; 
     background: #e2e8f0; 
 }
-.pgp-stack-card .stack-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.pgp-stack-card .stack-thumb img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
 .stack-kicker { 
     font-family: var(--font-mono); 
     font-size: 0.65rem; 
@@ -165,14 +212,14 @@ header.site-header {
     display: block; 
 }
 .stack-info h4 { 
-    font-size: 0.9rem; 
+    font-size: 0.875rem; 
     line-height: 1.28; 
     font-weight: 800; 
     margin: 0; 
     color: var(--text-primary); 
 }
 
-/* Columna 3: Al Momento */
+/* Columna 3: Feed Al Momento */
 .pgp-hero-latest-col { background: transparent; border: none; padding: 0; display: flex; flex-direction: column; }
 .latest-header { border-bottom: 2px solid var(--text-primary); padding-bottom: 0.4rem; margin-bottom: 0.6rem; }
 .latest-title { font-size: 0.825rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin: 0; display: flex; align-items: center; gap: 0.4rem; }
@@ -276,7 +323,7 @@ header.site-header {
 .news-banner-form button { background: var(--brand-red); color: #ffffff; border: none; padding: 0.5rem 1.1rem; border-radius: 3px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
 
 /* ==========================================================================
-   6. WIDGET: LO MÁS LEÍDO
+   6. WIDGET: LO MÁS LEÍDO (NÚMEROS RECTOS MONOSPACIADOS)
    ========================================================================== */
 .pgp-most-read-widget .widget-title {
     font-size: 0.85rem;
