@@ -1,7 +1,7 @@
 <?php
 /**
- * Home Hero Section - PressGrid Pro Hybrid Layout
- * Version: 17.0.0
+ * Home Hero Section - PressGrid Pro Clean Architecture
+ * Version: 17.1.0
  * 
  * @package PressGrid_Pro
  */
@@ -37,7 +37,7 @@ $pgp_used_ids = array();
                     <h1 class="lead-title"><?php the_title(); ?></h1>
                     
                     <p class="lead-excerpt">
-                        <?php echo !empty($subtitle) ? esc_html($subtitle) : (has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 20)); ?>
+                        <?php echo !empty($subtitle) ? esc_html($subtitle) : (has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 22)); ?>
                     </p>
                 </a>
         <?php
@@ -47,11 +47,11 @@ $pgp_used_ids = array();
         ?>
     </div>
 
-    <!-- Columna 2: Layout Híbrido Compacto -->
+    <!-- Columna 2: Layout Híbrido (1 Sub-Lead 16:9 + 3 Notas Compactas Inferiores) -->
     <div class="pgp-hero-stack-col">
         <?php
         $sec_hero_q = new WP_Query(array(
-            'posts_per_page'      => 3,
+            'posts_per_page'      => 4, // 1 principal + 3 secundarias
             'post__not_in'        => $pgp_used_ids,
             'ignore_sticky_posts' => true
         ));
@@ -66,7 +66,7 @@ $pgp_used_ids = array();
             wp_reset_postdata();
         }
 
-        // 1. Nota Sub-Principal Superior
+        // 1. Fila Superior: Nota Sub-Principal 16:9
         if (!empty($sec_posts[0])) :
             $post_top = $sec_posts[0];
             setup_postdata($post_top);
@@ -87,7 +87,7 @@ $pgp_used_ids = array();
         <!-- Divider Horizontal -->
         <div class="pgp-col2-divider"></div>
 
-        <!-- 2. Notas Secundarias Inferiores -->
+        <!-- 2. Fila Inferior: 3 Notas Secundarias Compactas -->
         <div class="pgp-col2-bottom-list">
             <?php
             for ($i = 1; $i < count($sec_posts); $i++) :
@@ -111,19 +111,16 @@ $pgp_used_ids = array();
         </div>
     </div>
 
-    <!-- Columna 3: Feed Al Momento -->
+    <!-- Columna 3: Feed Al Momento (Estilo Limpio Minimalista) -->
     <div class="pgp-hero-latest-col">
         <div class="latest-header">
-            <h3 class="latest-title">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
-                Al Momento
-            </h3>
+            <h3 class="latest-title">AL MOMENTO</h3>
         </div>
         
         <div class="latest-feed-list">
             <?php
             $am_stream_q = new WP_Query(array(
-                'posts_per_page'      => 5,
+                'posts_per_page'      => 6,
                 'post__not_in'        => $pgp_used_ids,
                 'ignore_sticky_posts' => true
             ));

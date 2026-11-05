@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 17.0.0
+Version: 17.1.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid-pro
 */
@@ -62,11 +62,11 @@ header.site-header {
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. HOME HERO (RETÍCULA Y ALINEACIÓN DE ALTURA PERFECTA)
+   3. HOME HERO (ESPACIADO DUPLICADO SUPERIOR Y ALINEACIÓN)
    ========================================================================== */
 .pgp-home-wrapper { 
     background: #ffffff;
-    padding-top: 1rem; 
+    padding-top: 2.25rem; /* PADDING SUPERIOR DUPLICADO PARA DAR RESPIRO VISUAL */
     padding-bottom: 1.5rem; 
 }
 
@@ -75,8 +75,8 @@ header.site-header {
     grid-template-columns: 1.45fr 1fr 300px; 
     gap: 1.5rem; 
     align-items: start; 
-    padding-bottom: 1.5rem; 
-    margin-bottom: 1.5rem; 
+    padding-bottom: 1.75rem; 
+    margin-bottom: 1.75rem; 
     border-bottom: 1px solid var(--border-color); 
     background: #ffffff;
 }
@@ -96,7 +96,7 @@ header.site-header {
     aspect-ratio: 16 / 9; 
     overflow: hidden; 
     background: #f1f5f9; 
-    margin-bottom: 0.75rem; 
+    margin-bottom: 0.85rem; 
     border-radius: 2px; 
 }
 .pgp-hero-lead-card .lead-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
@@ -116,7 +116,7 @@ header.site-header {
     margin: 0; 
 }
 
-/* Columna 2: Layout Híbrido Compacto */
+/* Columna 2: Layout Híbrido (1 Sub-Lead + 3 Compactas) */
 .pgp-hero-stack-col { 
     display: flex; 
     flex-direction: column; 
@@ -136,7 +136,7 @@ header.site-header {
     display: block;
     text-decoration: none;
     color: inherit;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.65rem;
 }
 .pgp-col2-top-lead .col2-top-thumb {
     width: 100%;
@@ -164,14 +164,14 @@ header.site-header {
 .pgp-col2-divider {
     height: 1px;
     background-color: var(--border-color);
-    margin: 0.4rem 0 0.75rem 0;
+    margin: 0.35rem 0 0.65rem 0;
 }
 
-/* Lista Inferior Compacta */
+/* Lista Inferior Compacta de 3 Notas */
 .pgp-col2-bottom-list {
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.55rem;
 }
 
 .pgp-stack-card { 
@@ -181,7 +181,7 @@ header.site-header {
     text-decoration: none; 
     color: inherit; 
     border-bottom: 1px solid #f1f5f9; 
-    padding-bottom: 0.65rem; 
+    padding-bottom: 0.55rem; 
 }
 .pgp-stack-card:last-child { 
     border-bottom: none; 
@@ -189,8 +189,8 @@ header.site-header {
 }
 
 .pgp-stack-card .stack-thumb { 
-    width: 76px; 
-    height: 52px; 
+    width: 68px; 
+    height: 48px; 
     flex-shrink: 0; 
     overflow: hidden; 
     border-radius: 2px; 
@@ -203,14 +203,14 @@ header.site-header {
 }
 
 .stack-info h4 { 
-    font-size: 0.85rem; 
+    font-size: 0.825rem; 
     line-height: 1.25; 
     font-weight: 800; 
     margin: 0; 
     color: var(--text-primary); 
 }
 
-/* Columna 3: Feed Al Momento */
+/* Columna 3: Feed Al Momento (Estilo Limpio Minimalista) */
 .pgp-hero-latest-col { 
     background: transparent; 
     border: none; 
@@ -218,14 +218,25 @@ header.site-header {
     display: flex; 
     flex-direction: column; 
 }
-.latest-header { border-bottom: 2px solid var(--text-primary); padding-bottom: 0.4rem; margin-bottom: 0.6rem; }
-.latest-title { font-size: 0.825rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin: 0; display: flex; align-items: center; gap: 0.4rem; }
+.latest-header { 
+    border-bottom: 1px solid var(--text-primary); 
+    padding-bottom: 0.35rem; 
+    margin-bottom: 0.5rem; 
+}
+.latest-title { 
+    font-size: 0.85rem; 
+    font-weight: 900; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px; 
+    margin: 0; 
+    color: var(--text-primary);
+}
 .latest-feed-list { display: flex; flex-direction: column; }
-.latest-feed-item { display: block; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; }
+.latest-feed-item { display: block; padding: 0.45rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; }
 .latest-feed-item:last-child { border-bottom: none; padding-bottom: 0; }
-.latest-meta { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.65rem; margin-bottom: 0.15rem; }
+.latest-meta { display: flex; align-items: center; font-family: var(--font-mono); font-size: 0.65rem; margin-bottom: 0.15rem; }
 .latest-time { color: var(--text-muted); }
-.latest-feed-item h4 { font-size: 0.825rem; line-height: 1.28; font-weight: 800; color: var(--text-primary); margin: 0; }
+.latest-feed-item h4 { font-size: 0.825rem; line-height: 1.25; font-weight: 800; color: var(--text-primary); margin: 0; }
 
 /* ==========================================================================
    4. SUB-HERO HORIZONTAL & LÍNEAS DIVISIONARIAS
