@@ -1,7 +1,7 @@
 <?php
 /**
- * Home Hero Section - PressGrid Pro Hybrid Layout with Global ID Tracking
- * Version: 17.3.0
+ * Home Hero Section - PressGrid Pro Clean Architecture
+ * Version: 17.6.0
  * 
  * @package PressGrid_Pro
  */
@@ -114,7 +114,7 @@ if (!is_array($pgp_used_ids)) {
         </div>
     </div>
 
-    <!-- Columna 3: Feed Al Momento (Estilo Limpio Minimalista) -->
+    <!-- Columna 3: Feed Al Momento (Ajustado a 5 Notas para Nivelación Exacta) -->
     <div class="pgp-hero-latest-col">
         <div class="latest-header">
             <h3 class="latest-title">AL MOMENTO</h3>
@@ -123,7 +123,7 @@ if (!is_array($pgp_used_ids)) {
         <div class="latest-feed-list">
             <?php
             $am_stream_q = new WP_Query(array(
-                'posts_per_page'      => 6,
+                'posts_per_page'      => 5, // Cambiado de 6 a 5 notas
                 'post__not_in'        => $pgp_used_ids,
                 'ignore_sticky_posts' => true
             ));

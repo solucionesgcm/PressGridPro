@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 17.5.0
+Version: 17.6.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid-pro
 */
@@ -87,7 +87,7 @@ header.site-header {
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. HOME HERO (CALIBRACIÓN DE PESOS TIPOGRÁFICOS)
+   3. HOME HERO (ALINEACIÓN PERFECTA DE 5 ELEMENTOS EN AL MOMENTO)
    ========================================================================== */
 .pgp-home-wrapper { 
     background: #ffffff;
@@ -113,7 +113,7 @@ header.site-header {
     .pgp-home-hero-white { grid-template-columns: 1fr; } 
 }
 
-/* Columna 1: Nota Principal (Headline Destacado a Weight 700) */
+/* Columna 1: Nota Principal */
 .pgp-hero-main-col { padding-right: 0.5rem; }
 .pgp-hero-lead-card { display: block; text-decoration: none; color: inherit; }
 .pgp-hero-lead-card .lead-thumb-wrap { 
@@ -130,7 +130,7 @@ header.site-header {
     font-family: var(--font-display);
     font-size: 32px; 
     line-height: 1.1; 
-    font-weight: 700; /* Peso equilibrado para el lead */
+    font-weight: 700; 
     letter-spacing: -0.1px; 
     margin: 0 0 0.5rem 0; 
     color: var(--text-primary); 
@@ -159,7 +159,6 @@ header.site-header {
     .pgp-hero-stack-col { border-left: none; padding: 0; } 
 }
 
-/* Sub-Lead Superior 16:9 */
 .pgp-col2-top-lead {
     display: block;
     text-decoration: none;
@@ -188,14 +187,12 @@ header.site-header {
     color: var(--text-primary);
 }
 
-/* División Horizontal */
 .pgp-col2-divider {
     height: 1px;
     background-color: var(--border-color);
     margin: 0.35rem 0 0.65rem 0;
 }
 
-/* Lista Inferior Compacta (Weight 600) */
 .pgp-col2-bottom-list {
     display: flex;
     flex-direction: column;
@@ -234,12 +231,12 @@ header.site-header {
     font-family: var(--font-display);
     font-size: 1.05rem; 
     line-height: 1.18; 
-    font-weight: 600; /* Suavizado a Semi-Bold */
+    font-weight: 600; 
     margin: 0; 
     color: var(--text-primary); 
 }
 
-/* Columna 3: Feed Al Momento (Limpieza Tipográfica) */
+/* Columna 3: Feed Al Momento (Ajuste fino a 5 elementos) */
 .pgp-hero-latest-col { 
     background: transparent; 
     border: none; 
@@ -262,7 +259,7 @@ header.site-header {
     color: var(--text-primary);
 }
 .latest-feed-list { display: flex; flex-direction: column; }
-.latest-feed-item { display: block; padding: 0.45rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; }
+.latest-feed-item { display: block; padding: 0.55rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; }
 .latest-feed-item:last-child { border-bottom: none; padding-bottom: 0; }
 .latest-meta { display: flex; align-items: center; font-family: var(--font-mono); font-size: 0.65rem; margin-bottom: 0.15rem; }
 .latest-time { color: var(--text-muted); }
@@ -270,7 +267,7 @@ header.site-header {
     font-family: var(--font-display);
     font-size: 1.05rem; 
     line-height: 1.18; 
-    font-weight: 600; /* Suavizado a Semi-Bold */
+    font-weight: 600; 
     color: var(--text-primary); 
     margin: 0; 
 }
@@ -304,7 +301,7 @@ header.site-header {
     font-family: var(--font-display);
     font-size: 1.1rem;
     line-height: 1.18;
-    font-weight: 600; /* Suavizado */
+    font-weight: 600;
     margin: 0;
     color: var(--text-primary);
 }
@@ -348,7 +345,7 @@ header.site-header {
 .asym-list-info h4 { 
     font-family: var(--font-display);
     font-size: 1.1rem; 
-    font-weight: 600; /* Suavizado a Semi-Bold */
+    font-weight: 600; 
     line-height: 1.18; 
     margin: 0; 
     color: var(--text-primary); 
@@ -364,7 +361,7 @@ header.site-header {
     font-family: var(--font-display);
     font-size: 1.1rem; 
     line-height: 1.18; 
-    font-weight: 600; /* Suavizado */
+    font-weight: 600; 
     margin: 0; 
     color: var(--text-primary); 
 }
@@ -400,7 +397,7 @@ header.site-header {
     font-family: var(--font-display);
     font-size: 1.1rem; 
     line-height: 1.18; 
-    font-weight: 600; /* Suavizado a Semi-Bold */
+    font-weight: 600; 
     margin: 0 0 0.3rem 0; 
     color: var(--text-primary); 
 }
