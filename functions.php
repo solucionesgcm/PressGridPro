@@ -1,7 +1,7 @@
 <?php
 /**
  * Functions and definitions - PressGrid Pro
- * Version: 17.8.0
+ * Version: 17.9.0
  * 
  * @package PressGrid_Pro
  */
@@ -93,7 +93,7 @@ function pressgrid_render_sidebar_meta_box($post) {
     echo '<input type="checkbox" name="pgp_is_breaking" value="1" ' . checked($is_breaking, '1', false) . ' /> Alerta Flash (Al Momento)';
     echo '</label>';
 
-    echo '<p style="font-size:0.75rem; color:#64748b; margin-top:0.5rem; line-height:1.3;">Si no marcas casillas, el sistema acomodará automáticamente las notas más recientes sin repetir contenidos.</p>';
+    echo '<p style="font-size:0.75rem; color:#64748b; margin-top:0.5rem; line-height:1.3;">Nota: Marcar como Principal anulará automáticamente cualquier otra nota principal activa.</p>';
     
     echo '</div>';
 }
@@ -144,7 +144,18 @@ function pressgrid_save_editorial_meta_boxes($post_id) {
 
     // Guardado de Visibilidad Portada
     if (isset($_POST['pressgrid_sidebar_meta_box_nonce']) && wp_verify_nonce($_POST['pressgrid_sidebar_meta_box_nonce'], 'pressgrid_save_sidebar_meta_box')) {
-        update_post_meta($post_id, '_pgp_is_featured', isset($_POST['pgp_is_featured']) ? '1' : '0');
+        $is_featured_new = isset($_POST['pgp_is_featured']) ? '1' : '0';
+
+        // LÓGICA DE EXCLUSIVIDAD: Si se marca como Principal, desmarca cualquier otra anterior
+        if ($is_featured_new === '1') {
+            global $wpdb;
+            $wpdb->query($wpdb->prepare(
+                "UPDATE {$wpdb->postmeta} SET meta_value = '0' WHERE meta_key = '_pgp_is_featured' AND post_id != %d",
+                $post_id
+            ));
+        }
+
+        update_post_meta($post_id, '_pgp_is_featured', $is_featured_new);
         update_post_meta($post_id, '_pgp_is_secondary', isset($_POST['pgp_is_secondary']) ? '1' : '0');
         update_post_meta($post_id, '_pgp_is_breaking', isset($_POST['pgp_is_breaking']) ? '1' : '0');
     }
