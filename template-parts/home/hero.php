@@ -1,7 +1,7 @@
 <?php
 /**
- * Home Hero Section - PressGrid Pro Clean Architecture
- * Version: 17.6.0
+ * Home Hero Section - PressGrid Pro Hybrid Layout
+ * Version: 18.0.0 (Búsqueda estricta de Nota Principal Manual)
  * 
  * @package PressGrid_Pro
  */
@@ -13,24 +13,43 @@ if (!is_array($pgp_used_ids)) {
 
 <section class="pgp-home-hero-white">
     
-    <!-- Columna 1: Nota Principal (Main Lead) -->
+    <!-- Columna 1: Nota Principal (Main Lead Manual Estricto) -->
     <div class="pgp-hero-main-col">
         <?php
+        // 1. Buscar la nota marcada explícitamente como Principal
         $main_hero_q = new WP_Query(array(
             'posts_per_page'      => 1,
-            'meta_key'            => '_pgp_is_featured',
-            'meta_value'          => '1',
+            'meta_query'          => array(
+                'relation' => 'OR',
+                array(
+                    'key'     => '_pgp_is_featured',
+                    'value'   => '1',
+                    'compare' => '='
+                ),
+                array(
+                    'key'     => '_gcm_is_featured',
+                    'value'   => '1',
+                    'compare' => '='
+                )
+            ),
             'ignore_sticky_posts' => true
         ));
 
+        // 2. Fallback automático SOLAMENTE si no existe NINGUNA nota marcada manualmente
         if (!$main_hero_q->have_posts()) {
-            $main_hero_q = new WP_Query(array('posts_per_page' => 1, 'ignore_sticky_posts' => true));
+            $main_hero_q = new WP_Query(array(
+                'posts_per_page'      => 1,
+                'ignore_sticky_posts' => true
+            ));
         }
 
         if ($main_hero_q->have_posts()) :
             while ($main_hero_q->have_posts()) : $main_hero_q->the_post();
                 $pgp_used_ids[] = get_the_ID();
                 $subtitle = get_post_meta(get_the_ID(), '_pgp_subtitle', true);
+                if (empty($subtitle)) {
+                    $subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
+                }
         ?>
                 <a href="<?php the_permalink(); ?>" class="pgp-hero-lead-card">
                     <?php if (has_post_thumbnail()) : ?>
@@ -114,7 +133,7 @@ if (!is_array($pgp_used_ids)) {
         </div>
     </div>
 
-    <!-- Columna 3: Feed Al Momento (Ajustado a 5 Notas para Nivelación Exacta) -->
+    <!-- Columna 3: Feed Al Momento (5 Notas Cronológicas) -->
     <div class="pgp-hero-latest-col">
         <div class="latest-header">
             <h3 class="latest-title">AL MOMENTO</h3>
@@ -123,7 +142,7 @@ if (!is_array($pgp_used_ids)) {
         <div class="latest-feed-list">
             <?php
             $am_stream_q = new WP_Query(array(
-                'posts_per_page'      => 5, // Cambiado de 6 a 5 notas
+                'posts_per_page'      => 5,
                 'post__not_in'        => $pgp_used_ids,
                 'ignore_sticky_posts' => true
             ));
