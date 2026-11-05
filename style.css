@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 16.5.0
+Version: 16.9.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid-pro
 */
@@ -62,7 +62,7 @@ header.site-header {
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. HOME HERO (PORTADA ESTILO NBC - RETÍCULA 3 COLUMNAS)
+   3. HOME HERO (RETÍCULA Y ALINEACIÓN DE ALTURA PERFECTA)
    ========================================================================== */
 .pgp-home-wrapper { 
     background: #ffffff;
@@ -74,7 +74,7 @@ header.site-header {
     display: grid; 
     grid-template-columns: 1.45fr 1fr 300px; 
     gap: 1.5rem; 
-    align-items: start; 
+    align-items: stretch; /* OBLIGA A TODAS LAS COLUMNAS A TENER LA MISMA ALTURA */
     padding-bottom: 1.5rem; 
     margin-bottom: 1.5rem; 
     border-bottom: 1px solid var(--border-color); 
@@ -88,7 +88,7 @@ header.site-header {
     .pgp-home-hero-white { grid-template-columns: 1fr; } 
 }
 
-/* Columna 1: Nota Principal (Main Lead Directo) */
+/* Columna 1: Nota Principal */
 .pgp-hero-main-col { padding-right: 0.5rem; }
 .pgp-hero-lead-card { display: block; text-decoration: none; color: inherit; }
 .pgp-hero-lead-card .lead-thumb-wrap { 
@@ -116,13 +116,15 @@ header.site-header {
     margin: 0; 
 }
 
-/* Columna 2: Layout Híbrido NBC (1 Sub-Lead 16:9 + 2 Notas en Lista) */
+/* Columna 2: Layout Híbrido (Distribución Flexible Vertical) */
 .pgp-hero-stack-col { 
     display: flex; 
     flex-direction: column; 
+    justify-content: space-between; /* DISTRIBUYE EL ESPACIO PARA ELIMINAR EL HUECO BLANCO */
     border-left: 1px solid var(--border-color); 
     border-right: 1px solid var(--border-color); 
     padding: 0 1.25rem; 
+    height: 100%;
 }
 @media (max-width: 1024px) { 
     .pgp-hero-stack-col { border-right: none; padding-right: 0; } 
@@ -136,7 +138,6 @@ header.site-header {
     display: block;
     text-decoration: none;
     color: inherit;
-    margin-bottom: 0.85rem;
 }
 .pgp-col2-top-lead .col2-top-thumb {
     width: 100%;
@@ -160,18 +161,19 @@ header.site-header {
     color: var(--text-primary);
 }
 
-/* División Horizontal entre Sub-Lead y Notas Inferiores */
+/* División Horizontal */
 .pgp-col2-divider {
     height: 1px;
     background-color: var(--border-color);
-    margin: 0.4rem 0 0.85rem 0;
+    margin: 0.75rem 0;
 }
 
-/* Lista Inferior Compacta de 2 Notas */
+/* Lista Inferior Compacta */
 .pgp-col2-bottom-list {
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.75rem;
+    justify-content: flex-end;
 }
 
 .pgp-stack-card { 
@@ -181,7 +183,7 @@ header.site-header {
     text-decoration: none; 
     color: inherit; 
     border-bottom: 1px solid #f1f5f9; 
-    padding-bottom: 0.75rem; 
+    padding-bottom: 0.65rem; 
 }
 .pgp-stack-card:last-child { 
     border-bottom: none; 
@@ -190,7 +192,7 @@ header.site-header {
 
 .pgp-stack-card .stack-thumb { 
     width: 85px; 
-    height: 60px; 
+    height: 58px; 
     flex-shrink: 0; 
     overflow: hidden; 
     border-radius: 2px; 
@@ -202,15 +204,6 @@ header.site-header {
     object-fit: cover; 
 }
 
-.stack-kicker { 
-    font-family: var(--font-mono); 
-    font-size: 0.65rem; 
-    font-weight: 800; 
-    text-transform: uppercase; 
-    color: var(--brand-red); 
-    margin-bottom: 0.15rem; 
-    display: block; 
-}
 .stack-info h4 { 
     font-size: 0.875rem; 
     line-height: 1.28; 
@@ -220,19 +213,26 @@ header.site-header {
 }
 
 /* Columna 3: Feed Al Momento */
-.pgp-hero-latest-col { background: transparent; border: none; padding: 0; display: flex; flex-direction: column; }
+.pgp-hero-latest-col { 
+    background: transparent; 
+    border: none; 
+    padding: 0; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
+    height: 100%;
+}
 .latest-header { border-bottom: 2px solid var(--text-primary); padding-bottom: 0.4rem; margin-bottom: 0.6rem; }
 .latest-title { font-size: 0.825rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin: 0; display: flex; align-items: center; gap: 0.4rem; }
-.latest-feed-list { display: flex; flex-direction: column; flex: 1; }
-.latest-feed-item { display: block; padding: 0.65rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; }
+.latest-feed-list { display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
+.latest-feed-item { display: block; padding: 0.55rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; }
 .latest-feed-item:last-child { border-bottom: none; padding-bottom: 0; }
 .latest-meta { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.65rem; margin-bottom: 0.2rem; }
 .latest-time { color: var(--text-muted); }
-.latest-tag { color: var(--brand-red); font-weight: 800; text-transform: uppercase; }
 .latest-feed-item h4 { font-size: 0.85rem; line-height: 1.3; font-weight: 800; color: var(--text-primary); margin: 0; }
 
 /* ==========================================================================
-   4. SUB-HERO HORIZONTAL & LÍNEAS DIVISIONARIAS SIMÉTRICAS
+   4. SUB-HERO HORIZONTAL & LÍNEAS DIVISIONARIAS
    ========================================================================== */
 .pgp-subhero-strip {
     border-bottom: 1px solid var(--border-color);
@@ -256,15 +256,6 @@ header.site-header {
     margin-bottom: 0.5rem;
 }
 .subhero-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.subhero-kicker {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: var(--brand-red);
-    display: block;
-    margin-bottom: 0.2rem;
-}
 .subhero-title {
     font-size: 0.925rem;
     line-height: 1.28;
@@ -272,16 +263,6 @@ header.site-header {
     margin: 0;
     color: var(--text-primary);
 }
-
-.pgp-multimedia-dark-strip { background: var(--pgp-dark-bg); color: #ffffff; padding: 2.25rem 0; margin: 1.5rem 0 2rem 0; }
-.multimedia-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; color: #94a3b8; display: block; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
-.multimedia-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-@media (max-width: 900px) { .multimedia-grid { grid-template-columns: repeat(2, 1fr); } }
-.multimedia-card { color: #ffffff; display: block; }
-.multimedia-thumb { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 4px; background: #1e293b; margin-bottom: 0.75rem; }
-.multimedia-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.video-play-icon { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.75); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-.multimedia-card h4 { font-size: 0.875rem; line-height: 1.3; font-weight: 800; margin: 0; color: #f1f5f9; }
 
 /* ==========================================================================
    5. CUERPO PRINCIPAL
@@ -323,7 +304,7 @@ header.site-header {
 .news-banner-form button { background: var(--brand-red); color: #ffffff; border: none; padding: 0.5rem 1.1rem; border-radius: 3px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
 
 /* ==========================================================================
-   6. WIDGET: LO MÁS LEÍDO (NÚMEROS RECTOS MONOSPACIADOS)
+   6. WIDGET: LO MÁS LEÍDO
    ========================================================================== */
 .pgp-most-read-widget .widget-title {
     font-size: 0.85rem;
