@@ -1,22 +1,28 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Front Page Template - PressGrid Pro
+ * Version: 16.3.0
+ * 
+ * @package PressGrid_Pro
+ */
 
-<?php get_template_part('template-parts/home/ticker'); ?>
+get_header(); ?>
 
-<main class="container gcm-home-wrapper">
-    <?php get_template_part('template-parts/home/hero'); ?>
-</main>
+<main class="pgp-home-wrapper">
+    <div class="container">
+        
+        <?php 
+        // 1. Cargar el Hero Principal de 3 Columnas (Fondo Blanco)
+        get_template_part('template-parts/home/hero'); 
+        ?>
 
-<?php get_template_part('template-parts/home/multimedia'); ?>
+        <?php 
+        // 2. Cargar el Cuerpo Principal (Sub-Hero, Secciones Asimétricas, Grid 3Col y Sidebar integrado)
+        get_template_part('template-parts/home/main-content'); 
+        ?>
 
-<main class="container gcm-home-wrapper" style="padding-top: 1.5rem;">
-    <div class="foxiz-main-layout">
-        <div class="foxiz-content-col">
-            <?php get_template_part('template-parts/home/main-content'); ?>
-        </div>
-        <aside class="foxiz-sidebar-col">
-            <?php get_template_part('template-parts/home/sidebar'); ?>
-        </aside>
     </div>
 </main>
 
-<?php get_footer(); ?>
+<?php 
+get_footer();

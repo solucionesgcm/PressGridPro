@@ -1,23 +1,27 @@
 <?php
 /**
- * Main Content Body - PressGrid Pro Flow Layout
- * Version: 16.2.0
+ * Main Content Body - PressGrid Pro
+ * Version: 16.3.0
+ * 
+ * @package PressGrid_Pro
  */
 ?>
 
-<!-- 1. SUB-HERO HORIZONTAL DE 4 COLUMNAS -->
+<!-- 1. SUB-HERO HORIZONTAL DE 4 COLUMNAS (NOTAS DESTACADAS SECUNDARIAS) -->
 <section class="pgp-subhero-strip">
     <div class="subhero-grid">
         <?php
         $subhero_q = new WP_Query(array(
             'posts_per_page'      => 4,
             'ignore_sticky_posts' => true,
-            'offset'              => 5
+            'offset'              => 5 // Desplazamiento para omitir las notas asignadas al hero
         ));
 
         if ($subhero_q->have_posts()) :
-            while ($subhero_q->have_posts()) : $subhero_q->the_post();$kicker = get_post_meta(get_the_ID(), '_pgp_kicker', true);
-                $cats   = get_the_category();$tag    = !empty($kicker) ?$kicker : (!empty($cats) ?$cats[0]->name : 'COBERTURA');
+            while ($subhero_q->have_posts()) : $subhero_q->the_post();
+                $kicker = get_post_meta(get_the_ID(), '_pgp_kicker', true);
+                $cats   = get_the_category();
+                $tag    = !empty($kicker) ? $kicker : (!empty($cats) ? $cats[0]->name : 'COBERTURA');
         ?>
                 <a href="<?php the_permalink(); ?>" class="subhero-card">
                     <div class="subhero-thumb">
@@ -34,13 +38,13 @@
     </div>
 </section>
 
-<!-- 2. LAYOUT PRINCIPAL CON SIDEBAR REUTILIZABLE -->
+<!-- 2. RETÍCULA PRINCIPAL CON SIDEBAR ÚNICO INTEGRADO A LA DERECHA -->
 <div class="pgp-main-layout">
     
-    <!-- COLUMNA PRINCIPAL IZQUIERDA -->
+    <!-- COLUMNA PRINCIPAL IZQUIERDA (FEED DE SECCIONES) -->
     <div class="pgp-main-feed-col">
 
-        <!-- BLOQUE: MERCADOS & FINANZAS -->
+        <!-- BLOQUE 1: MERCADOS & FINANZAS (LAYOUT ASIMÉTRICO 60/40) -->
         <section class="pgp-block-section">
             <div class="pgp-block-header">
                 <h2 class="pgp-block-title">Mercados & Finanzas</h2>
@@ -49,13 +53,13 @@
             <div class="asymmetric-layout-grid">
                 <?php
                 $fin_main_q = new WP_Query(array(
-                    'posts_per_page' => 1,
-                    'category_name'  => 'finanzas',
+                    'posts_per_page'      => 1,
+                    'category_name'       => 'finanzas',
                     'ignore_sticky_posts' => true
                 ));
 
                 if ($fin_main_q->have_posts()) :
-                    while ($fin_main_q->have_posts()) :$fin_main_q->the_post();
+                    while ($fin_main_q->have_posts()) : $fin_main_q->the_post();
                 ?>
                         <a href="<?php the_permalink(); ?>" class="asym-main-card">
                             <?php if (has_post_thumbnail()) : ?>
@@ -73,14 +77,14 @@
                 <div class="asym-side-list">
                     <?php
                     $fin_side_q = new WP_Query(array(
-                        'posts_per_page' => 3,
-                        'category_name'  => 'finanzas',
-                        'offset'         => 1,
+                        'posts_per_page'      => 3,
+                        'category_name'       => 'finanzas',
+                        'offset'              => 1,
                         'ignore_sticky_posts' => true
                     ));
 
                     if ($fin_side_q->have_posts()) :
-                        while ($fin_side_q->have_posts()) :$fin_side_q->the_post();
+                        while ($fin_side_q->have_posts()) : $fin_side_q->the_post();
                     ?>
                             <a href="<?php the_permalink(); ?>" class="asym-list-item">
                                 <div class="asym-list-info">
@@ -97,7 +101,7 @@
             </div>
         </section>
 
-        <!-- BANNER BOLETÍN CORPORATIVO -->
+        <!-- BANNER BOLETÍN CORPORATIVO INTERCALADO -->
         <div class="pgp-newsletter-banner">
             <div class="news-banner-content">
                 <h3>GCM Intelligence Morning Brief</h3>
@@ -109,7 +113,7 @@
             </form>
         </div>
 
-        <!-- BLOQUE: TECNOLOGÍA & IA -->
+        <!-- BLOQUE 2: TECNOLOGÍA & IA (GRID DE 3 COLUMNAS) -->
         <section class="pgp-block-section">
             <div class="pgp-block-header">
                 <h2 class="pgp-block-title">Tecnología & IA</h2>
@@ -118,13 +122,13 @@
             <div class="pgp-grid-3col">
                 <?php
                 $tech_q = new WP_Query(array(
-                    'posts_per_page' => 3,
-                    'category_name'  => 'tecnologia',
+                    'posts_per_page'      => 3,
+                    'category_name'       => 'tecnologia',
                     'ignore_sticky_posts' => true
                 ));
 
                 if ($tech_q->have_posts()) :
-                    while ($tech_q->have_posts()) :$tech_q->the_post();
+                    while ($tech_q->have_posts()) : $tech_q->the_post();
                 ?>
                         <a href="<?php the_permalink(); ?>" class="pgp-card-3col">
                             <?php if (has_post_thumbnail()) : ?>
@@ -140,9 +144,9 @@
             </div>
         </section>
 
-    </div>
+    </div><!-- /.pgp-main-feed-col -->
 
-    <!-- SIDEBAR DERECHO -->
+    <!-- SIDEBAR DERECHO ÚNICO (DENTRO DE LA RETÍCULA PRINCIPAL) -->
     <?php get_template_part('template-parts/home/sidebar'); ?>
 
-</div>
+</div><!-- /.pgp-main-layout -->
