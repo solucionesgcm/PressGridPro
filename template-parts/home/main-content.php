@@ -1,19 +1,18 @@
 <?php
 /**
- * Main Content Body - PressGrid Pro Flow Layout with ID Exclusion
- * Version: 16.7.0
+ * Main Content Body - PressGrid Pro Clean Sections
+ * Version: 16.8.0
  * 
  * @package PressGrid_Pro
  */
 
-// Heredar o inicializar el array de IDs usados para evitar repeticiones en el cuerpo
 global $pgp_used_ids;
 if (!is_array($pgp_used_ids)) {
     $pgp_used_ids = array();
 }
 ?>
 
-<!-- 1. SUB-HERO HORIZONTAL DE 4 COLUMNAS (NOTAS DESTACADAS SECUNDARIAS) -->
+<!-- 1. SUB-HERO HORIZONTAL DE 4 COLUMNAS (CLEAN CARDS SIN KICKER) -->
 <section class="pgp-subhero-strip">
     <div class="subhero-grid">
         <?php
@@ -26,15 +25,11 @@ if (!is_array($pgp_used_ids)) {
         if ($subhero_q->have_posts()) :
             while ($subhero_q->have_posts()) : $subhero_q->the_post();
                 $pgp_used_ids[] = get_the_ID();
-                $kicker = get_post_meta(get_the_ID(), '_pgp_kicker', true);
-                $cats   = get_the_category();
-                $tag    = !empty($kicker) ? $kicker : (!empty($cats) ? $cats[0]->name : 'COBERTURA');
         ?>
                 <a href="<?php the_permalink(); ?>" class="subhero-card">
                     <div class="subhero-thumb">
                         <?php if (has_post_thumbnail()) the_post_thumbnail('medium'); ?>
                     </div>
-                    <span class="subhero-kicker"><?php echo esc_html($tag); ?></span>
                     <h4 class="subhero-title"><?php the_title(); ?></h4>
                 </a>
         <?php
@@ -45,10 +40,10 @@ if (!is_array($pgp_used_ids)) {
     </div>
 </section>
 
-<!-- 2. RETÍCULA PRINCIPAL CON SIDEBAR ÚNICO INTEGRADO A LA DERECHA -->
+<!-- 2. RETÍCULA PRINCIPAL CON SIDEBAR ÚNICO INTEGRADO -->
 <div class="pgp-main-layout">
     
-    <!-- COLUMNA PRINCIPAL IZQUIERDA (FEED DE SECCIONES) -->
+    <!-- COLUMNA PRINCIPAL IZQUIERDA -->
     <div class="pgp-main-feed-col">
 
         <!-- BLOQUE 1: MERCADOS & FINANZAS (LAYOUT ASIMÉTRICO 60/40) -->
@@ -119,7 +114,7 @@ if (!is_array($pgp_used_ids)) {
             </div>
         </section>
 
-        <!-- BANNER BOLETÍN CORPORATIVO INTERCALADO -->
+        <!-- BANNER BOLETÍN CORPORATIVO -->
         <div class="pgp-newsletter-banner">
             <div class="news-banner-content">
                 <h3>GCM Intelligence Morning Brief</h3>
@@ -131,7 +126,7 @@ if (!is_array($pgp_used_ids)) {
             </form>
         </div>
 
-        <!-- BLOQUE 2: TECNOLOGÍA & IA (GRID DE 3 COLUMNAS SIN DUPLICADOS) -->
+        <!-- BLOQUE 2: TECNOLOGÍA & IA (GRID 3 COLUMNAS LIMPIO) -->
         <section class="pgp-block-section">
             <div class="pgp-block-header">
                 <h2 class="pgp-block-title">Tecnología & IA</h2>
@@ -172,9 +167,9 @@ if (!is_array($pgp_used_ids)) {
             </div>
         </section>
 
-    </div><!-- /.pgp-main-feed-col -->
+    </div>
 
-    <!-- SIDEBAR DERECHO ÚNICO INTEGRADO -->
+    <!-- SIDEBAR DERECHO INTEGRADO -->
     <?php get_template_part('template-parts/home/sidebar'); ?>
 
-</div><!-- /.pgp-main-layout -->
+</div>
