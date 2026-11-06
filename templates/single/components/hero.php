@@ -47,9 +47,6 @@ $cat_name = !empty($cats) ? $cats[0]->name : 'EXCLUSIVO';
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="#0f172a"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                 </button>
                 <span class="audio-info">Escuchar versión en audio (2 min)</span>
-                <div class="audio-progress" role="progressbar" aria-label="Progreso de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                    <span class="audio-progress-fill"></span>
-                </div>
             </div>
 
         </div>

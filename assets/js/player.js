@@ -6,8 +6,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playBtn = document.querySelector('.audio-play-btn');
     const audioInfo = document.querySelector('.audio-info');
-    const progressBar = document.querySelector('.audio-progress');
-    const progressFill = document.querySelector('.audio-progress-fill');
 
     if (!playBtn || !('speechSynthesis' in window)) {
         if (playBtn) playBtn.style.display = 'none';
@@ -66,12 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return `${headline}. ${subtitle}. ${content}`;
     }
 
-    function updateProgress(percent) {
-        const progress = Math.max(0, Math.min(100, percent));
-        if (progressFill) progressFill.style.width = `${progress}%`;
-        if (progressBar) progressBar.setAttribute('aria-valuenow', String(progress));
-    }
-
     function toggleSpeech() {
         if (isPlaying) {
             synth.pause();
@@ -84,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateUI(true);
             } else {
                 synth.cancel(); // Limpieza previa
-                updateProgress(0);
 
                 const textToRead = getArticleText();
                 utterance = new SpeechSynthesisUtterance(textToRead);
@@ -99,21 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 utterance.rate = 1.0;  // Velocidad normal
                 utterance.pitch = 1.0; // Tono estándar
 
-                utterance.onboundary = event => {
-                    if (textToRead.length > 0) {
-                        updateProgress((event.charIndex / textToRead.length) * 100);
-                    }
-                };
-
                 utterance.onend = () => {
                     isPlaying = false;
-                    updateProgress(100);
                     updateUI(false);
                 };
 
                 utterance.onerror = () => {
                     isPlaying = false;
-                    updateProgress(0);
                     updateUI(false);
                 };
 
