@@ -28,25 +28,18 @@ function pressgrid_enqueue_scripts() {
 
     // 3. CSS y JS Exclusivos del Single Post (Carga condicional)
     if (is_single()) {
-        $single_style_version = $style_version . '.' . filemtime(
-            get_template_directory() . '/assets/css/single.css'
-        );
-        $player_script_version = $style_version . '.' . filemtime(
-            get_template_directory() . '/assets/js/player.js'
-        );
-
         wp_enqueue_style(
             'pressgrid-single',
             get_template_directory_uri() . '/assets/css/single.css',
             array('pressgrid-main'),
-            $single_style_version
+            $style_version
         );
 
         wp_enqueue_script(
             'pressgrid-player',
             get_template_directory_uri() . '/assets/js/player.js',
             array(),
-            $player_script_version,
+            $style_version,
             true
         );
     }

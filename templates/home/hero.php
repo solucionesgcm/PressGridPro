@@ -149,10 +149,6 @@ if (!is_array($pgp_used_ids)) {
             <?php
             $am_stream_q = new WP_Query(array(
                 'posts_per_page'      => 5,
-                'orderby'             => array(
-                    'date' => 'DESC',
-                    'ID'   => 'DESC',
-                ),
                 'post__not_in'        => $pgp_used_ids,
                 'meta_query'          => array(
                     array(
@@ -167,10 +163,7 @@ if (!is_array($pgp_used_ids)) {
             if ($am_stream_q->have_posts()) :
                 while ($am_stream_q->have_posts()) : $am_stream_q->the_post();
                     $pgp_used_ids[] = get_the_ID();
-                    $time_diff = human_time_diff(
-                        get_post_time('U', true),
-                        current_time('timestamp', true)
-                    );
+                    $time_diff = human_time_diff(get_post_time('U', true), current_time('timestamp'));
             ?>
                     <a href="<?php the_permalink(); ?>" class="latest-feed-item">
                         <div class="latest-meta">

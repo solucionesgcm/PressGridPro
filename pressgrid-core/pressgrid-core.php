@@ -245,33 +245,11 @@ function pressgrid_core_save_editorial_meta_boxes($post_id, $post) {
         update_post_meta($post_id, '_pgp_is_secondary', $is_secondary);
         update_post_meta($post_id, '_gcm_is_secondary', $is_secondary);
 
-        $is_breaking = isset($_POST['pgp_is_breaking']) ? '1' : '0';
-        update_post_meta($post_id, '_pgp_is_breaking', $is_breaking);
-
-        if ('1' === $is_breaking) {
-            $breaking_post_ids = get_posts(
-                array(
-                    'post_type'      => 'post',
-                    'post_status'    => 'publish',
-                    'posts_per_page' => -1,
-                    'fields'         => 'ids',
-                    'meta_query'     => array(
-                        array(
-                            'key'   => '_pgp_is_breaking',
-                            'value' => '1',
-                        ),
-                    ),
-                    'orderby'        => array(
-                        'date' => 'DESC',
-                        'ID'   => 'DESC',
-                    ),
-                )
-            );
-
-            foreach (array_slice($breaking_post_ids, 5) as $old_post_id) {
-                update_post_meta($old_post_id, '_pgp_is_breaking', '0');
-            }
-        }
+        update_post_meta(
+            $post_id,
+            '_pgp_is_breaking',
+            isset($_POST['pgp_is_breaking']) ? '1' : '0'
+        );
     }
 
     $editorial_nonce = isset($_POST['pressgrid_core_editorial_nonce'])
