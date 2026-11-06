@@ -1,393 +1,121 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const player = document.querySelector('.pgp-audio-player-bar');
-    if (!player) return;
+/**
+ * Native Text-to-Speech Player (Strict Spanish Best Voice Selection) - PressGrid Pro
+ * Version: 19.6.0
+ */
 
-    const playButton = player.querySelector('.audio-play-btn');
-    const restartButton = player.querySelector('.audio-restart-btn');
-    const playIcon = player.querySelector('.player-play-icon');
-    const pauseIcon = player.querySelector('.player-pause-icon');
-    const info = player.querySelector('.audio-info');
-    const durationEstimateLabel = player.querySelector('.audio-duration-estimate');
-    const status = player.querySelector('.audio-status');
-    const speedControl = player.querySelector('.audio-speed');
-    const progressGroup = player.querySelector('.audio-progress-group');
-    const progress = player.querySelector('.audio-progress');
-    const currentTime = player.querySelector('.audio-current-time');
-    const duration = player.querySelector('.audio-duration');
-    const audioSource = player.dataset.audioSrc;
-    const audio = audioSource ? new Audio(audioSource) : null;
-    const speech = window.speechSynthesis;
+document.addEventListener('DOMContentLoaded', () => {
+    const playBtn = document.querySelector('.audio-play-btn');
+    const audioInfo = document.querySelector('.audio-info');
+
+    if (!playBtn || !('speechSynthesis' in window)) {
+        if (playBtn) playBtn.style.display = 'none';
+        return;
+    }
 
     let isPlaying = false;
-    let isPaused = false;
+    let synth = window.speechSynthesis;
     let utterance = null;
-    let speechChunks = [];
-    let chunkIndex = 0;
-    let speechRate = Number(speedControl.value);
     let selectedVoice = null;
-    let speechText = '';
-    let estimatedDuration = 0;
 
-    function setStatus(message) {
-        status.textContent = message;
-    }
+    // Búsqueda estricta de voces exclusivas en español
+    function loadBestVoice() {
+        const voices = synth.getVoices();
+        if (!voices.length) return;
 
-    function updatePlayButton(playing) {
-        isPlaying = playing;
-        playIcon.hidden = playing;
-        pauseIcon.hidden = !playing;
-        playButton.setAttribute(
-            'aria-label',
-            playing ? 'Pausar lectura' : 'Escuchar artículo'
-        );
-        info.textContent = player.dataset.idleLabel;
-    }
-
-    function formatTime(seconds) {
-        const totalSeconds = Math.floor(seconds);
-        const minutes = Math.floor(totalSeconds / 60);
-        const remainingSeconds = totalSeconds % 60;
-
-        return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`;
-    }
-
-    function updateProgress() {
-        if (!audio || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
-
-        progress.value = String((audio.currentTime / audio.duration) * 100);
-        currentTime.textContent = formatTime(audio.currentTime);
-        duration.textContent = formatTime(audio.duration);
-        durationEstimateLabel.textContent = `(${formatMinutes(audio.duration)})`;
-    }
-
-    function updateEstimatedProgress(fraction) {
-        if (!estimatedDuration) return;
-
-        const boundedFraction = Math.max(0, Math.min(1, fraction));
-        progress.value = String(boundedFraction * 100);
-        currentTime.textContent = formatTime(estimatedDuration * boundedFraction);
-        duration.textContent = `~${formatTime(estimatedDuration)}`;
-    }
-
-    function formatMinutes(seconds) {
-        const minutes = Math.max(1, Math.ceil(seconds / 60));
-        return `${minutes} min`;
-    }
-
-    function loadSpanishVoice() {
-        if (!speech) return;
-
-        const spanishVoices = speech.getVoices().filter((voice) => {
-            const language = voice.lang.toLowerCase().replace('_', '-');
-            return 'es' === language || language.startsWith('es-');
+        // Filtrar ÚNICAMENTE voces cuyo código empiece estrictamente por "es"
+        const spanishVoices = voices.filter(voice => {
+            const lang = voice.lang.toLowerCase().replace('_', '-');
+            return lang.startsWith('es');
         });
 
-        selectedVoice =
-            spanishVoices.find((voice) =>
-                voice.lang.toLowerCase().replace('_', '-').startsWith('es-mx')
-            ) || spanishVoices[0] || null;
+        if (!spanishVoices.length) return;
+
+        // Prioridad 1: Voces Neurales / Premium en Español México o España (Google, Microsoft, Apple)
+        selectedVoice = spanishVoices.find(v => {
+            const name = v.name.toLowerCase();
+            const lang = v.lang.toLowerCase();
+            return (lang.includes('mx') || lang.includes('es') || lang.includes('us')) && 
+                   (name.includes('google') || name.includes('natural') || name.includes('premium') || name.includes('enhanced') || name.includes('online'));
+        }) 
+        // Prioridad 2: Cualquier voz oficial de México (es-MX)
+        || spanishVoices.find(v => v.lang.toLowerCase().includes('mx'))
+        // Prioridad 3: Cualquier voz oficial en Español (es-ES / es-US)
+        || spanishVoices.find(v => v.lang.toLowerCase().includes('es') || v.lang.toLowerCase().includes('us'))
+        // Prioridad 4: Primera voz de la lista en español
+        || spanishVoices[0];
+
+        // Forzar el atributo de idioma a español neutro/mexicano
+        if (selectedVoice) {
+            console.log('PressGrid Player — Voz seleccionada:', selectedVoice.name, selectedVoice.lang);
+        }
+    }
+
+    // Inicialización y re-escucha para carga asíncrona de voces en navegadores basados en Chromium
+    loadBestVoice();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = loadBestVoice;
     }
 
     function getArticleText() {
         const headline = document.querySelector('.pgp-hero-headline')?.innerText || '';
         const subtitle = document.querySelector('.pgp-hero-subtitle')?.innerText || '';
         const content = document.querySelector('.post-content')?.innerText || '';
-
-        return [headline, subtitle, content].filter(Boolean).join('. ');
+        
+        return `${headline}. ${subtitle}. ${content}`;
     }
 
-    function estimateSpeechDuration() {
-        const wordCount = speechText.trim().split(/\s+/).filter(Boolean).length;
-        estimatedDuration = wordCount
-            ? Math.ceil((wordCount / (165 * speechRate)) * 60)
-            : 0;
-        duration.textContent = estimatedDuration
-            ? `~${formatTime(estimatedDuration)}`
-            : '0:00';
-        durationEstimateLabel.textContent = estimatedDuration
-            ? `(~${formatMinutes(estimatedDuration)})`
-            : '';
-    }
-
-    function makeSpeechChunks(text) {
-        const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
-        const chunks = [];
-        let chunk = '';
-
-        sentences.forEach((sentence) => {
-            const part = sentence.trim();
-            if (!part) return;
-
-            if (chunk && `${chunk} ${part}`.length > 180) {
-                chunks.push(chunk);
-                chunk = '';
-            }
-
-            if (part.length > 180) {
-                const words = part.split(/\s+/);
-                words.forEach((word) => {
-                    if (chunk && `${chunk} ${word}`.length > 180) {
-                        chunks.push(chunk);
-                        chunk = '';
-                    }
-                    chunk = chunk ? `${chunk} ${word}` : word;
-                });
-            } else {
-                chunk = chunk ? `${chunk} ${part}` : part;
-            }
-        });
-
-        if (chunk) chunks.push(chunk);
-        return chunks;
-    }
-
-    function speakCurrentChunk() {
-        if (chunkIndex >= speechChunks.length) {
-            utterance = null;
-            isPaused = false;
-            updatePlayButton(false);
-            setStatus('Lectura finalizada.');
-            return;
-        }
-
-        const nextUtterance = new SpeechSynthesisUtterance(speechChunks[chunkIndex]);
-        utterance = nextUtterance;
-        nextUtterance.rate = speechRate;
-        nextUtterance.pitch = 1;
-        nextUtterance.lang = selectedVoice?.lang || 'es-MX';
-
-        if (selectedVoice) {
-            nextUtterance.voice = selectedVoice;
-        }
-
-        const previousChunkLength = speechChunks
-            .slice(0, chunkIndex)
-            .reduce((length, chunk) => length + chunk.length, 0);
-        const totalTextLength = speechChunks.reduce(
-            (length, chunk) => length + chunk.length,
-            0
-        );
-
-        nextUtterance.onboundary = (event) => {
-            if (
-                utterance === nextUtterance
-                && totalTextLength
-                && Number.isFinite(event.charIndex)
-            ) {
-                updateEstimatedProgress(
-                    (previousChunkLength + event.charIndex) / totalTextLength
-                );
-            }
-        };
-
-        nextUtterance.onend = () => {
-            if (utterance !== nextUtterance) return;
-            chunkIndex += 1;
-            updateEstimatedProgress(
-                chunkIndex >= speechChunks.length
-                    ? 1
-                    : speechChunks
-                        .slice(0, chunkIndex)
-                        .reduce((length, chunk) => length + chunk.length, 0)
-                        / totalTextLength
-            );
-            speakCurrentChunk();
-        };
-
-        nextUtterance.onerror = (event) => {
-            if (utterance !== nextUtterance || 'canceled' === event.error) return;
-            utterance = null;
-            isPaused = false;
-            updatePlayButton(false);
-            setStatus('No se pudo iniciar la lectura por voz.');
-        };
-
-        speech.speak(nextUtterance);
-    }
-
-    function startSpeech() {
-        if (!speech) {
-            updatePlayButton(false);
-            playButton.disabled = true;
-            restartButton.disabled = true;
-            setStatus('Este navegador no admite lectura por voz.');
-            return;
-        }
-
-        if (!speechChunks.length) {
-            speechText = getArticleText();
-            speechChunks = makeSpeechChunks(speechText);
-            estimateSpeechDuration();
-        }
-
-        if (!speechChunks.length) {
-            setStatus('No hay texto disponible para leer.');
-            return;
-        }
-
-        isPaused = false;
-        updateEstimatedProgress(
-            speechChunks
-                .slice(0, chunkIndex)
-                .reduce((length, chunk) => length + chunk.length, 0)
-                / speechChunks.reduce((length, chunk) => length + chunk.length, 0)
-        );
-        updatePlayButton(true);
-        setStatus('Lectura automática con voz sintética.');
-        speakCurrentChunk();
-    }
-
-    function playAudio() {
-        audio.play().catch(() => {
-            updatePlayButton(false);
-            setStatus('No se pudo reproducir el archivo de audio.');
-        });
-    }
-
-    if (audio) {
-        progressGroup.hidden = false;
-        audio.preload = 'metadata';
-        audio.addEventListener('loadedmetadata', updateProgress);
-        audio.addEventListener('timeupdate', updateProgress);
-        audio.addEventListener('play', () => updatePlayButton(true));
-        audio.addEventListener('pause', () => updatePlayButton(false));
-        audio.addEventListener('ended', () => {
-            updatePlayButton(false);
-            setStatus('Audio finalizado.');
-        });
-        audio.addEventListener('error', () => {
-            setStatus('No se pudo cargar el archivo de audio.');
-        });
-    } else {
-        loadSpanishVoice();
-        speech?.addEventListener('voiceschanged', loadSpanishVoice);
-        progress.setAttribute('aria-label', 'Posición estimada de lectura');
-        speechText = getArticleText();
-        speechChunks = makeSpeechChunks(speechText);
-        estimateSpeechDuration();
-        progress.addEventListener('change', () => {
-            if (!speechChunks.length) {
-                speechText = getArticleText();
-                speechChunks = makeSpeechChunks(speechText);
-                estimateSpeechDuration();
-            }
-
-            if (!speechChunks.length) return;
-
-            const target = Number(progress.value) / 100;
-            const totalLength = speechChunks.reduce(
-                (length, chunk) => length + chunk.length,
-                0
-            );
-            let targetLength = totalLength * target;
-            chunkIndex = 0;
-
-            while (
-                chunkIndex < speechChunks.length - 1
-                && targetLength > speechChunks[chunkIndex].length
-            ) {
-                targetLength -= speechChunks[chunkIndex].length;
-                chunkIndex += 1;
-            }
-
-            updateEstimatedProgress(target);
-            if (isPlaying || isPaused) {
-                speech.cancel();
-                utterance = null;
-                isPaused = false;
-                startSpeech();
-            }
-        });
-    }
-
-    playButton.addEventListener('click', () => {
-        if (audio) {
-            if (audio.paused) {
-                playAudio();
-            } else {
-                audio.pause();
-            }
-            return;
-        }
-
-        if (!speech) {
-            startSpeech();
-            return;
-        }
-
+    function toggleSpeech() {
         if (isPlaying) {
-            speech.pause();
-            isPaused = true;
-            updatePlayButton(false);
-            setStatus('Lectura en pausa.');
-        } else if (isPaused) {
-            if (utterance) {
-                speech.resume();
-                isPaused = false;
-                updatePlayButton(true);
-                setStatus('Lectura automática con voz sintética.');
-            } else {
-                startSpeech();
-            }
+            synth.pause();
+            isPlaying = false;
+            updateUI(false);
         } else {
-            if (chunkIndex >= speechChunks.length) chunkIndex = 0;
-            startSpeech();
-        }
-    });
+            if (synth.paused) {
+                synth.resume();
+                isPlaying = true;
+                updateUI(true);
+            } else {
+                synth.cancel(); // Limpieza previa
 
-    restartButton.addEventListener('click', () => {
-        if (audio) {
-            audio.currentTime = 0;
-            setStatus('');
-            playAudio();
-            return;
-        }
+                const textToRead = getArticleText();
+                utterance = new SpeechSynthesisUtterance(textToRead);
 
-        if (!speech) return;
+                // Configurar idioma explícito en la emisión
+                utterance.lang = selectedVoice ? selectedVoice.lang : 'es-MX';
 
-        utterance = null;
-        speech.cancel();
-        chunkIndex = 0;
-        isPaused = false;
-        updateEstimatedProgress(0);
-        startSpeech();
-    });
+                if (selectedVoice) {
+                    utterance.voice = selectedVoice;
+                }
+                
+                utterance.rate = 1.0;  // Velocidad normal
+                utterance.pitch = 1.0; // Tono estándar
 
-    speedControl.addEventListener('change', () => {
-        const rate = Number(speedControl.value);
+                utterance.onend = () => {
+                    isPlaying = false;
+                    updateUI(false);
+                };
 
-        if (audio) {
-            audio.playbackRate = rate;
-            setStatus(`Velocidad: ${rate}×.`);
-            return;
-        }
+                utterance.onerror = () => {
+                    isPlaying = false;
+                    updateUI(false);
+                };
 
-        speechRate = rate;
-        if (speechChunks.length) estimateSpeechDuration();
-        if (isPlaying) {
-            utterance = null;
-            speech.cancel();
-            updateEstimatedProgress(
-                speechChunks
-                    .slice(0, chunkIndex)
-                    .reduce((length, chunk) => length + chunk.length, 0)
-                    / speechChunks.reduce((length, chunk) => length + chunk.length, 0)
-            );
-            speakCurrentChunk();
-            updatePlayButton(true);
-        } else if (isPaused && utterance) {
-            utterance = null;
-            speech.cancel();
-        }
-
-        setStatus(`Velocidad de lectura: ${rate}×.`);
-    });
-
-    if (audio) {
-        progress.addEventListener('input', () => {
-            if (Number.isFinite(audio.duration)) {
-                audio.currentTime = (Number(progress.value) / 100) * audio.duration;
+                synth.speak(utterance);
+                isPlaying = true;
+                updateUI(true);
             }
-        });
+        }
     }
+
+    function updateUI(playing) {
+        if (playing) {
+            playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#0f172a"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+            audioInfo.textContent = 'Pausar lectura de audio';
+        } else {
+            playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#0f172a"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+            audioInfo.textContent = 'Escuchar versión en audio';
+        }
+    }
+
+    playBtn.addEventListener('click', toggleSpeech);
 });
