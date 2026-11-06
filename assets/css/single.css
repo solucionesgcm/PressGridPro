@@ -48,42 +48,6 @@
     max-width: 900px; /* Ligero margen visual para no ahogar la lectura */
 }
 
-.pgp-single-sub-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 310px;
-    gap: 2.5rem;
-    align-items: start;
-}
-
-.pgp-article-main-column,
-.pgp-single-sub-grid > .pgp-sidebar {
-    min-width: 0;
-}
-
-.pgp-article-main-column .post-content {
-    max-width: 600px;
-    color: #1f2937;
-    font-family: var(--font-serif-content);
-    font-size: 1rem;
-    line-height: 1.8;
-}
-
-.pgp-article-main-column .post-content > * {
-    max-width: 100%;
-}
-
-.pgp-article-main-column .post-content p {
-    margin: 0 0 1.25rem;
-}
-
-.pgp-article-main-column .post-content h2,
-.pgp-article-main-column .post-content h3,
-.pgp-article-main-column .post-content h4 {
-    margin: 1.75rem 0 0.75rem;
-    color: #0f172a;
-    line-height: 1.25;
-}
-
 /* 3. Posicionamiento de la Foto: solo entra el 20% en el bloque oscuro */
 .pgp-feat-hero-media-wrapper { 
     position: relative; 
@@ -107,15 +71,4 @@
     width: 100%; 
     height: auto; 
     display: block; 
-}
-
-@media (max-width: 992px) {
-    .pgp-single-sub-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .pgp-article-main-column .post-content {
-        max-width: 680px;
-    }
 }
