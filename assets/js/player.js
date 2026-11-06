@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const playIcon = player.querySelector('.player-play-icon');
     const pauseIcon = player.querySelector('.player-pause-icon');
     const info = player.querySelector('.audio-info');
+    const durationEstimateLabel = player.querySelector('.audio-duration-estimate');
     const status = player.querySelector('.audio-status');
     const speedControl = player.querySelector('.audio-speed');
     const progressGroup = player.querySelector('.audio-progress-group');
@@ -56,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         progress.value = String((audio.currentTime / audio.duration) * 100);
         currentTime.textContent = formatTime(audio.currentTime);
         duration.textContent = formatTime(audio.duration);
+        durationEstimateLabel.textContent = `(${formatMinutes(audio.duration)})`;
     }
 
     function updateEstimatedProgress(fraction) {
@@ -65,6 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
         progress.value = String(boundedFraction * 100);
         currentTime.textContent = formatTime(estimatedDuration * boundedFraction);
         duration.textContent = `~${formatTime(estimatedDuration)}`;
+    }
+
+    function formatMinutes(seconds) {
+        const minutes = Math.max(1, Math.ceil(seconds / 60));
+        return `${minutes} min`;
     }
 
     function loadSpanishVoice() {
@@ -97,6 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
         duration.textContent = estimatedDuration
             ? `~${formatTime(estimatedDuration)}`
             : '0:00';
+        durationEstimateLabel.textContent = estimatedDuration
+            ? `(~${formatMinutes(estimatedDuration)})`
+            : '';
     }
 
     function makeSpeechChunks(text) {
@@ -379,7 +389,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 audio.currentTime = (Number(progress.value) / 100) * audio.duration;
             }
         });
-    } else {
-        progressGroup.hidden = true;
     }
 });
