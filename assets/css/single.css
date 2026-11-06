@@ -6,7 +6,7 @@
 .pgp-single-hero-dark { 
     background: var(--pgp-dark-bg); 
     color: #ffffff; 
-    padding: 3.5rem 0 10rem 0; 
+    padding: 3rem 0 7rem 0; 
     position: relative; 
     z-index: 1; 
 }
@@ -25,7 +25,7 @@
     letter-spacing: 0.8px; 
     color: var(--brand-red); 
     display: block; 
-    margin-bottom: 0.5rem; 
+    margin-bottom: 0.6rem; 
 }
 
 .pgp-hero-headline { 
@@ -42,21 +42,23 @@
     font-size: 1.2rem; 
     line-height: 1.55; 
     color: #cbd5e1; 
-    margin-bottom: 1.75rem; 
+    margin-bottom: 1.5rem; 
 }
 
+/* Reproductor de audio integrado al final del Hero Oscuro */
 .pgp-audio-player-bar { 
     background: rgba(255, 255, 255, 0.08); 
     border: 1px solid rgba(255, 255, 255, 0.15); 
     border-radius: 40px; 
-    padding: 0.6rem 1.2rem; 
+    padding: 0.5rem 1.1rem; 
     display: inline-flex; 
     align-items: center; 
     gap: 0.85rem; 
+    margin-top: 0.5rem;
 }
 .audio-play-btn { 
-    width: 30px; 
-    height: 30px; 
+    width: 28px; 
+    height: 28px; 
     background: #ffffff; 
     border-radius: 50%; 
     display: flex; 
@@ -75,12 +77,12 @@
     z-index: 10; 
 }
 
-/* Imagen Destacada Flotante (960px Maestro) */
+/* Imagen Destacada Flotante (960px Maestro montada en el Hero) */
 .pgp-feat-hero-media-wrapper { 
     position: relative; 
     z-index: 30; 
-    top: -7.5rem; 
-    margin-bottom: -5.5rem; 
+    top: -5.5rem; 
+    margin-bottom: -4rem; 
     width: 100%; 
     max-width: 960px; 
     margin-left: auto; 
@@ -102,18 +104,18 @@
 /* Pie de Foto & Crédito Institucional */
 .pgp-photo-caption-strip {
     max-width: 960px;
-    margin: 0.65rem auto 1.5rem auto;
+    margin: 0.5rem auto 1.25rem auto;
     display: flex;
     justify-content: space-between;
     font-size: 0.75rem;
     color: var(--text-muted);
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.65rem;
+    padding-bottom: 0.5rem;
 }
 .pgp-photo-caption-strip .caption-text { font-style: italic; color: var(--text-secondary); }
 .pgp-photo-caption-strip .credit-text { font-family: var(--font-mono); text-transform: uppercase; }
 
-/* Barra Meta Byline (Autor + Fecha) */
+/* Barra Meta Byline (Autor + Fecha) ubicada limpiamente en el fondo blanco */
 .pgp-single-meta-bar {
     max-width: 960px;
     margin: 0 auto 2rem auto;
