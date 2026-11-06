@@ -28,8 +28,9 @@ PressGridPro/
 │   ├── setup.php          # Soportes, menús y widgets
 ├── backend/
 │   ├── admin-style.css     # Estilos del panel de administración
-│   ├── meta-boxes.php      # Metadatos editoriales
 │   └── theme-options.php   # Opciones del tema (WordPress Settings API)
+├── pressgrid-core/
+│   └── pressgrid-core.php  # Plugin complementario: metadatos editoriales
 ├── templates/
 │   ├── home/               # Componentes de la portada
 │   ├── sidebar/            # Componentes de barras laterales
@@ -43,3 +44,16 @@ PressGridPro/
 ├── index.php               # Fallback principal
 ├── single.php              # Plantilla de artículo individual (Single Dark Hero)
 └── style.css               # Hoja de estilos principal y cabecera del tema
+```
+
+## PressGrid Core
+
+La lógica editorial de las entradas vive en el plugin complementario `pressgrid-core/`. Administra las metaboxes de nota principal, secundaria, alerta, kicker, bajada, URL de audio, pie y crédito de foto. Conserva las claves `_pgp_*` y puede leer las claves antiguas `_gcm_*` compatibles.
+
+### Instalación
+
+1. En WordPress, abre **Plugins → Añadir nuevo → Subir plugin**.
+2. Comprime la carpeta `pressgrid-core/` en un archivo ZIP (el ZIP debe contener `pressgrid-core/pressgrid-core.php`) y súbelo.
+3. Activa **PressGrid Core** desde **Plugins instalados**.
+
+El despliegue de GitHub Actions también sincroniza el tema con `wp-content/themes/PressGridPro/` y el plugin, por separado, con `wp-content/plugins/pressgrid-core/`. Después del primer despliegue, activa el plugin desde el administrador de WordPress. No copies `pressgrid-core/` dentro de la carpeta del tema.

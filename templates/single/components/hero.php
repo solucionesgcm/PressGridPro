@@ -7,12 +7,12 @@
  */
 
 $subtitle = get_post_meta(get_the_ID(), '_pgp_subtitle', true);
-if (empty($subtitle)) {
+if (!metadata_exists('post', get_the_ID(), '_pgp_subtitle')) {
     $subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
 }
 
 $kicker = get_post_meta(get_the_ID(), '_pgp_kicker', true);
-if (empty($kicker)) {
+if (!metadata_exists('post', get_the_ID(), '_pgp_kicker')) {
     $kicker = get_post_meta(get_the_ID(), '_gcm_kicker', true);
 }
 
