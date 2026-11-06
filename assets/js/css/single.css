@@ -1,0 +1,181 @@
+/* ==========================================================================
+   SINGLE POST - PRESSGRID PRO (ESTILO NBC NEWS 960PX)
+   ========================================================================== */
+
+/* Hero Oscuro Institucional */
+.pgp-single-hero-dark { 
+    background: var(--pgp-dark-bg); 
+    color: #ffffff; 
+    padding: 3.5rem 0 10rem 0; 
+    position: relative; 
+    z-index: 1; 
+}
+
+/* Marco Maestro de 960px */
+.pgp-single-hero-inner { 
+    max-width: 960px; 
+    margin: 0 auto; 
+}
+
+.pgp-hero-category { 
+    font-family: var(--font-mono); 
+    font-size: 0.75rem; 
+    font-weight: 800; 
+    text-transform: uppercase; 
+    letter-spacing: 0.8px; 
+    color: var(--brand-red); 
+    display: block; 
+    margin-bottom: 0.5rem; 
+}
+
+.pgp-hero-headline { 
+    font-family: var(--font-display);
+    font-size: 3.25rem; 
+    line-height: 1.08; 
+    font-weight: 700; 
+    color: #ffffff; 
+    margin: 0 0 1.25rem 0; 
+}
+
+.pgp-hero-subtitle { 
+    font-family: var(--font-serif-excerpt); 
+    font-size: 1.2rem; 
+    line-height: 1.55; 
+    color: #cbd5e1; 
+    margin-bottom: 1.75rem; 
+}
+
+.pgp-audio-player-bar { 
+    background: rgba(255, 255, 255, 0.08); 
+    border: 1px solid rgba(255, 255, 255, 0.15); 
+    border-radius: 40px; 
+    padding: 0.6rem 1.2rem; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 0.85rem; 
+}
+.audio-play-btn { 
+    width: 30px; 
+    height: 30px; 
+    background: #ffffff; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    flex-shrink: 0; 
+    border: none; 
+}
+.audio-info { font-size: 0.8rem; font-weight: 600; color: #ffffff; }
+
+.pgp-single-body-area { 
+    padding: 0 0 5rem 0; 
+    background: #ffffff; 
+    position: relative; 
+    z-index: 10; 
+}
+
+/* Imagen Destacada Flotante (960px Maestro) */
+.pgp-feat-hero-media-wrapper { 
+    position: relative; 
+    z-index: 30; 
+    top: -7.5rem; 
+    margin-bottom: -5.5rem; 
+    width: 100%; 
+    max-width: 960px; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+.pgp-feat-hero-media { 
+    width: 100%; 
+    overflow: hidden; 
+    box-shadow: 0 16px 40px rgba(0,0,0,0.22); 
+    border-radius: 2px; 
+    background: var(--pgp-dark-bg); 
+}
+.pgp-feat-hero-media img { 
+    width: 100%; 
+    height: auto; 
+    display: block; 
+}
+
+/* Pie de Foto & Crédito Institucional */
+.pgp-photo-caption-strip {
+    max-width: 960px;
+    margin: 0.65rem auto 1.5rem auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.65rem;
+}
+.pgp-photo-caption-strip .caption-text { font-style: italic; color: var(--text-secondary); }
+.pgp-photo-caption-strip .credit-text { font-family: var(--font-mono); text-transform: uppercase; }
+
+/* Barra Meta Byline (Autor + Fecha) */
+.pgp-single-meta-bar {
+    max-width: 960px;
+    margin: 0 auto 2rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+.pgp-single-meta-bar .author-info strong { color: var(--text-primary); }
+.pgp-single-meta-bar .pub-date { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; }
+
+/* Retícula del Artículo: 620px (Texto) + 40px (Gap) + 300px (Sidebar) */
+.pgp-single-sub-grid { 
+    display: grid; 
+    grid-template-columns: 620px 300px; 
+    gap: 2.5rem; 
+    justify-content: center;
+    align-items: start; 
+    max-width: 960px; 
+    margin: 0 auto; 
+}
+@media (max-width: 992px) { 
+    .pgp-single-sub-grid { 
+        grid-template-columns: 1fr; 
+        padding: 0 1rem;
+    } 
+}
+
+.pgp-article-main-column {
+    width: 100%;
+    max-width: 620px;
+}
+
+.post-content { 
+    font-family: var(--font-serif-content); 
+    font-size: 1.05rem; 
+    line-height: 1.78; 
+    color: #1e293b; 
+}
+.post-content p { margin-bottom: 1.65rem; }
+
+.pgp-sidebar { 
+    border-left: 1px solid var(--border-color); 
+    padding-left: 1.8rem; 
+}
+@media (max-width: 992px) { 
+    .pgp-sidebar { 
+        border-left: none; 
+        padding-left: 0; 
+    } 
+}
+
+.pgp-post-nav-strip { 
+    display: flex; 
+    justify-content: space-between; 
+    gap: 1rem; 
+    padding-top: 1.5rem; 
+    margin-top: 2rem; 
+    border-top: 1px solid var(--border-color); 
+    font-weight: 700; 
+    font-size: 0.875rem; 
+}
