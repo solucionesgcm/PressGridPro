@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
-
-concurrency:
-  group: pressgrid-production-deploy
-  cancel-in-progress: false
 
 jobs:
   web-deploy:
@@ -17,8 +12,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.sha }}
 
       - name: Deploy with rsync
         uses: burnett01/rsync-deployments@7.0.1
