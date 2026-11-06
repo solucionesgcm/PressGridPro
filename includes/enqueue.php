@@ -28,11 +28,15 @@ function pressgrid_enqueue_scripts() {
 
     // 3. CSS y JS Exclusivos del Single Post (Carga condicional)
     if (is_single()) {
+        $single_style_version = $style_version . '.' . filemtime(
+            get_template_directory() . '/assets/css/single.css'
+        );
+
         wp_enqueue_style(
             'pressgrid-single',
             get_template_directory_uri() . '/assets/css/single.css',
             array('pressgrid-main'),
-            $style_version
+            $single_style_version
         );
 
         wp_enqueue_script(
