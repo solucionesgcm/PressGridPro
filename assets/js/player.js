@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let chunkIndex = 0;
     let speechRate = Number(speedControl.value);
     let selectedVoice = null;
+    let speechText = '';
+    let estimatedDuration = 0;
 
     function setStatus(message) {
         status.textContent = message;
@@ -37,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'aria-label',
             playing ? 'Pausar lectura' : 'Escuchar artículo'
         );
-        info.textContent = playing ? 'Pausar lectura' : 'Escuchar artículo';
+        info.textContent = player.dataset.idleLabel;
     }
 
     function formatTime(seconds) {
@@ -54,6 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
         progress.value = String((audio.currentTime / audio.duration) * 100);
         currentTime.textContent = formatTime(audio.currentTime);
         duration.textContent = formatTime(audio.duration);
+    }
+
+    function updateEstimatedProgress(fraction) {
+        if (!estimatedDuration) return;
+
+        const boundedFraction = Math.max(0, Math.min(1, fraction));
+        progress.value = String(boundedFraction * 100);
+        currentTime.textContent = formatTime(estimatedDuration * boundedFraction);
+        duration.textContent = `~${formatTime(estimatedDuration)}`;
     }
 
     function loadSpanishVoice() {
@@ -76,6 +87,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const content = document.querySelector('.post-content')?.innerText || '';
 
         return [headline, subtitle, content].filter(Boolean).join('. ');
+    }
+
+    function estimateSpeechDuration() {
+        const wordCount = speechText.trim().split(/\s+/).filter(Boolean).length;
+        estimatedDuration = wordCount
+            ? Math.ceil((wordCount / (165 * speechRate)) * 60)
+            : 0;
+        duration.textContent = estimatedDuration
+            ? `~${formatTime(estimatedDuration)}`
+            : '0:00';
     }
 
     function makeSpeechChunks(text) {
@@ -129,9 +150,37 @@ document.addEventListener('DOMContentLoaded', () => {
             nextUtterance.voice = selectedVoice;
         }
 
+        const previousChunkLength = speechChunks
+            .slice(0, chunkIndex)
+            .reduce((length, chunk) => length + chunk.length, 0);
+        const totalTextLength = speechChunks.reduce(
+            (length, chunk) => length + chunk.length,
+            0
+        );
+
+        nextUtterance.onboundary = (event) => {
+            if (
+                utterance === nextUtterance
+                && totalTextLength
+                && Number.isFinite(event.charIndex)
+            ) {
+                updateEstimatedProgress(
+                    (previousChunkLength + event.charIndex) / totalTextLength
+                );
+            }
+        };
+
         nextUtterance.onend = () => {
             if (utterance !== nextUtterance) return;
             chunkIndex += 1;
+            updateEstimatedProgress(
+                chunkIndex >= speechChunks.length
+                    ? 1
+                    : speechChunks
+                        .slice(0, chunkIndex)
+                        .reduce((length, chunk) => length + chunk.length, 0)
+                        / totalTextLength
+            );
             speakCurrentChunk();
         };
 
@@ -156,7 +205,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!speechChunks.length) {
-            speechChunks = makeSpeechChunks(getArticleText());
+            speechText = getArticleText();
+            speechChunks = makeSpeechChunks(speechText);
+            estimateSpeechDuration();
         }
 
         if (!speechChunks.length) {
@@ -165,6 +216,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         isPaused = false;
+        updateEstimatedProgress(
+            speechChunks
+                .slice(0, chunkIndex)
+                .reduce((length, chunk) => length + chunk.length, 0)
+                / speechChunks.reduce((length, chunk) => length + chunk.length, 0)
+        );
         updatePlayButton(true);
         setStatus('Lectura automática con voz sintética.');
         speakCurrentChunk();
@@ -194,6 +251,43 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         loadSpanishVoice();
         speech?.addEventListener('voiceschanged', loadSpanishVoice);
+        progress.setAttribute('aria-label', 'Posición estimada de lectura');
+        speechText = getArticleText();
+        speechChunks = makeSpeechChunks(speechText);
+        estimateSpeechDuration();
+        progress.addEventListener('change', () => {
+            if (!speechChunks.length) {
+                speechText = getArticleText();
+                speechChunks = makeSpeechChunks(speechText);
+                estimateSpeechDuration();
+            }
+
+            if (!speechChunks.length) return;
+
+            const target = Number(progress.value) / 100;
+            const totalLength = speechChunks.reduce(
+                (length, chunk) => length + chunk.length,
+                0
+            );
+            let targetLength = totalLength * target;
+            chunkIndex = 0;
+
+            while (
+                chunkIndex < speechChunks.length - 1
+                && targetLength > speechChunks[chunkIndex].length
+            ) {
+                targetLength -= speechChunks[chunkIndex].length;
+                chunkIndex += 1;
+            }
+
+            updateEstimatedProgress(target);
+            if (isPlaying || isPaused) {
+                speech.cancel();
+                utterance = null;
+                isPaused = false;
+                startSpeech();
+            }
+        });
     }
 
     playButton.addEventListener('click', () => {
@@ -245,6 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
         speech.cancel();
         chunkIndex = 0;
         isPaused = false;
+        updateEstimatedProgress(0);
         startSpeech();
     });
 
@@ -258,9 +353,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         speechRate = rate;
+        if (speechChunks.length) estimateSpeechDuration();
         if (isPlaying) {
             utterance = null;
             speech.cancel();
+            updateEstimatedProgress(
+                speechChunks
+                    .slice(0, chunkIndex)
+                    .reduce((length, chunk) => length + chunk.length, 0)
+                    / speechChunks.reduce((length, chunk) => length + chunk.length, 0)
+            );
             speakCurrentChunk();
             updatePlayButton(true);
         } else if (isPaused && utterance) {

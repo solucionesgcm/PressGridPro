@@ -50,27 +50,26 @@ $cat_name = !empty($cats) ? $cats[0]->name : 'EXCLUSIVO';
             <div
                 class="pgp-audio-player-bar"
                 data-audio-src="<?php echo esc_url($audio_url); ?>"
+                data-idle-label="<?php echo esc_attr($audio_url ? __('Escuchar audio del artículo', 'pressgrid-pro') : __('Escuchar versión en audio con IA', 'pressgrid-pro')); ?>"
             >
                 <button class="audio-play-btn" type="button" aria-label="Escuchar artículo">
-                    <svg class="player-play-icon" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    <svg class="player-pause-icon" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" hidden><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    <svg class="player-play-icon" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <svg class="player-pause-icon" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true" hidden><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                 </button>
                 <div class="pgp-audio-player-content">
                     <div class="pgp-audio-player-heading">
-                        <span class="audio-info">Escuchar artículo</span>
-                        <span class="audio-credit"><?php echo $audio_url ? esc_html__('Audio del artículo', 'pressgrid-pro') : esc_html__('Versión en audio con IA', 'pressgrid-pro'); ?></span>
+                        <span class="audio-info"><?php echo $audio_url ? esc_html__('Escuchar audio del artículo', 'pressgrid-pro') : esc_html__('Escuchar versión en audio con IA', 'pressgrid-pro'); ?></span>
                     </div>
                     <div class="pgp-audio-player-controls">
-                        <button class="audio-restart-btn" type="button" aria-label="Volver al inicio">
-                            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a8 8 0 1 1 2.3 5.7M4 4v7h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                        <div class="audio-progress-group" hidden>
+                        <div class="audio-progress-group">
                             <span class="audio-current-time">0:00</span>
-                            <input class="audio-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Posición del audio" />
+                            <input class="audio-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="<?php esc_attr_e('Posición de reproducción', 'pressgrid-pro'); ?>" />
                             <span class="audio-duration">0:00</span>
                         </div>
+                        <button class="audio-restart-btn" type="button" aria-label="Volver al inicio">
+                            <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a8 8 0 1 1 2.3 5.7M4 4v7h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
                         <label class="audio-speed-control">
-                            <span><?php esc_html_e('Velocidad', 'pressgrid-pro'); ?></span>
                             <select class="audio-speed" aria-label="Velocidad de lectura">
                                 <option value="0.8">0.8×</option>
                                 <option value="1" selected>1×</option>

@@ -50,10 +50,10 @@
 
 .pgp-audio-player-bar {
     display: flex;
-    align-items: flex-start;
-    gap: 0.85rem;
-    max-width: 620px;
-    margin-top: 1.75rem;
+    align-items: center;
+    gap: 0.55rem;
+    max-width: 580px;
+    margin-top: 0.8rem;
     color: #ffffff;
 }
 
@@ -81,9 +81,9 @@
 }
 
 .audio-play-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    border-radius: 2px;
     background: #ffffff;
 }
 
@@ -94,38 +94,36 @@
 .pgp-audio-player-content {
     flex: 1;
     min-width: 0;
-    padding-top: 0.1rem;
 }
 
 .pgp-audio-player-heading {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.25rem 0.65rem;
-    margin-bottom: 0.45rem;
+    gap: 0.25rem 0.45rem;
 }
 
 .audio-info {
-    font-size: 0.9rem;
-    font-weight: 700;
+    font-size: 0.78rem;
+    font-weight: 600;
 }
 
-.audio-credit,
+.audio-duration-estimate,
 .audio-status {
     color: #aab8ca;
-    font-size: 0.75rem;
+    font-size: 0.68rem;
 }
 
 .pgp-audio-player-controls {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    min-height: 28px;
+    gap: 0.4rem;
+    min-height: 20px;
 }
 
 .audio-restart-btn {
-    width: 28px;
-    height: 28px;
+    width: 20px;
+    height: 20px;
     padding: 0;
     background: transparent;
     color: #d7e0eb;
@@ -136,7 +134,7 @@
     align-items: center;
     gap: 0.5rem;
     flex: 1;
-    min-width: 100px;
+    min-width: 80px;
     color: #aab8ca;
     font-size: 0.7rem;
     font-variant-numeric: tabular-nums;
@@ -152,18 +150,17 @@
 .audio-speed-control {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.25rem;
     color: #aab8ca;
-    font-size: 0.72rem;
+    font-size: 0.65rem;
 }
 
 .audio-speed {
-    border: 1px solid #536176;
-    border-radius: 3px;
-    padding: 0.15rem 0.25rem;
+    border: 0;
+    padding: 0.05rem 0.15rem;
     background: #102039;
     color: #ffffff;
-    font-size: 0.75rem;
+    font-size: 0.68rem;
 }
 
 .audio-status:empty {
@@ -172,7 +169,8 @@
 
 .audio-status {
     display: block;
-    margin-top: 0.2rem;
+    margin-top: 0.1rem;
+    font-size: 0.65rem;
 }
 
 /* 3. Posicionamiento de la Foto: solo entra el 20% en el bloque oscuro */
@@ -202,7 +200,8 @@
 
 @media (max-width: 600px) {
     .pgp-audio-player-bar {
-        gap: 0.65rem;
+        align-items: flex-start;
+        gap: 0.45rem;
     }
 
     .pgp-audio-player-controls {
