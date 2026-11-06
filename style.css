@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 17.6.0
+Version: 19.2.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid-pro
 */
@@ -12,7 +12,7 @@ Text Domain: pressgrid-pro
 /* ==========================================================================
    1. IMPORTACIÓN DE FUENTES & RESET GENERAL
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700&family=DM+Mono:wght@500;700&family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700&family=DM+Mono:wght@500;700&family=Inter:wght@400;500;600;700;800;900&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap');
 
 :root {
     --bg-main: #ffffff;
@@ -59,7 +59,8 @@ h1, h2, h3, h4, h5, h6,
 .asym-title, 
 .card-title, 
 .latest-title,
-.widget-title {
+.widget-title,
+.sidebar-media-title {
     font-family: var(--font-display);
     text-transform: none;
 }
@@ -87,7 +88,7 @@ header.site-header {
 .main-nav a { color: #ffffff; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   3. HOME HERO (ALINEACIÓN PERFECTA DE 5 ELEMENTOS EN AL MOMENTO)
+   3. HOME HERO (ALINEACIÓN PERFECTA & ESPACIADO SUPERIOR)
    ========================================================================== */
 .pgp-home-wrapper { 
     background: #ffffff;
@@ -113,7 +114,7 @@ header.site-header {
     .pgp-home-hero-white { grid-template-columns: 1fr; } 
 }
 
-/* Columna 1: Nota Principal */
+/* Columna 1: Nota Principal (Headline 32px) */
 .pgp-hero-main-col { padding-right: 0.5rem; }
 .pgp-hero-lead-card { display: block; text-decoration: none; color: inherit; }
 .pgp-hero-lead-card .lead-thumb-wrap { 
@@ -236,7 +237,7 @@ header.site-header {
     color: var(--text-primary); 
 }
 
-/* Columna 3: Feed Al Momento (Ajuste fino a 5 elementos) */
+/* Columna 3: Feed Al Momento (Estilo Minimalista) */
 .pgp-hero-latest-col { 
     background: transparent; 
     border: none; 
@@ -375,7 +376,7 @@ header.site-header {
 .news-banner-form button { background: var(--brand-red); color: #ffffff; border: none; padding: 0.5rem 1.1rem; border-radius: 3px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
 
 /* ==========================================================================
-   6. WIDGET: LO MÁS LEÍDO
+   6. WIDGETS SIDEBAR (LO MÁS LEÍDO & RECOMENDADAS 16:9)
    ========================================================================== */
 .pgp-most-read-widget .widget-title {
     font-family: var(--font-display);
@@ -402,6 +403,67 @@ header.site-header {
     color: var(--text-primary); 
 }
 .rank-meta { font-family: var(--font-mono); font-size: 0.685rem; color: var(--text-muted); }
+
+/* Bloque 2: Tarjetas Recomendadas 16:9 en Sidebar */
+.pgp-sidebar-media-widget {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.pgp-sidebar-media-widget .widget-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--text-primary);
+    padding-bottom: 0.4rem;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+}
+
+.sidebar-media-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.sidebar-media-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.sidebar-media-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 2px;
+    background: #e2e8f0;
+    margin-bottom: 0.4rem;
+}
+
+.sidebar-media-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-media-card:hover .sidebar-media-thumb img {
+    transform: scale(1.03);
+}
+
+.sidebar-media-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    line-height: 1.18;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+}
 
 /* ==========================================================================
    7. SINGLE POST
