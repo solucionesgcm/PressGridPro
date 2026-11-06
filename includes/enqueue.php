@@ -29,6 +29,7 @@ function pressgrid_enqueue_scripts() {
     // 3. CSS y JS Exclusivos del Single Post (Carga condicional)
     if (is_single()) {
         $single_style_path = get_template_directory() . '/assets/css/single.css';
+        $player_style_path = get_template_directory() . '/assets/css/player.css';
         $player_script_path = get_template_directory() . '/assets/js/player.js';
 
         wp_enqueue_style(
@@ -36,6 +37,13 @@ function pressgrid_enqueue_scripts() {
             get_template_directory_uri() . '/assets/css/single.css',
             array('pressgrid-main'),
             $style_version . '.' . filemtime($single_style_path)
+        );
+
+        wp_enqueue_style(
+            'pressgrid-player-style',
+            get_template_directory_uri() . '/assets/css/player.css',
+            array('pressgrid-single'),
+            $style_version . '.' . filemtime($player_style_path)
         );
 
         wp_enqueue_script(
