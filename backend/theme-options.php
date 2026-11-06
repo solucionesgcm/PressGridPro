@@ -16,7 +16,7 @@ add_action('admin_menu', 'pressgrid_add_admin_menu');
 
 function pressgrid_admin_styles($hook) {
     if ($hook != 'toplevel_page_pressgrid_options') return;
-    wp_enqueue_style('pressgrid-admin-css', get_template_directory_uri() . '/inc/admin-style.css', array(), '10.38.0');
+    wp_enqueue_style('pressgrid-admin-css', get_template_directory_uri() . '/backend/admin-style.css', array(), '10.38.0');
 }
 add_action('admin_enqueue_scripts', 'pressgrid_admin_styles');
 

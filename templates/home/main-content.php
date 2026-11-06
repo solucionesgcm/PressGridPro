@@ -170,6 +170,6 @@ if (!is_array($pgp_used_ids)) {
     </div>
 
     <!-- SIDEBAR DERECHO INTEGRADO -->
-    <?php get_template_part('template-parts/home/sidebar'); ?>
+    <?php get_template_part('templates/home/sidebar'); ?>
 
 </div>

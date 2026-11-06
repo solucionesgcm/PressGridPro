@@ -13,12 +13,12 @@ get_header(); ?>
         
         <?php 
         // 1. Cargar el Hero Principal de 3 Columnas (Fondo Blanco)
-        get_template_part('template-parts/home/hero'); 
+        get_template_part('templates/home/hero');
         ?>
 
         <?php 
         // 2. Cargar el Cuerpo Principal (Sub-Hero, Secciones Asimétricas, Grid 3Col y Sidebar integrado)
-        get_template_part('template-parts/home/main-content'); 
+        get_template_part('templates/home/main-content');
         ?>
 
     </div>

@@ -23,12 +23,22 @@
 
 ```text
 PressGridPro/
-├── inc/
-│   ├── admin-style.css    # Estilos del panel de administración
-│   └── theme-options.php  # Opciones del tema (WordPress Settings API)
+├── includes/
+│   ├── enqueue.php        # Carga de estilos y scripts
+│   ├── setup.php          # Soportes, menús y widgets
+├── backend/
+│   ├── admin-style.css     # Estilos del panel de administración
+│   ├── meta-boxes.php      # Metadatos editoriales
+│   └── theme-options.php   # Opciones del tema (WordPress Settings API)
+├── templates/
+│   ├── home/               # Componentes de la portada
+│   ├── sidebar/            # Componentes de barras laterales
+│   └── single/
+│       ├── components/     # Partes reutilizables del artículo
+│       └── layouts/        # Diseños completos de artículo
 ├── footer.php              # Pie de página global
 ├── front-page.php          # Plantilla de portada principal
-├── functions.php           # Soporte de tema, metaboxes y scripts
+├── functions.php           # Carga los módulos del tema
 ├── header.php              # Encabezado HTML y navegación
 ├── index.php               # Fallback principal
 ├── single.php              # Plantilla de artículo individual (Single Dark Hero)
