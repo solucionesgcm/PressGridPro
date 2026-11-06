@@ -38,7 +38,7 @@ if (!is_array($pgp_used_ids)) {
             while ($main_hero_q->have_posts()) : $main_hero_q->the_post();
                 $pgp_used_ids[] = get_the_ID();
                 $subtitle = get_post_meta(get_the_ID(), '_pgp_subtitle', true);
-                if (empty($subtitle)) {
+                if (!metadata_exists('post', get_the_ID(), '_pgp_subtitle')) {
                     $subtitle = get_post_meta(get_the_ID(), '_gcm_subtitle', true);
                 }
         ?>
