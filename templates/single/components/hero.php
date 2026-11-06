@@ -58,7 +58,7 @@ $cat_name = !empty($cats) ? $cats[0]->name : 'EXCLUSIVO';
                 <div class="pgp-audio-player-content">
                     <div class="pgp-audio-player-heading">
                         <span class="audio-info">Escuchar artículo</span>
-                        <span class="audio-credit"><?php echo $audio_url ? esc_html__('Audio del artículo', 'pressgrid-pro') : esc_html__('Lectura automática con voz sintética', 'pressgrid-pro'); ?></span>
+                        <span class="audio-credit"><?php echo $audio_url ? esc_html__('Audio del artículo', 'pressgrid-pro') : esc_html__('Versión en audio con IA', 'pressgrid-pro'); ?></span>
                     </div>
                     <div class="pgp-audio-player-controls">
                         <button class="audio-restart-btn" type="button" aria-label="Volver al inicio">
