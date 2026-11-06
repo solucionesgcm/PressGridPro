@@ -4,7 +4,7 @@ Theme URI: https://solucionesgcm.com/pressgrid
 Author: Soluciones GCM
 Author URI: https://solucionesgcm.com
 Description: Tema editorial de alto rendimiento para medios de comunicación y periódicos digitales.
-Version: 20.2.0
+Version: 20.3.0
 License: GNU General Public License v2 or later
 Text Domain: pressgrid-pro
 */
@@ -454,7 +454,7 @@ header.site-header {
 .rank-meta { font-family: var(--font-mono); font-size: 0.685rem; color: var(--text-muted); }
 
 /* ==========================================================================
-   7. SINGLE POST (HERO OSCURO + IMAGEN FLOTANTE CENTRADA + SIDEBAR DERECHO)
+   7. SINGLE POST (ANCHO DE LECTURA NBC STYLE: 580PX)
    ========================================================================== */
 .pgp-single-hero-dark { 
     background: var(--pgp-dark-bg); 
@@ -539,7 +539,7 @@ header.site-header {
     z-index: 10; 
 }
 
-/* IMAGEN DESTACADA FLOTANTE (Centrada a 1000px sobre el hero) */
+/* IMAGEN DESTACADA FLOTANTE CENTRADA A 1000PX */
 .pgp-feat-hero-media-wrapper { 
     position: relative; 
     z-index: 30; 
@@ -563,7 +563,7 @@ header.site-header {
     display: block; 
 }
 
-/* GRID PRINCIPAL (1fr flexible para la izquierda + 310px fijo para el sidebar derecho) */
+/* RETÍCULA CENTRAL: Flexibilidad mantenida para Sidebar a 310px */
 .pgp-single-sub-grid { 
     display: grid; 
     grid-template-columns: 1fr 310px; 
@@ -579,10 +579,10 @@ header.site-header {
     } 
 }
 
-/* COLUMNA PRINCIPAL DE LECTURA (Ancho contenido a 620px) */
+/* COLUMNA PRINCIPAL DE LECTURA (NBC News Measure: 580px exactos) */
 .pgp-article-main-column {
     width: 100%;
-    max-width: 620px;
+    max-width: 580px;
 }
 
 .post-content { 
