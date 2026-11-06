@@ -1,121 +1,283 @@
-/**
- * Native Text-to-Speech Player (Strict Spanish Best Voice Selection) - PressGrid Pro
- * Version: 19.6.0
- */
-
 document.addEventListener('DOMContentLoaded', () => {
-    const playBtn = document.querySelector('.audio-play-btn');
-    const audioInfo = document.querySelector('.audio-info');
+    const player = document.querySelector('.pgp-audio-player-bar');
+    if (!player) return;
 
-    if (!playBtn || !('speechSynthesis' in window)) {
-        if (playBtn) playBtn.style.display = 'none';
-        return;
-    }
+    const playButton = player.querySelector('.audio-play-btn');
+    const restartButton = player.querySelector('.audio-restart-btn');
+    const playIcon = player.querySelector('.player-play-icon');
+    const pauseIcon = player.querySelector('.player-pause-icon');
+    const info = player.querySelector('.audio-info');
+    const status = player.querySelector('.audio-status');
+    const speedControl = player.querySelector('.audio-speed');
+    const progressGroup = player.querySelector('.audio-progress-group');
+    const progress = player.querySelector('.audio-progress');
+    const currentTime = player.querySelector('.audio-current-time');
+    const duration = player.querySelector('.audio-duration');
+    const audioSource = player.dataset.audioSrc;
+    const audio = audioSource ? new Audio(audioSource) : null;
+    const speech = window.speechSynthesis;
 
     let isPlaying = false;
-    let synth = window.speechSynthesis;
+    let isPaused = false;
     let utterance = null;
+    let speechChunks = [];
+    let chunkIndex = 0;
+    let speechRate = Number(speedControl.value);
     let selectedVoice = null;
 
-    // Búsqueda estricta de voces exclusivas en español
-    function loadBestVoice() {
-        const voices = synth.getVoices();
-        if (!voices.length) return;
-
-        // Filtrar ÚNICAMENTE voces cuyo código empiece estrictamente por "es"
-        const spanishVoices = voices.filter(voice => {
-            const lang = voice.lang.toLowerCase().replace('_', '-');
-            return lang.startsWith('es');
-        });
-
-        if (!spanishVoices.length) return;
-
-        // Prioridad 1: Voces Neurales / Premium en Español México o España (Google, Microsoft, Apple)
-        selectedVoice = spanishVoices.find(v => {
-            const name = v.name.toLowerCase();
-            const lang = v.lang.toLowerCase();
-            return (lang.includes('mx') || lang.includes('es') || lang.includes('us')) && 
-                   (name.includes('google') || name.includes('natural') || name.includes('premium') || name.includes('enhanced') || name.includes('online'));
-        }) 
-        // Prioridad 2: Cualquier voz oficial de México (es-MX)
-        || spanishVoices.find(v => v.lang.toLowerCase().includes('mx'))
-        // Prioridad 3: Cualquier voz oficial en Español (es-ES / es-US)
-        || spanishVoices.find(v => v.lang.toLowerCase().includes('es') || v.lang.toLowerCase().includes('us'))
-        // Prioridad 4: Primera voz de la lista en español
-        || spanishVoices[0];
-
-        // Forzar el atributo de idioma a español neutro/mexicano
-        if (selectedVoice) {
-            console.log('PressGrid Player — Voz seleccionada:', selectedVoice.name, selectedVoice.lang);
-        }
+    function setStatus(message) {
+        status.textContent = message;
     }
 
-    // Inicialización y re-escucha para carga asíncrona de voces en navegadores basados en Chromium
-    loadBestVoice();
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = loadBestVoice;
+    function updatePlayButton(playing) {
+        isPlaying = playing;
+        playIcon.hidden = playing;
+        pauseIcon.hidden = !playing;
+        playButton.setAttribute(
+            'aria-label',
+            playing ? 'Pausar lectura' : 'Escuchar artículo'
+        );
+        info.textContent = playing ? 'Pausar lectura' : 'Escuchar artículo';
+    }
+
+    function formatTime(seconds) {
+        const totalSeconds = Math.floor(seconds);
+        const minutes = Math.floor(totalSeconds / 60);
+        const remainingSeconds = totalSeconds % 60;
+
+        return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`;
+    }
+
+    function updateProgress() {
+        if (!audio || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
+
+        progress.value = String((audio.currentTime / audio.duration) * 100);
+        currentTime.textContent = formatTime(audio.currentTime);
+        duration.textContent = formatTime(audio.duration);
+    }
+
+    function loadSpanishVoice() {
+        if (!speech) return;
+
+        const spanishVoices = speech.getVoices().filter((voice) => {
+            const language = voice.lang.toLowerCase().replace('_', '-');
+            return 'es' === language || language.startsWith('es-');
+        });
+
+        selectedVoice =
+            spanishVoices.find((voice) =>
+                voice.lang.toLowerCase().replace('_', '-').startsWith('es-mx')
+            ) || spanishVoices[0] || null;
     }
 
     function getArticleText() {
         const headline = document.querySelector('.pgp-hero-headline')?.innerText || '';
         const subtitle = document.querySelector('.pgp-hero-subtitle')?.innerText || '';
         const content = document.querySelector('.post-content')?.innerText || '';
-        
-        return `${headline}. ${subtitle}. ${content}`;
+
+        return [headline, subtitle, content].filter(Boolean).join('. ');
     }
 
-    function toggleSpeech() {
-        if (isPlaying) {
-            synth.pause();
-            isPlaying = false;
-            updateUI(false);
-        } else {
-            if (synth.paused) {
-                synth.resume();
-                isPlaying = true;
-                updateUI(true);
-            } else {
-                synth.cancel(); // Limpieza previa
+    function makeSpeechChunks(text) {
+        const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+        const chunks = [];
+        let chunk = '';
 
-                const textToRead = getArticleText();
-                utterance = new SpeechSynthesisUtterance(textToRead);
+        sentences.forEach((sentence) => {
+            const part = sentence.trim();
+            if (!part) return;
 
-                // Configurar idioma explícito en la emisión
-                utterance.lang = selectedVoice ? selectedVoice.lang : 'es-MX';
-
-                if (selectedVoice) {
-                    utterance.voice = selectedVoice;
-                }
-                
-                utterance.rate = 1.0;  // Velocidad normal
-                utterance.pitch = 1.0; // Tono estándar
-
-                utterance.onend = () => {
-                    isPlaying = false;
-                    updateUI(false);
-                };
-
-                utterance.onerror = () => {
-                    isPlaying = false;
-                    updateUI(false);
-                };
-
-                synth.speak(utterance);
-                isPlaying = true;
-                updateUI(true);
+            if (chunk && `${chunk} ${part}`.length > 180) {
+                chunks.push(chunk);
+                chunk = '';
             }
-        }
+
+            if (part.length > 180) {
+                const words = part.split(/\s+/);
+                words.forEach((word) => {
+                    if (chunk && `${chunk} ${word}`.length > 180) {
+                        chunks.push(chunk);
+                        chunk = '';
+                    }
+                    chunk = chunk ? `${chunk} ${word}` : word;
+                });
+            } else {
+                chunk = chunk ? `${chunk} ${part}` : part;
+            }
+        });
+
+        if (chunk) chunks.push(chunk);
+        return chunks;
     }
 
-    function updateUI(playing) {
-        if (playing) {
-            playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#0f172a"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-            audioInfo.textContent = 'Pausar lectura de audio';
+    function speakCurrentChunk() {
+        if (chunkIndex >= speechChunks.length) {
+            utterance = null;
+            isPaused = false;
+            updatePlayButton(false);
+            setStatus('Lectura finalizada.');
+            return;
+        }
+
+        const nextUtterance = new SpeechSynthesisUtterance(speechChunks[chunkIndex]);
+        utterance = nextUtterance;
+        nextUtterance.rate = speechRate;
+        nextUtterance.pitch = 1;
+        nextUtterance.lang = selectedVoice?.lang || 'es-MX';
+
+        if (selectedVoice) {
+            nextUtterance.voice = selectedVoice;
+        }
+
+        nextUtterance.onend = () => {
+            if (utterance !== nextUtterance) return;
+            chunkIndex += 1;
+            speakCurrentChunk();
+        };
+
+        nextUtterance.onerror = (event) => {
+            if (utterance !== nextUtterance || 'canceled' === event.error) return;
+            utterance = null;
+            isPaused = false;
+            updatePlayButton(false);
+            setStatus('No se pudo iniciar la lectura por voz.');
+        };
+
+        speech.speak(nextUtterance);
+    }
+
+    function startSpeech() {
+        if (!speech) {
+            updatePlayButton(false);
+            playButton.disabled = true;
+            restartButton.disabled = true;
+            setStatus('Este navegador no admite lectura por voz.');
+            return;
+        }
+
+        if (!speechChunks.length) {
+            speechChunks = makeSpeechChunks(getArticleText());
+        }
+
+        if (!speechChunks.length) {
+            setStatus('No hay texto disponible para leer.');
+            return;
+        }
+
+        isPaused = false;
+        updatePlayButton(true);
+        setStatus('Lectura automática con voz sintética.');
+        speakCurrentChunk();
+    }
+
+    function playAudio() {
+        audio.play().catch(() => {
+            updatePlayButton(false);
+            setStatus('No se pudo reproducir el archivo de audio.');
+        });
+    }
+
+    if (audio) {
+        progressGroup.hidden = false;
+        audio.preload = 'metadata';
+        audio.addEventListener('loadedmetadata', updateProgress);
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('play', () => updatePlayButton(true));
+        audio.addEventListener('pause', () => updatePlayButton(false));
+        audio.addEventListener('ended', () => {
+            updatePlayButton(false);
+            setStatus('Audio finalizado.');
+        });
+        audio.addEventListener('error', () => {
+            setStatus('No se pudo cargar el archivo de audio.');
+        });
+    } else {
+        loadSpanishVoice();
+        speech?.addEventListener('voiceschanged', loadSpanishVoice);
+    }
+
+    playButton.addEventListener('click', () => {
+        if (audio) {
+            if (audio.paused) {
+                playAudio();
+            } else {
+                audio.pause();
+            }
+            return;
+        }
+
+        if (!speech) {
+            startSpeech();
+            return;
+        }
+
+        if (isPlaying) {
+            speech.pause();
+            isPaused = true;
+            updatePlayButton(false);
+            setStatus('Lectura en pausa.');
+        } else if (isPaused) {
+            if (utterance) {
+                speech.resume();
+                isPaused = false;
+                updatePlayButton(true);
+                setStatus('Lectura automática con voz sintética.');
+            } else {
+                startSpeech();
+            }
         } else {
-            playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#0f172a"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
-            audioInfo.textContent = 'Escuchar versión en audio';
+            if (chunkIndex >= speechChunks.length) chunkIndex = 0;
+            startSpeech();
         }
-    }
+    });
 
-    playBtn.addEventListener('click', toggleSpeech);
+    restartButton.addEventListener('click', () => {
+        if (audio) {
+            audio.currentTime = 0;
+            setStatus('');
+            playAudio();
+            return;
+        }
+
+        if (!speech) return;
+
+        utterance = null;
+        speech.cancel();
+        chunkIndex = 0;
+        isPaused = false;
+        startSpeech();
+    });
+
+    speedControl.addEventListener('change', () => {
+        const rate = Number(speedControl.value);
+
+        if (audio) {
+            audio.playbackRate = rate;
+            setStatus(`Velocidad: ${rate}×.`);
+            return;
+        }
+
+        speechRate = rate;
+        if (isPlaying) {
+            utterance = null;
+            speech.cancel();
+            speakCurrentChunk();
+            updatePlayButton(true);
+        } else if (isPaused && utterance) {
+            utterance = null;
+            speech.cancel();
+        }
+
+        setStatus(`Velocidad de lectura: ${rate}×.`);
+    });
+
+    if (audio) {
+        progress.addEventListener('input', () => {
+            if (Number.isFinite(audio.duration)) {
+                audio.currentTime = (Number(progress.value) / 100) * audio.duration;
+            }
+        });
+    } else {
+        progressGroup.hidden = true;
+    }
 });
