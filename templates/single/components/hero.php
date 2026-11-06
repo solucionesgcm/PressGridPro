@@ -41,6 +41,12 @@ $cat_name = !empty($cats) ? $cats[0]->name : 'EXCLUSIVO';
                 <p class="pgp-hero-subtitle"><?php echo get_the_excerpt(); ?></p>
             <?php endif; ?>
 
+            <!-- Bloque de Firma y Fecha -->
+            <div class="byline-date-block-dark">
+                <span class="byline-author">Por <strong><?php the_author(); ?></strong></span>
+                <span class="pub-date">Publicado: <?php echo get_the_date('j \d\e F, Y'); ?></span>
+            </div>
+
             <!-- Reproductor de Audio / Briefing -->
             <div class="pgp-audio-player-bar">
                 <button class="audio-play-btn" aria-label="Escuchar artículo">
