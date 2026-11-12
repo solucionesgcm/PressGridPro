@@ -41,7 +41,7 @@
     margin: 0 0 1.75rem;
 }
 
-.byline-date-block-dark {
+.byline-author-block-dark {
     font-size: 0.85rem;
     color: #94a3b8;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -51,13 +51,7 @@
     gap: 1.5rem;
 }
 
-.byline-date-block-dark .pub-date {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-}
-
-.byline-date-block-dark .byline-author strong {
+.byline-author-block-dark .byline-author strong {
     color: #ffffff;
 }
 
@@ -133,12 +127,26 @@
     padding: 0.7rem 0.9rem;
     background: #f8fafc;
     color: #64748b;
+    font-family: var(--font-mono);
     font-size: 0.8rem;
+    letter-spacing: 0.01em;
     line-height: 1.5;
 }
 
 .pgp-featured-image-credit {
     font-size: 0.72rem;
+}
+
+.pgp-article-published-at {
+    display: block;
+    margin-top: 2rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    color: #64748b;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
 }
 
 .pgp-single-sub-grid {

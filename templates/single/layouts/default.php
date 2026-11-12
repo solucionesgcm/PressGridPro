@@ -39,6 +39,13 @@
                     <?php the_content(); ?>
                 </div>
 
+                <time
+                    class="pgp-article-published-at"
+                    datetime="<?php echo esc_attr(get_the_date(DATE_W3C)); ?>"
+                >
+                    Publicado: <?php echo esc_html(get_the_date('j \d\e F, Y')); ?>
+                </time>
+
                 <div class="pgp-post-nav-strip">
                     <div class="nav-prev"><?php previous_post_link('%link', '← Nota Anterior: %title'); ?></div>
                     <div class="nav-next"><?php next_post_link('%link', 'Siguiente Nota: %title →'); ?></div>
