@@ -12,11 +12,17 @@
     <div class="container">
 
         <?php if (has_post_thumbnail()) : ?>
-            <div class="pgp-feat-hero-media-wrapper">
+            <?php $photo_caption = get_post_meta(get_the_ID(), '_pgp_photo_caption', true); ?>
+            <figure class="pgp-feat-hero-media-wrapper">
                 <div class="pgp-feat-hero-media">
                     <?php the_post_thumbnail('full'); ?>
                 </div>
-            </div>
+                <?php if (!empty($photo_caption)) : ?>
+                    <figcaption class="pgp-featured-image-caption">
+                        <?php echo esc_html($photo_caption); ?>
+                    </figcaption>
+                <?php endif; ?>
+            </figure>
         <?php endif; ?>
 
         <div class="pgp-single-sub-grid">
