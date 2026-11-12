@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../pressgrid-next"
+		}
+	],
+	"settings": {
+		"window.autoDetectColorScheme": true,
+		"workbench.colorTheme": "Dark 2026",
+		"workbench.preferredLightColorTheme": "Light 2026",
+		"markdown-mermaid.darkModeTheme": "vscode",
+		"workbench.preferredDarkColorTheme": "Dark 2026"
+	}
+}
