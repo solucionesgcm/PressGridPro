@@ -13,13 +13,21 @@
 
         <?php if (has_post_thumbnail()) : ?>
             <?php $photo_caption = get_post_meta(get_the_ID(), '_pgp_photo_caption', true); ?>
+            <?php $photo_credit = get_post_meta(get_the_ID(), '_pgp_photo_credit', true); ?>
             <figure class="pgp-feat-hero-media-wrapper">
                 <div class="pgp-feat-hero-media">
                     <?php the_post_thumbnail('full'); ?>
                 </div>
-                <?php if (!empty($photo_caption)) : ?>
+                <?php if (!empty($photo_caption) || !empty($photo_credit)) : ?>
                     <figcaption class="pgp-featured-image-caption">
-                        <?php echo esc_html($photo_caption); ?>
+                        <?php if (!empty($photo_caption)) : ?>
+                            <span><?php echo esc_html($photo_caption); ?></span>
+                        <?php endif; ?>
+                        <?php if (!empty($photo_credit)) : ?>
+                            <span class="pgp-featured-image-credit">
+                                <?php echo esc_html('Crédito: ' . $photo_credit); ?>
+                            </span>
+                        <?php endif; ?>
                     </figcaption>
                 <?php endif; ?>
             </figure>

@@ -124,12 +124,21 @@
 }
 
 .pgp-featured-image-caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.3rem 1rem;
     margin: 0;
     padding: 0.7rem 0.9rem;
     background: #f8fafc;
     color: #64748b;
     font-size: 0.8rem;
     line-height: 1.5;
+}
+
+.pgp-featured-image-credit {
+    font-size: 0.72rem;
 }
 
 .pgp-single-sub-grid {

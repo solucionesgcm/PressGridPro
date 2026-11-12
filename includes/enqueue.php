@@ -28,7 +28,7 @@ function pressgrid_enqueue_scripts() {
 
     // 3. CSS y JS Exclusivos del Single Post (Carga condicional)
     if (is_single()) {
-        $single_style_version = '21.2.4';
+        $single_style_version = '21.2.5';
 
         wp_enqueue_style(
             'pressgrid-single',
