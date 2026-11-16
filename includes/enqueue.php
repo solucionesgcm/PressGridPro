@@ -26,6 +26,15 @@ function pressgrid_enqueue_scripts() {
         $style_version
     );
 
+    if (is_category()) {
+        wp_enqueue_style(
+            'pressgrid-archive',
+            get_template_directory_uri() . '/assets/css/archive.css',
+            array('pressgrid-main'),
+            '1.0.0'
+        );
+    }
+
     // 3. CSS y JS Exclusivos del Single Post (Carga condicional)
     if (is_single()) {
         $single_style_version = '21.2.6';
