@@ -31,7 +31,7 @@ function pressgrid_enqueue_scripts() {
             'pressgrid-archive',
             get_template_directory_uri() . '/assets/css/archive.css',
             array('pressgrid-main'),
-            '1.0.0'
+            '1.0.1'
         );
     }
 
