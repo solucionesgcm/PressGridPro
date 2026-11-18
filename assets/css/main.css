@@ -54,6 +54,49 @@ h1, h2, h3, h4, h5, h6,
     text-transform: none;
 }
 
+.pgp-hero-lead-card .lead-title,
+.pgp-col2-top-lead .col2-top-title,
+.pgp-stack-card .stack-info h4,
+.latest-feed-item h4,
+.subhero-card .subhero-title,
+.asym-main-card .asym-title,
+.asym-list-item .asym-list-info h4,
+.pgp-card-3col .card-title,
+.sidebar-media-card .sidebar-media-title,
+.top-rank-item .rank-info h4,
+.foxiz-card-item .card-title {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: #cbd5e1;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.16em;
+}
+
+.pgp-hero-lead-card:hover .lead-title,
+.pgp-hero-lead-card:focus-visible .lead-title,
+.pgp-col2-top-lead:hover .col2-top-title,
+.pgp-col2-top-lead:focus-visible .col2-top-title,
+.pgp-stack-card:hover .stack-info h4,
+.pgp-stack-card:focus-visible .stack-info h4,
+.latest-feed-item:hover h4,
+.latest-feed-item:focus-visible h4,
+.subhero-card:hover .subhero-title,
+.subhero-card:focus-visible .subhero-title,
+.asym-main-card:hover .asym-title,
+.asym-main-card:focus-visible .asym-title,
+.asym-list-item:hover .asym-list-info h4,
+.asym-list-item:focus-visible .asym-list-info h4,
+.pgp-card-3col:hover .card-title,
+.pgp-card-3col:focus-visible .card-title,
+.sidebar-media-card:hover .sidebar-media-title,
+.sidebar-media-card:focus-visible .sidebar-media-title,
+.top-rank-item:hover .rank-info h4,
+.top-rank-item:focus-visible .rank-info h4,
+.foxiz-card-item .card-title a:hover,
+.foxiz-card-item .card-title a:focus-visible {
+    text-decoration-color: var(--brand-red);
+}
+
 /* ==========================================================================
    2. HEADER
    ========================================================================== */
