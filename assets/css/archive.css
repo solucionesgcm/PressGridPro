@@ -152,11 +152,7 @@
 
 .pgp-category-lead h2 a,
 .pgp-category-card h3 a {
-    text-decoration-line: underline;
-    text-decoration-style: dotted;
-    text-decoration-color: #cbd5e1;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.16em;
+    text-decoration: none;
     transition: color 0.2s ease;
 }
 
@@ -165,7 +161,6 @@
 .pgp-category-lead h2 a:focus-visible,
 .pgp-category-card h3 a:focus-visible {
     color: #b91c1c;
-    text-decoration-color: var(--brand-red);
 }
 
 .pgp-category-lead-copy > p {

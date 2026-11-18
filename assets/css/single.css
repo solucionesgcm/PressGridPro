@@ -175,6 +175,19 @@
     margin-bottom: 1.65rem;
 }
 
+.post-content a {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: #94a3b8;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.16em;
+}
+
+.post-content a:hover,
+.post-content a:focus-visible {
+    text-decoration-color: var(--brand-red);
+}
+
 .pgp-sidebar {
     border-left: 1px solid var(--border-color);
     padding-left: 1.8rem;
