@@ -152,7 +152,11 @@
 
 .pgp-category-lead h2 a,
 .pgp-category-card h3 a {
-    text-decoration: none;
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: #94a3b8;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.16em;
     transition: color 0.2s ease;
 }
 
